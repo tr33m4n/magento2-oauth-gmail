@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="tr33m4n_google_oauth_mail" translate="label" type="text" sortOrder="300" showInDefault="1"
+                 showInWebsite="0" showInStore="0">
+            <tab>sales</tab> <!-- TODO: Put config in correct place -->
+            <label>Google Oauth Mail</label>
+            <resource>Tr33m4n_GoogleOauthMail::config</resource>
+            <group id="authentication" translate="label" type="text" sortOrder="100" showInDefault="1"
+                   showInWebsite="0" showInStore="0">
+                <label>Authentication</label>
+                <field id="client_id" translate="label" type="text" sortOrder="1" showInDefault="1"
+                       showInWebsite="0" showInStore="0" canRestore="1">
+                    <label>Client ID</label>
+                </field>
+                <field id="client_secret" translate="label" type="obscure" sortOrder="5" showInDefault="1"
+                       showInWebsite="0" showInStore="0" canRestore="1">
+                    <label>Client Secret</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

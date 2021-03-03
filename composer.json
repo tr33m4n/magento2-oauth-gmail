@@ -1,0 +1,33 @@
+{
+    "name": "tr33m4n/magento2-google-oauth-mail",
+    "type": "magento2-module",
+    "description": "A simple way to send mail via Google using Oauth",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Daniel Doyle",
+            "email": "tr33m4n@googlemail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "files": [
+            "src/registration.php"
+        ],
+        "psr-4": {
+            "tr33m4n\\GoogleOauthMail\\": "src"
+        }
+    },
+    "require": {
+        "php": "^7.3",
+        "google/apiclient": "^2.9"
+    },
+    "scripts": {
+        "post-update-cmd": "Google\\Task\\Composer::cleanup"
+    },
+    "extra": {
+        "google/apiclient-services": [
+            "Gmail"
+        ]
+    }
+}
