@@ -7,17 +7,22 @@
             <tab>sales</tab> <!-- TODO: Put config in correct place -->
             <label>Google Oauth Mail</label>
             <resource>Tr33m4n_GoogleOauthMail::config</resource>
-            <group id="authentication" translate="label" type="text" sortOrder="100" showInDefault="1"
+            <group id="authentication" translate="label" type="text" sortOrder="1" showInDefault="1"
                    showInWebsite="0" showInStore="0">
                 <label>Authentication</label>
                 <field id="client_id" translate="label" type="text" sortOrder="1" showInDefault="1"
                        showInWebsite="0" showInStore="0" canRestore="1">
                     <label>Client ID</label>
                 </field>
-                <field id="client_secret" translate="label" type="obscure" sortOrder="5" showInDefault="1"
+                <field id="client_secret" translate="label" type="obscure" sortOrder="2" showInDefault="1"
                        showInWebsite="0" showInStore="0" canRestore="1">
                     <label>Client Secret</label>
                     <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                </field>
+                <field id="authenticate" translate="button_label" sortOrder="3" showInDefault="1"
+                       showInWebsite="0" showInStore="0" canRestore="1">
+                    <button_label>Authenticate</button_label>
+                    <frontend_model>tr33m4n\GoogleOauthMail\Block\Adminhtml\System\Config\Authenticate</frontend_model>
                 </field>
             </group>
         </section>
