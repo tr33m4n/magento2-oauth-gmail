@@ -2,6 +2,7 @@
 
 namespace tr33m4n\GoogleOauthMail\Block\Adminhtml\System\Config;
 
+use InvalidArgumentException;
 use Magento\Backend\Block\Template\Context;
 use Magento\Config\Block\System\Config\Form\Field;
 use Magento\Framework\Data\Form\Element\AbstractElement;
@@ -61,11 +62,18 @@ class Authenticate extends Field
     {
         $originalData = $element->getOriginalData();
         $buttonLabel = !empty($originalData['button_label']) ? $originalData['button_label'] : 'Authenticate';
+
+        try {
+            $buttonUrl = $this->getGoogleClient->execute()->createAuthUrl();
+        } catch (InvalidArgumentException $exception) {
+            $buttonUrl = null;
+        }
+
         $this->addData(
             [
                 'button_label' => __($buttonLabel),
                 'html_id' => $element->getHtmlId(),
-                'button_url' => $this->getGoogleClient->execute()->createAuthUrl(),
+                'button_url' => $buttonUrl
             ]
         );
 

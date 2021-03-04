@@ -2,18 +2,18 @@
 /** @var \tr33m4n\GoogleOauthMail\Block\Adminhtml\System\Config\Authenticate $block */
 /** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
 
-$buttonUrl = $block->escapeJs($block->escapeUrl($block->getData('button_url')));
+$buttonUrl = $block->getData('button_url');
 ?>
 
 <div class="actions actions-authenticate">
-    <p class="admin__field-error hidden" id="validation_result"></p>
-    <button class="action-authenticate" type="button" id="<?= /* @noEscape */ $block->getData('html_id') ?>">
+    <button class="action-authenticate" type="button" id="<?= /* @noEscape */ $block->getData('html_id') ?>"<?= !$buttonUrl ? ' disabled' : '' ?>>
         <span><?= $block->escapeHtml($block->getData('button_label')) ?></span>
     </button>
 </div>
-<?= /* @noEscape */ $secureRenderer->renderTag('style', [], '#validation_result {margin-bottom: 10px;}', false); ?>
-<?= /* @noEscape */ $secureRenderer->renderEventListenerAsTag(
-    'onclick',
-    "event.preventDefault(); window.location = {$buttonUrl};",
-    '#' . /* @noEscape */ $block->getData('html_id')
-); ?>
+<?php if ($buttonUrl) : ?>
+    <?= /* @noEscape */ $secureRenderer->renderEventListenerAsTag(
+        'onclick',
+        "event.preventDefault(); window.location = \"{$block->escapeJs($buttonUrl)}\";",
+        '#' . /* @noEscape */ $block->getData('html_id')
+    ); ?>
+<?php endif; ?>
