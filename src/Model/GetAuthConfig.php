@@ -51,8 +51,24 @@ class GetAuthConfig
             'client_id' => $this->scopeConfig->getValue(self::XML_CONFIG_CLIENT_ID_PATH),
             'client_secret' => $this->scopeConfig->getValue(self::XML_CONFIG_CLIENT_SECRET_PATH),
             'redirect_uris' => [
-                $this->url->getUrl('google-oauth-mail/callback/authenticate')
+                $this->getRedirectUrl()
             ]
         ];
+    }
+
+    /**
+     * Get redirect URL
+     *
+     * @return string
+     */
+    private function getRedirectUrl() : string
+    {
+        /** @var \Magento\Backend\Model\Url $urlModel */
+        $urlModel = $this->url;
+        $urlModel->turnOffSecretKey();
+        $callbackUrl = $urlModel->getUrl('google-oauth-mail/callback/authenticate');
+        $urlModel->turnOnSecretKey();
+
+        return $callbackUrl;
     }
 }

@@ -2,7 +2,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
     <router id="admin">
-        <route id="google-oauth-mail" frontName="google-oauth-mail">
+        <route id="google_oauth_mail" frontName="google-oauth-mail">
             <module name="tr33m4n_GoogleOauthMail"/>
         </route>
     </router>

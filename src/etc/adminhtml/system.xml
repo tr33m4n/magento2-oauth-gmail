@@ -4,11 +4,9 @@
     <system>
         <section id="system" translate="label" type="text" sortOrder="300" showInDefault="1"
                  showInWebsite="0" showInStore="0">
-            <label>Google Oauth Mail</label>
-            <resource>Tr33m4n_GoogleOauthMail::config</resource>
             <group id="google_oauth_mail" translate="label" type="text" sortOrder="1" showInDefault="1"
                    showInWebsite="0" showInStore="0">
-                <label>Authentication</label>
+                <label>Google Oauth Mail</label>
                 <field id="client_id" translate="label" type="text" sortOrder="1" showInDefault="1"
                        showInWebsite="0" showInStore="0">
                     <label>Client ID</label>

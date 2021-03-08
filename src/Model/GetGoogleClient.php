@@ -24,6 +24,11 @@ class GetGoogleClient
     private $getAuthConfig;
 
     /**
+     * @var \tr33m4n\GoogleOauthMail\Model\GetAccessToken
+     */
+    private $getAccessToken;
+
+    /**
      * @var \Google\Client|null
      */
     private $configuredClient;
@@ -33,13 +38,16 @@ class GetGoogleClient
      *
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      * @param \tr33m4n\GoogleOauthMail\Model\GetAuthConfig       $getAuthConfig
+     * @param \tr33m4n\GoogleOauthMail\Model\GetAccessToken      $getAccessToken
      */
     public function __construct(
         ScopeConfigInterface $scopeConfig,
-        GetAuthConfig $getAuthConfig
+        GetAuthConfig $getAuthConfig,
+        GetAccessToken $getAccessToken
     ) {
         $this->scopeConfig = $scopeConfig;
         $this->getAuthConfig = $getAuthConfig;
+        $this->getAccessToken = $getAccessToken;
     }
 
     /**
@@ -56,7 +64,12 @@ class GetGoogleClient
 
         $client = new Client();
         $client->setAuthConfig($this->getAuthConfig->execute());
+        $client->setAccessType('offline');
         $client->addScope(Google_Service_Gmail::GMAIL_SEND);
+
+        if ($accessToken = $this->getAccessToken->execute()) {
+            $client->setAccessToken($accessToken);
+        }
 
         return $this->configuredClient = $client;
     }

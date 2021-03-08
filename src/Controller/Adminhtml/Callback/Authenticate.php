@@ -5,7 +5,9 @@ namespace tr33m4n\GoogleOauthMail\Controller\Adminhtml\Callback;
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\App\Action\HttpGetActionInterface;
+use Magento\Framework\App\ResponseInterface;
 use tr33m4n\GoogleOauthMail\Model\GetGoogleClient;
+use tr33m4n\GoogleOauthMail\Model\SaveAccessToken;
 
 /**
  * Class Authenticate
@@ -20,21 +22,26 @@ class Authenticate extends Action implements HttpGetActionInterface
     const ADMIN_RESOURCE = 'tr33m4n_GoogleOauthMail::oauth';
 
     /**
+     * @inheritDoc
+     */
+    protected $_publicActions = [
+        'authenticate'
+    ];
+
+    /**
      * @var \tr33m4n\GoogleOauthMail\Model\GetGoogleClient
      */
     private $getGoogleClient;
 
-    /**
-     * Authenticate constructor.
-     *
-     * @param \Magento\Backend\App\Action\Context            $context
-     * @param \tr33m4n\GoogleOauthMail\Model\GetGoogleClient $getGoogleClient
-     */
+    private $saveAccessToken;
+
     public function __construct(
         Context $context,
-        GetGoogleClient $getGoogleClient
+        GetGoogleClient $getGoogleClient,
+        SaveAccessToken $saveAccessToken
     ) {
         $this->getGoogleClient = $getGoogleClient;
+        $this->saveAccessToken = $saveAccessToken;
 
         parent::__construct($context);
     }
@@ -43,15 +50,17 @@ class Authenticate extends Action implements HttpGetActionInterface
      * {@inheritdoc}
      *
      * @throws \Google\Exception
-     * @return void
+     * @return \Magento\Framework\App\ResponseInterface
      */
-    public function execute() : void
+    public function execute() : ResponseInterface
     {
-        $this->getGoogleClient->execute()
-            ->fetchAccessTokenWithAuthCode($this->getRequest()->getParam('code'));
+        $client = $this->getGoogleClient->execute();
+        $client->fetchAccessTokenWithAuthCode($this->getRequest()->getParam('code'));
+
+        $this->saveAccessToken->execute($client->getAccessToken());
 
         $this->messageManager->addSuccessMessage(__('Successfully authenticated with Google!'));
 
-        $this->_forward('edit', 'system_config', ['section' => 'system']);
+        return $this->_redirect('adminhtml/system_config/edit', ['section' => 'system']);
     }
 }
