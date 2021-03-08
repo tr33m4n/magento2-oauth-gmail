@@ -12,9 +12,9 @@ use Magento\Framework\UrlInterface;
  */
 class GetAuthConfig
 {
-    private const XML_CONFIG_CLIENT_ID_PATH = 'tr33m4n_google_oauth_mail/authentication/client_id';
+    private const XML_CONFIG_CLIENT_ID_PATH = 'system/google_oauth_mail/client_id';
 
-    private const XML_CONFIG_CLIENT_SECRET_PATH = 'tr33m4n_google_oauth_mail/authentication/client_secret';
+    private const XML_CONFIG_CLIENT_SECRET_PATH = 'system/google_oauth_mail/client_secret';
 
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
@@ -51,7 +51,7 @@ class GetAuthConfig
             'client_id' => $this->scopeConfig->getValue(self::XML_CONFIG_CLIENT_ID_PATH),
             'client_secret' => $this->scopeConfig->getValue(self::XML_CONFIG_CLIENT_SECRET_PATH),
             'redirect_uris' => [
-                $this->url->getUrl('test/test')
+                $this->url->getUrl('google-oauth-mail/callback/authenticate')
             ]
         ];
     }

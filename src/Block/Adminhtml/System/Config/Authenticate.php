@@ -60,9 +60,6 @@ class Authenticate extends Field
      */
     protected function _getElementHtml(AbstractElement $element) : string
     {
-        $originalData = $element->getOriginalData();
-        $buttonLabel = !empty($originalData['button_label']) ? $originalData['button_label'] : 'Authenticate';
-
         try {
             $buttonUrl = $this->getGoogleClient->execute()->createAuthUrl();
         } catch (InvalidArgumentException $exception) {
@@ -71,7 +68,7 @@ class Authenticate extends Field
 
         $this->addData(
             [
-                'button_label' => __($buttonLabel),
+                'button_label' => __('Authenticate'),
                 'html_id' => $element->getHtmlId(),
                 'button_url' => $buttonUrl
             ]

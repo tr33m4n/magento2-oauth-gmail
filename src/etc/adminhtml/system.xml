@@ -2,12 +2,11 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <section id="tr33m4n_google_oauth_mail" translate="label" type="text" sortOrder="300" showInDefault="1"
+        <section id="system" translate="label" type="text" sortOrder="300" showInDefault="1"
                  showInWebsite="0" showInStore="0">
-            <tab>sales</tab> <!-- TODO: Put config in correct place -->
             <label>Google Oauth Mail</label>
             <resource>Tr33m4n_GoogleOauthMail::config</resource>
-            <group id="authentication" translate="label" type="text" sortOrder="1" showInDefault="1"
+            <group id="google_oauth_mail" translate="label" type="text" sortOrder="1" showInDefault="1"
                    showInWebsite="0" showInStore="0">
                 <label>Authentication</label>
                 <field id="client_id" translate="label" type="text" sortOrder="1" showInDefault="1"
@@ -19,9 +18,7 @@
                     <label>Client Secret</label>
                     <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
                 </field>
-                <field id="authenticate" translate="button_label" sortOrder="3" showInDefault="1"
-                       showInWebsite="0" showInStore="0">
-                    <button_label>Authenticate</button_label>
+                <field id="authenticate" sortOrder="3" showInDefault="1" showInWebsite="0" showInStore="0">
                     <frontend_model>tr33m4n\GoogleOauthMail\Block\Adminhtml\System\Config\Authenticate</frontend_model>
                 </field>
             </group>
