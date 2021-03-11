@@ -43,7 +43,7 @@ class GetAccessToken
             ->getFirstItem();
 
         return null !== $latestAccessToken->getId()
-            ? $latestAccessToken->getToken()
+            ? $latestAccessToken->getAccessToken()
             : null;
     }
 }

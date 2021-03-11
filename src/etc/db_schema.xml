@@ -4,7 +4,9 @@
     <table name="google_oauth_mail" resource="default" engine="innodb" comment="Config Data">
         <column xsi:type="int" name="token_id" unsigned="true" nullable="false" identity="true"
                 comment="Token ID"/>
-        <column xsi:type="varchar" name="token" nullable="false" length="255" comment="Token"/>
+        <column xsi:type="varchar" name="access_token" nullable="false" length="255" comment="Access Token"/>
+        <column xsi:type="varchar" name="scope" nullable="false" length="255" comment="Scope"/>
+        <column xsi:type="timestamp" name="expires_in" nullable="false" comment="Expires In"/>
         <column xsi:type="timestamp" name="created_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP"
                 comment="Created At"/>
         <constraint xsi:type="primary" referenceId="PRIMARY">
