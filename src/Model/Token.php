@@ -57,7 +57,7 @@ class Token extends AbstractModel implements TokenInterface
     /**
      * @inheritDoc
      */
-    public function getAccessToken() : string
+    public function getAccessToken() : ?string
     {
         return $this->getData(self::KEY_ACCESS_TOKEN);
     }
@@ -73,7 +73,7 @@ class Token extends AbstractModel implements TokenInterface
     /**
      * @inheritDoc
      */
-    public function getScope() : string
+    public function getScope() : ?string
     {
         return $this->getData(self::KEY_SCOPE);
     }
@@ -89,7 +89,7 @@ class Token extends AbstractModel implements TokenInterface
     /**
      * @inheritDoc
      */
-    public function getExpiresIn() : string
+    public function getExpiresIn() : ?string
     {
         return $this->getData(self::KEY_EXPIRES_IN);
     }
@@ -100,6 +100,22 @@ class Token extends AbstractModel implements TokenInterface
     public function setExpiresIn(int $expiresIn) : TokenInterface
     {
         return $this->setData(self::KEY_EXPIRES_IN, $this->dateTime->gmtDate(null, time() + $expiresIn));
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getCreatedAt() : ?string
+    {
+        return $this->getData(self::KEY_CREATED_AT);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setCreatedAt(string $createdAt) : TokenInterface
+    {
+        return $this->setData(self::KEY_CREATED_AT, $createdAt);
     }
 
     /**

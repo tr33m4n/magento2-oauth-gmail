@@ -15,12 +15,14 @@ interface TokenInterface
 
     const KEY_SCOPE = 'scope';
 
+    const KEY_CREATED_AT = 'created_at';
+
     /**
      * Get access token
      *
-     * @return string
+     * @return string|null
      */
-    public function getAccessToken() : string;
+    public function getAccessToken() : ?string;
 
     /**
      * Set access token
@@ -33,9 +35,9 @@ interface TokenInterface
     /**
      * Get scope
      *
-     * @return string
+     * @return string|null
      */
-    public function getScope() : string;
+    public function getScope() : ?string;
 
     /**
      * Set scope
@@ -48,9 +50,9 @@ interface TokenInterface
     /**
      * Get expires in
      *
-     * @return string
+     * @return string|null
      */
-    public function getExpiresIn() : string;
+    public function getExpiresIn() : ?string;
 
     /**
      * Set expires in
@@ -63,9 +65,9 @@ interface TokenInterface
     /**
      * Get created at
      *
-     * @return string
+     * @return string|null
      */
-    public function getCreatedAt() : string;
+    public function getCreatedAt() : ?string;
 
     /**
      * Set created at
