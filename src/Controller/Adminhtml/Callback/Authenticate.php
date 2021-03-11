@@ -50,15 +50,22 @@ class Authenticate extends Action implements HttpGetActionInterface
      * {@inheritdoc}
      *
      * @throws \Google\Exception
+     * @throws \Magento\Framework\Exception\AlreadyExistsException
      * @return \Magento\Framework\App\ResponseInterface
      */
     public function execute() : ResponseInterface
     {
         $client = $this->getGoogleClient->execute();
-        $client->fetchAccessTokenWithAuthCode($this->getRequest()->getParam('code'));
+        $credentials = $client->fetchAccessTokenWithAuthCode($this->getRequest()->getParam('code'));
+
+        // TODO: Refactor and handle credential errors properly
+        if (array_key_exists('error', $credentials)) {
+            $this->messageManager->addErrorMessage(__('Something went wrong: %1', json_encode($credentials)));
+
+            return $this->_redirect('adminhtml/system_config/edit', ['section' => 'system']);
+        }
 
         $this->saveAccessToken->execute($client->getAccessToken());
-
         $this->messageManager->addSuccessMessage(__('Successfully authenticated with Google!'));
 
         return $this->_redirect('adminhtml/system_config/edit', ['section' => 'system']);

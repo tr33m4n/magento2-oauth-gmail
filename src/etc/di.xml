@@ -2,4 +2,12 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <preference for="tr33m4n\GoogleOauthMail\Api\Data\TokenInterface" type="tr33m4n\GoogleOauthMail\Model\Token"/>
+
+    <type name="Magento\Config\Model\Config\TypePool">
+        <arguments>
+            <argument name="sensitive" xsi:type="array">
+                <item name="system/google_oauth_mail/client_secret" xsi:type="string">1</item>
+            </argument>
+        </arguments>
+    </type>
 </config>
