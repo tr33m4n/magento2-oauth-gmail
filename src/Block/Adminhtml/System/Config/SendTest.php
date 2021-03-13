@@ -2,7 +2,6 @@
 
 namespace tr33m4n\GoogleOauthMail\Block\Adminhtml\System\Config;
 
-use Magento\Config\Block\System\Config\Form\Field;
 use Magento\Framework\Data\Form\Element\AbstractElement;
 
 /**
@@ -10,23 +9,8 @@ use Magento\Framework\Data\Form\Element\AbstractElement;
  *
  * @package tr33m4n\GoogleOauthMail\Block\Adminhtml\System\Config
  */
-class SendTest extends Field
+class SendTest extends AbstractButton
 {
-    /**
-     * @inheritDoc
-     */
-    protected $_template = 'tr33m4n_GoogleOauthMail::system/config/send-test.phtml';
-
-    /**
-     * @inheritDoc
-     */
-    public function render(AbstractElement $element) : string
-    {
-        $element->unsScope()->unsCanUseWebsiteValue()->unsCanUseDefaultValue();
-
-        return parent::render($element);
-    }
-
     /**
      * @inheritDoc
      */
@@ -35,8 +19,9 @@ class SendTest extends Field
         $this->addData(
             [
                 'button_label' => __('Send Test'),
+                'class_suffix' => 'send-test',
                 'html_id' => $element->getHtmlId(),
-                'button_url' => $this->_urlBuilder->getUrl('google-oauth-mail/email/test')
+                'button_url' => $this->getUrl('google-oauth-mail/email/test')
             ]
         );
 

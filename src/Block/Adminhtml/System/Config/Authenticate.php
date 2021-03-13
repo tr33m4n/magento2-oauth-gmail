@@ -4,7 +4,6 @@ namespace tr33m4n\GoogleOauthMail\Block\Adminhtml\System\Config;
 
 use InvalidArgumentException;
 use Magento\Backend\Block\Template\Context;
-use Magento\Config\Block\System\Config\Form\Field;
 use Magento\Framework\Data\Form\Element\AbstractElement;
 use Magento\Framework\View\Helper\SecureHtmlRenderer;
 use tr33m4n\GoogleOauthMail\Model\GetGoogleClient;
@@ -14,13 +13,8 @@ use tr33m4n\GoogleOauthMail\Model\GetGoogleClient;
  *
  * @package tr33m4n\GoogleOauthMail\Block\Adminhtml\System\Config
  */
-class Authenticate extends Field
+class Authenticate extends AbstractButton
 {
-    /**
-     * @inheritDoc
-     */
-    protected $_template = 'tr33m4n_GoogleOauthMail::system/config/authenticate.phtml';
-
     /**
      * @var \tr33m4n\GoogleOauthMail\Model\GetGoogleClient
      */
@@ -48,16 +42,6 @@ class Authenticate extends Field
     /**
      * @inheritDoc
      */
-    public function render(AbstractElement $element) : string
-    {
-        $element->unsScope()->unsCanUseWebsiteValue()->unsCanUseDefaultValue();
-
-        return parent::render($element);
-    }
-
-    /**
-     * @inheritDoc
-     */
     protected function _getElementHtml(AbstractElement $element) : string
     {
         try {
@@ -69,6 +53,7 @@ class Authenticate extends Field
         $this->addData(
             [
                 'button_label' => __('Authenticate'),
+                'class_suffix' => 'authenticate',
                 'html_id' => $element->getHtmlId(),
                 'button_url' => $buttonUrl
             ]

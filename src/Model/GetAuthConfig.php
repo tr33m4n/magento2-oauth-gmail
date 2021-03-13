@@ -2,8 +2,8 @@
 
 namespace tr33m4n\GoogleOauthMail\Model;
 
+use Magento\Backend\Model\UrlInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Framework\UrlInterface;
 
 /**
  * Class GetAuthConfig
@@ -30,7 +30,7 @@ class GetAuthConfig
      * GetAuthConfig constructor.
      *
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
-     * @param \Magento\Framework\UrlInterface                    $url
+     * @param \Magento\Backend\Model\UrlInterface                $url
      */
     public function __construct(
         ScopeConfigInterface $scopeConfig,
@@ -63,11 +63,9 @@ class GetAuthConfig
      */
     private function getRedirectUrl() : string
     {
-        /** @var \Magento\Backend\Model\Url $urlModel */
-        $urlModel = $this->url;
-        $urlModel->turnOffSecretKey();
-        $callbackUrl = $urlModel->getUrl('google-oauth-mail/callback/authenticate');
-        $urlModel->turnOnSecretKey();
+        $this->url->turnOffSecretKey();
+        $callbackUrl = $this->url->getUrl('google-oauth-mail/callback/authenticate');
+        $this->url->turnOnSecretKey();
 
         return $callbackUrl;
     }

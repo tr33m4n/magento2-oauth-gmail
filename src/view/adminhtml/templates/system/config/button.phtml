@@ -1,19 +1,21 @@
 <?php
-/** @var \tr33m4n\GoogleOauthMail\Block\Adminhtml\System\Config\Authenticate $block */
+/** @var \tr33m4n\GoogleOauthMail\Block\Adminhtml\System\Config\AbstractButton $block */
 /** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
+/** @var \Magento\Framework\Escaper $escaper */
 
 $buttonUrl = $block->getData('button_url');
+$classSuffix = $block->getData('class_suffix');
 ?>
 
-<div class="actions actions-authenticate">
+<div class="actions actions-<?= $escaper->escapeHtmlAttr($classSuffix) ?>">
     <button class="action-authenticate" type="button" id="<?= /* @noEscape */ $block->getData('html_id') ?>"<?= !$buttonUrl ? ' disabled' : '' ?>>
-        <span><?= $block->escapeHtml($block->getData('button_label')) ?></span>
+        <span><?= $escaper->escapeHtml($block->getData('button_label')) ?></span>
     </button>
 </div>
 <?php if ($buttonUrl) : ?>
     <?= /* @noEscape */ $secureRenderer->renderEventListenerAsTag(
         'onclick',
-        "event.preventDefault(); window.location = \"{$block->escapeJs($buttonUrl)}\";",
+        "event.preventDefault(); window.location = \"{$escaper->escapeJs($buttonUrl)}\";",
         '#' . /* @noEscape */ $block->getData('html_id')
     ); ?>
 <?php endif; ?>
