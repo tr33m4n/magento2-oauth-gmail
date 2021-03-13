@@ -2,6 +2,7 @@
 
 namespace tr33m4n\GoogleOauthMail\Model;
 
+use Exception;
 use Google\Client;
 use Google_Service_Gmail;
 use Magento\Framework\App\Config\ScopeConfigInterface;
@@ -54,6 +55,7 @@ class GetGoogleClient
      * Get configured Google client
      *
      * @throws \Google\Exception
+     * @throws \Exception
      * @return \Google\Client
      */
     public function execute() : Client
@@ -65,10 +67,19 @@ class GetGoogleClient
         $client = new Client();
         $client->setAuthConfig($this->getAuthConfig->execute());
         $client->setAccessType('offline');
-        $client->addScope(Google_Service_Gmail::GMAIL_SEND);
+        $client->setApprovalPrompt('force');
+        $client->addScope(Google_Service_Gmail::GMAIL_COMPOSE);
 
         if ($accessToken = $this->getAccessToken->execute()) {
             $client->setAccessToken($accessToken);
+        }
+
+        if ($client->isAccessTokenExpired()) {
+            if ($client->getRefreshToken()) {
+                $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
+            } else {
+                //throw new Exception('TODO');
+            }
         }
 
         return $this->configuredClient = $client;

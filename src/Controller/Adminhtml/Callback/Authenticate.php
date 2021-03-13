@@ -51,6 +51,7 @@ class Authenticate extends Action implements HttpGetActionInterface
      *
      * @throws \Google\Exception
      * @throws \Magento\Framework\Exception\AlreadyExistsException
+     * @throws \tr33m4n\GoogleOauthMail\Exception\AccessTokenException
      * @return \Magento\Framework\App\ResponseInterface
      */
     public function execute() : ResponseInterface
