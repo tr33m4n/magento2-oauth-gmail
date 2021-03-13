@@ -33,8 +33,18 @@ class Authenticate extends Action implements HttpGetActionInterface
      */
     private $getGoogleClient;
 
+    /**
+     * @var \tr33m4n\GoogleOauthMail\Model\SaveAccessToken
+     */
     private $saveAccessToken;
 
+    /**
+     * Authenticate constructor.
+     *
+     * @param \Magento\Backend\App\Action\Context            $context
+     * @param \tr33m4n\GoogleOauthMail\Model\GetGoogleClient $getGoogleClient
+     * @param \tr33m4n\GoogleOauthMail\Model\SaveAccessToken $saveAccessToken
+     */
     public function __construct(
         Context $context,
         GetGoogleClient $getGoogleClient,

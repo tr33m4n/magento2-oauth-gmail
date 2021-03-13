@@ -1,0 +1,19 @@
+<?php
+/** @var \tr33m4n\GoogleOauthMail\Block\Adminhtml\System\Config\SendTest $block */
+/** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
+
+$buttonUrl = $block->getData('button_url');
+?>
+
+<div class="actions actions-send-test">
+    <button class="action-send-test" type="button" id="<?= /* @noEscape */ $block->getData('html_id') ?>"<?= !$buttonUrl ? ' disabled' : '' ?>>
+        <span><?= $block->escapeHtml($block->getData('button_label')) ?></span>
+    </button>
+</div>
+<?php if ($buttonUrl) : ?>
+    <?= /* @noEscape */ $secureRenderer->renderEventListenerAsTag(
+        'onclick',
+        "event.preventDefault(); window.location = \"{$block->escapeJs($buttonUrl)}\";",
+        '#' . /* @noEscape */ $block->getData('html_id')
+    ); ?>
+<?php endif; ?>
