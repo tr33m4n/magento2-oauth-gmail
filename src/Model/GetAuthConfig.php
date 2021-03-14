@@ -22,7 +22,7 @@ class GetAuthConfig
     private $scopeConfig;
 
     /**
-     * @var \Magento\Framework\UrlInterface
+     * @var \Magento\Backend\Model\UrlInterface
      */
     private $url;
 

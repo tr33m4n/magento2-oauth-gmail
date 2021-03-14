@@ -1,6 +1,6 @@
 <?php
 
-namespace tr33m4n\GoogleOauthMail\Controller\Adminhtml\Callback;
+namespace tr33m4n\GoogleOauthMail\Controller\Adminhtml\Email;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
@@ -12,7 +12,7 @@ use Magento\Framework\Mail\Template\TransportBuilder;
 /**
  * Class Test
  *
- * @package tr33m4n\GoogleOauthMail\Controller\Adminhtml\Callback
+ * @package tr33m4n\GoogleOauthMail\Controller\Adminhtml\Email
  */
 class Test extends Action implements HttpGetActionInterface
 {
