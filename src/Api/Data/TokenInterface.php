@@ -84,9 +84,9 @@ interface TokenInterface
     /**
      * Get expires in
      *
-     * @return string|null
+     * @return int|null
      */
-    public function getExpiresIn() : ?string;
+    public function getExpiresIn() : ?int;
 
     /**
      * Set expires in
@@ -99,9 +99,9 @@ interface TokenInterface
     /**
      * Get created
      *
-     * @return string|null
+     * @return int|null
      */
-    public function getCreated() : ?string;
+    public function getCreated() : ?int;
 
     /**
      * Set created
