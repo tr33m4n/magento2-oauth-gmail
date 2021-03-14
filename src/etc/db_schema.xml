@@ -2,13 +2,13 @@
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
     <table name="google_oauth_mail" resource="default" engine="innodb" comment="Config Data">
-        <column xsi:type="int" name="token_id" unsigned="true" nullable="false" identity="true"
-                comment="Token ID"/>
+        <column xsi:type="int" name="token_id" unsigned="true" nullable="false" identity="true" comment="Token ID"/>
         <column xsi:type="varchar" name="access_token" nullable="false" length="255" comment="Access Token"/>
+        <column xsi:type="varchar" name="refresh_token" nullable="false" length="255" comment="Access Token"/>
+        <column xsi:type="varchar" name="token_type" nullable="false" length="255" comment="Token Type"/>
         <column xsi:type="varchar" name="scope" nullable="false" length="255" comment="Scope"/>
         <column xsi:type="timestamp" name="expires_in" nullable="false" comment="Expires In"/>
-        <column xsi:type="timestamp" name="created_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP"
-                comment="Created At"/>
+        <column xsi:type="timestamp" name="created" nullable="false" default="CURRENT_TIMESTAMP" comment="Created"/>
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="token_id"/>
         </constraint>

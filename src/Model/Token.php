@@ -73,6 +73,38 @@ class Token extends AbstractModel implements TokenInterface
     /**
      * @inheritDoc
      */
+    public function getRefreshToken() : ?string
+    {
+        return $this->getData(self::KEY_REFRESH_TOKEN);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setRefreshToken(string $refreshToken) : TokenInterface
+    {
+        return $this->setData(self::KEY_REFRESH_TOKEN, $refreshToken);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getTokenType() : ?string
+    {
+        return $this->getData(self::KEY_TOKEN_TYPE);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setTokenType(string $tokenType) : TokenInterface
+    {
+        return $this->setData(self::KEY_TOKEN_TYPE, $tokenType);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getScope() : ?string
     {
         return $this->getData(self::KEY_SCOPE);
@@ -105,28 +137,16 @@ class Token extends AbstractModel implements TokenInterface
     /**
      * @inheritDoc
      */
-    public function getCreatedAt() : ?string
+    public function getCreated() : ?string
     {
-        return $this->getData(self::KEY_CREATED_AT);
+        return $this->getData(self::KEY_CREATED);
     }
 
     /**
      * @inheritDoc
      */
-    public function setCreatedAt(string $createdAt) : TokenInterface
+    public function setCreated(int $created) : TokenInterface
     {
-        return $this->setData(self::KEY_CREATED_AT, $createdAt);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function beforeSave() : AbstractModel
-    {
-        if ($this->isObjectNew() && !$this->getCreatedAt()) {
-            $this->setCreatedAt($this->dateTime->gmtDate());
-        }
-
-        return parent::beforeSave();
+        return $this->setData(self::KEY_CREATED, $this->dateTime->gmtDate(null, $created));
     }
 }

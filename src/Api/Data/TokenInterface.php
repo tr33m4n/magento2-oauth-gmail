@@ -11,11 +11,15 @@ interface TokenInterface
 {
     const KEY_ACCESS_TOKEN = 'access_token';
 
-    const KEY_EXPIRES_IN = 'expires_in';
+    const KEY_REFRESH_TOKEN = 'refresh_token';
+
+    const KEY_TOKEN_TYPE = 'token_type';
 
     const KEY_SCOPE = 'scope';
 
-    const KEY_CREATED_AT = 'created_at';
+    const KEY_EXPIRES_IN = 'expires_in';
+
+    const KEY_CREATED = 'created';
 
     /**
      * Get access token
@@ -31,6 +35,36 @@ interface TokenInterface
      * @return \tr33m4n\GoogleOauthMail\Api\Data\TokenInterface
      */
     public function setAccessToken(string $accessToken) : TokenInterface;
+
+    /**
+     * Get refresh token
+     *
+     * @return string|null
+     */
+    public function getRefreshToken() : ?string;
+
+    /**
+     * Set refresh token
+     *
+     * @param string $refreshToken
+     * @return \tr33m4n\GoogleOauthMail\Api\Data\TokenInterface
+     */
+    public function setRefreshToken(string $refreshToken) : TokenInterface;
+
+    /**
+     * Get token type
+     *
+     * @return string|null
+     */
+    public function getTokenType() : ?string;
+
+    /**
+     * Set token type
+     *
+     * @param string $tokenType
+     * @return \tr33m4n\GoogleOauthMail\Api\Data\TokenInterface
+     */
+    public function setTokenType(string $tokenType) : TokenInterface;
 
     /**
      * Get scope
@@ -63,17 +97,17 @@ interface TokenInterface
     public function setExpiresIn(int $expiresIn) : TokenInterface;
 
     /**
-     * Get created at
+     * Get created
      *
      * @return string|null
      */
-    public function getCreatedAt() : ?string;
+    public function getCreated() : ?string;
 
     /**
-     * Set created at
+     * Set created
      *
-     * @param string $createdAt
+     * @param int $created
      * @return \tr33m4n\GoogleOauthMail\Api\Data\TokenInterface
      */
-    public function setCreatedAt(string $createdAt) : TokenInterface;
+    public function setCreated(int $created) : TokenInterface;
 }

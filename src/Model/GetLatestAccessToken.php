@@ -2,14 +2,15 @@
 
 namespace tr33m4n\GoogleOauthMail\Model;
 
+use tr33m4n\GoogleOauthMail\Api\Data\TokenInterface;
 use tr33m4n\GoogleOauthMail\Model\ResourceModel\Token\CollectionFactory;
 
 /**
- * Class GetAccessToken
+ * Class GetLatestAccessToken
  *
  * @package tr33m4n\GoogleOauthMail\Model
  */
-class GetAccessToken
+class GetLatestAccessToken
 {
     /**
      * @var \tr33m4n\GoogleOauthMail\Model\ResourceModel\Token\CollectionFactory
@@ -28,22 +29,22 @@ class GetAccessToken
     }
 
     /**
-     * Get access token
+     * Get latest access token
      *
-     * @return string
+     * @return \tr33m4n\GoogleOauthMail\Api\Data\TokenInterface|null
      */
-    public function execute() : ?string
+    public function execute() : ?TokenInterface
     {
-        /** @var \tr33m4n\GoogleOauthMail\Model\ResourceModel\Token\Collection $collection */
+        /** @var \tr33m4n\GoogleOauthMail\Api\Data\TokenInterface $latestAccessToken */
         $latestAccessToken = $this->collectionFactory->create()
-            ->addFieldToSelect('token')
+            ->addFieldToSelect(TokenInterface::KEY_ACCESS_TOKEN)
             ->setPageSize(1)
             ->setCurPage(1)
-            ->setOrder('created_at')
+            ->setOrder(TokenInterface::KEY_CREATED)
             ->getFirstItem();
 
         return null !== $latestAccessToken->getId()
-            ? $latestAccessToken->getAccessToken()
+            ? $latestAccessToken
             : null;
     }
 }
