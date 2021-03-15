@@ -21,7 +21,7 @@ class SendTest extends AbstractButton
                 'button_label' => __('Send Test'),
                 'class_suffix' => 'send-test',
                 'html_id' => $element->getHtmlId(),
-                'button_url' => $this->getUrl('google-oauth-mail/email/test')
+                'button_url' => $this->getUrl('oauthgmail/email/test')
             ]
         );
 

@@ -64,7 +64,7 @@ class GetAuthConfig
     private function getRedirectUrl() : string
     {
         $this->url->turnOffSecretKey();
-        $callbackUrl = $this->url->getUrl('google-oauth-mail/callback/authenticate');
+        $callbackUrl = $this->url->getUrl('oauthgmail/callback/authenticate');
         $this->url->turnOnSecretKey();
 
         return $callbackUrl;

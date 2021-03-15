@@ -4,10 +4,12 @@ namespace tr33m4n\GoogleOauthMail\Controller\Adminhtml\Email;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
+use Magento\Backend\App\Area\FrontNameResolver;
 use Magento\Backend\Model\Auth\Session as AuthSession;
 use Magento\Framework\App\Action\HttpGetActionInterface;
 use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Mail\Template\TransportBuilder;
+use Magento\Store\Model\Store;
 
 /**
  * Class Test
@@ -59,9 +61,15 @@ class Test extends Action implements HttpGetActionInterface
     public function execute() : ResponseInterface
     {
         $adminUser = $this->authSession->getUser();
-        $this->transportBuilder->setTemplateIdentifier('google_oauth_mail_test');
-        $this->transportBuilder->setFromByScope('general');
-        $this->transportBuilder->addTo($adminUser->getEmail(), $adminUser->getName());
+
+        $this->transportBuilder->setTemplateIdentifier('google_oauth_mail_test')
+            ->setFromByScope('general')
+            ->addTo($adminUser->getEmail(), $adminUser->getName())
+            ->setTemplateOptions([
+                'area' => FrontNameResolver::AREA_CODE,
+                'store' => Store::DEFAULT_STORE_ID
+            ])
+            ->setTemplateVars([]);
 
         $transport = $this->transportBuilder->getTransport();
         $transport->sendMessage();

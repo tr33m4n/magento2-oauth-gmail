@@ -37,7 +37,6 @@ class GetLatestAccessToken
     {
         /** @var \tr33m4n\GoogleOauthMail\Api\Data\TokenInterface $latestAccessToken */
         $latestAccessToken = $this->collectionFactory->create()
-            ->addFieldToSelect(TokenInterface::KEY_ACCESS_TOKEN)
             ->setPageSize(1)
             ->setCurPage(1)
             ->setOrder(TokenInterface::KEY_CREATED)
