@@ -7,7 +7,6 @@ use Google_Service_Gmail_Message;
 use Magento\Framework\Exception\MailException;
 use Magento\Framework\Mail\MessageInterface;
 use Magento\Framework\Mail\TransportInterface;
-use Magento\Framework\Phrase;
 
 /**
  * Class Transport
@@ -36,7 +35,7 @@ class Transport implements TransportInterface
      *
      * @param \tr33m4n\OauthGmail\Model\ValidateSender  $validateSender
      * @param \tr33m4n\OauthGmail\Model\GetGmailService $getGmailService
-     * @param \Magento\Framework\Mail\MessageInterface       $message
+     * @param \Magento\Framework\Mail\MessageInterface  $message
      */
     public function __construct(
         ValidateSender $validateSender,

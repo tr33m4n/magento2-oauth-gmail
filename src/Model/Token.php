@@ -2,12 +2,7 @@
 
 namespace tr33m4n\OauthGmail\Model;
 
-use Magento\Framework\Data\Collection\AbstractDb;
 use Magento\Framework\Model\AbstractModel;
-use Magento\Framework\Model\Context;
-use Magento\Framework\Model\ResourceModel\AbstractResource;
-use Magento\Framework\Registry;
-use Magento\Framework\Stdlib\DateTime\DateTime;
 use tr33m4n\OauthGmail\Api\Data\TokenInterface;
 use tr33m4n\OauthGmail\Model\ResourceModel\Token as TokenResource;
 
@@ -18,14 +13,6 @@ use tr33m4n\OauthGmail\Model\ResourceModel\Token as TokenResource;
  */
 class Token extends AbstractModel implements TokenInterface
 {
-    /**
-     * @inheritDoc
-     */
-    protected function _construct()
-    {
-        $this->_init(TokenResource::class);
-    }
-
     /**
      * @inheritDoc
      */
@@ -120,5 +107,13 @@ class Token extends AbstractModel implements TokenInterface
     public function setCreated(int $created) : TokenInterface
     {
         return $this->setData(self::KEY_CREATED, $created);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function _construct()
+    {
+        $this->_init(TokenResource::class);
     }
 }
