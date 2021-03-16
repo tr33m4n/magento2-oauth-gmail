@@ -3,9 +3,9 @@
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
         <system>
-            <google_oauth_mail>
+            <oauth_gmail>
                 <client_secret backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
-            </google_oauth_mail>
+            </oauth_gmail>
         </system>
     </default>
 </config>

@@ -1,13 +1,13 @@
 <?php
 
-namespace tr33m4n\OauthGoogleMail\Model\ResourceModel;
+namespace tr33m4n\OauthGmail\Model\ResourceModel;
 
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 
 /**
  * Class Token
  *
- * @package tr33m4n\OauthGoogleMail\Model\ResourceModel
+ * @package tr33m4n\OauthGmail\Model\ResourceModel
  */
 class Token extends AbstractDb
 {
@@ -16,6 +16,6 @@ class Token extends AbstractDb
      */
     protected function _construct()
     {
-        $this->_init('google_oauth_mail', 'token_id');
+        $this->_init('oauth_gmail_token', 'token_id');
     }
 }

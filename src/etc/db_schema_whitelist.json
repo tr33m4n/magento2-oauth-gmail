@@ -1,5 +1,5 @@
 {
-    "google_oauth_mail": {
+    "oauth_gmail_token": {
         "column": {
             "token_id": true,
             "access_token": true,

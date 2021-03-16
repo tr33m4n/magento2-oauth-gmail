@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
-    <table name="google_oauth_mail" resource="default" engine="innodb" comment="Config Data">
+    <table name="oauth_gmail_token" resource="default" engine="innodb" comment="Config Data">
         <column xsi:type="int" name="token_id" unsigned="true" nullable="false" identity="true" comment="Token ID"/>
         <column xsi:type="varchar" name="access_token" nullable="false" length="255" comment="Access Token"/>
         <column xsi:type="varchar" name="refresh_token" nullable="false" length="255" comment="Access Token"/>

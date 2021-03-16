@@ -1,13 +1,13 @@
 <?php
 
-namespace tr33m4n\OauthGoogleMail\Block\Adminhtml\System\Config;
+namespace tr33m4n\OauthGmail\Block\Adminhtml\System\Config;
 
 use Magento\Framework\Data\Form\Element\AbstractElement;
 
 /**
  * Class Authenticate
  *
- * @package tr33m4n\OauthGoogleMail\Block\Adminhtml\System\Config
+ * @package tr33m4n\OauthGmail\Block\Adminhtml\System\Config
  */
 class SendTest extends AbstractButton
 {

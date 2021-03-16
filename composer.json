@@ -1,7 +1,7 @@
 {
-    "name": "tr33m4n/magento2-oauth-google-mail",
+    "name": "tr33m4n/magento2-oauth-gmail",
     "type": "magento2-module",
-    "description": "A simple way to send mail via Google Mail using Oauth",
+    "description": "A simple way to send mail via Gmail using Oauth",
     "license": "MIT",
     "authors": [
         {
@@ -15,7 +15,7 @@
             "src/registration.php"
         ],
         "psr-4": {
-            "tr33m4n\\OauthGoogleMail\\": "src"
+            "tr33m4n\\OauthGmail\\": "src"
         }
     },
     "require": {

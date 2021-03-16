@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
-    <module name="tr33m4n_OauthGoogleMail">
+    <module name="tr33m4n_OauthGmail">
         <sequence>
             <module name="Magento_Email"/>
         </sequence>

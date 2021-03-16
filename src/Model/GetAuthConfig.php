@@ -1,6 +1,6 @@
 <?php
 
-namespace tr33m4n\OauthGoogleMail\Model;
+namespace tr33m4n\OauthGmail\Model;
 
 use Magento\Backend\Model\UrlInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
@@ -8,13 +8,13 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 /**
  * Class GetAuthConfig
  *
- * @package tr33m4n\OauthGoogleMail\Model
+ * @package tr33m4n\OauthGmail\Model
  */
 class GetAuthConfig
 {
-    private const XML_CONFIG_CLIENT_ID_PATH = 'system/google_oauth_mail/client_id';
+    private const XML_CONFIG_CLIENT_ID_PATH = 'system/oauth_gmail/client_id';
 
-    private const XML_CONFIG_CLIENT_SECRET_PATH = 'system/google_oauth_mail/client_secret';
+    private const XML_CONFIG_CLIENT_SECRET_PATH = 'system/oauth_gmail/client_secret';
 
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface

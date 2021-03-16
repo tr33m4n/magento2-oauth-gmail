@@ -1,25 +1,25 @@
 <?php
 
-namespace tr33m4n\OauthGoogleMail\Model;
+namespace tr33m4n\OauthGmail\Model;
 
 use Google_Service_Gmail;
 
 /**
  * Class GetGmailService
  *
- * @package tr33m4n\OauthGoogleMail\Model
+ * @package tr33m4n\OauthGmail\Model
  */
 class GetGmailService
 {
     /**
-     * @var \tr33m4n\OauthGoogleMail\Model\GetGoogleClient
+     * @var \tr33m4n\OauthGmail\Model\GetGoogleClient
      */
     private $getGoogleClient;
 
     /**
      * GetGmailService constructor.
      *
-     * @param \tr33m4n\OauthGoogleMail\Model\GetGoogleClient $getGoogleClient
+     * @param \tr33m4n\OauthGmail\Model\GetGoogleClient $getGoogleClient
      */
     public function __construct(
         GetGoogleClient $getGoogleClient

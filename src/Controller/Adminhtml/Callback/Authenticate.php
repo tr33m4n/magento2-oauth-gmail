@@ -1,26 +1,26 @@
 <?php
 
-namespace tr33m4n\OauthGoogleMail\Controller\Adminhtml\Callback;
+namespace tr33m4n\OauthGmail\Controller\Adminhtml\Callback;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\App\Action\HttpGetActionInterface;
 use Magento\Framework\App\ResponseInterface;
-use tr33m4n\OauthGoogleMail\Exception\AccessTokenException;
-use tr33m4n\OauthGoogleMail\Model\GetGoogleClient;
-use tr33m4n\OauthGoogleMail\Model\SaveAccessToken;
+use tr33m4n\OauthGmail\Exception\AccessTokenException;
+use tr33m4n\OauthGmail\Model\GetGoogleClient;
+use tr33m4n\OauthGmail\Model\SaveAccessToken;
 
 /**
  * Class Authenticate
  *
- * @package tr33m4n\OauthGoogleMail\Controller\Adminhtml\Callback
+ * @package tr33m4n\OauthGmail\Controller\Adminhtml\Callback
  */
 class Authenticate extends Action implements HttpGetActionInterface
 {
     /**
      * @inheritDoc
      */
-    const ADMIN_RESOURCE = 'tr33m4n_OauthGoogleMail::oauth';
+    const ADMIN_RESOURCE = 'tr33m4n_OauthGmail::oauth';
 
     /**
      * @inheritDoc
@@ -30,12 +30,12 @@ class Authenticate extends Action implements HttpGetActionInterface
     ];
 
     /**
-     * @var \tr33m4n\OauthGoogleMail\Model\GetGoogleClient
+     * @var \tr33m4n\OauthGmail\Model\GetGoogleClient
      */
     private $getGoogleClient;
 
     /**
-     * @var \tr33m4n\OauthGoogleMail\Model\SaveAccessToken
+     * @var \tr33m4n\OauthGmail\Model\SaveAccessToken
      */
     private $saveAccessToken;
 
@@ -43,8 +43,8 @@ class Authenticate extends Action implements HttpGetActionInterface
      * Authenticate constructor.
      *
      * @param \Magento\Backend\App\Action\Context            $context
-     * @param \tr33m4n\OauthGoogleMail\Model\GetGoogleClient $getGoogleClient
-     * @param \tr33m4n\OauthGoogleMail\Model\SaveAccessToken $saveAccessToken
+     * @param \tr33m4n\OauthGmail\Model\GetGoogleClient $getGoogleClient
+     * @param \tr33m4n\OauthGmail\Model\SaveAccessToken $saveAccessToken
      */
     public function __construct(
         Context $context,

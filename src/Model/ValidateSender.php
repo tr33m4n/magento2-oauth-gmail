@@ -1,15 +1,15 @@
 <?php
 
-namespace tr33m4n\OauthGoogleMail\Model;
+namespace tr33m4n\OauthGmail\Model;
 
 use Google\Exception;
 use Magento\Framework\Mail\EmailMessage;
-use tr33m4n\OauthGoogleMail\Exception\SenderVerificationException;
+use tr33m4n\OauthGmail\Exception\SenderVerificationException;
 
 /**
  * Class ValidateSender
  *
- * @package tr33m4n\OauthGoogleMail\Model
+ * @package tr33m4n\OauthGmail\Model
  */
 class ValidateSender
 {
@@ -18,14 +18,14 @@ class ValidateSender
     const PENDING_STATUS = 'PENDING';
 
     /**
-     * @var \tr33m4n\OauthGoogleMail\Model\GetGmailService
+     * @var \tr33m4n\OauthGmail\Model\GetGmailService
      */
     private $getGmailService;
 
     /**
      * ValidateSender constructor.
      *
-     * @param \tr33m4n\OauthGoogleMail\Model\GetGmailService $getGmailService
+     * @param \tr33m4n\OauthGmail\Model\GetGmailService $getGmailService
      */
     public function __construct(
         GetGmailService $getGmailService
@@ -37,7 +37,7 @@ class ValidateSender
      * Validate sender credentials with Google
      *
      * @throws \Google\Exception
-     * @throws \tr33m4n\OauthGoogleMail\Exception\SenderVerificationException
+     * @throws \tr33m4n\OauthGmail\Exception\SenderVerificationException
      * @param \Magento\Framework\Mail\EmailMessage $emailMessage
      */
     public function execute(EmailMessage $emailMessage) : void

@@ -1,6 +1,6 @@
 <?php
 
-namespace tr33m4n\OauthGoogleMail\Model;
+namespace tr33m4n\OauthGmail\Model;
 
 use Exception;
 use Google_Service_Gmail_Message;
@@ -12,17 +12,17 @@ use Magento\Framework\Phrase;
 /**
  * Class Transport
  *
- * @package tr33m4n\OauthGoogleMail\Model
+ * @package tr33m4n\OauthGmail\Model
  */
 class Transport implements TransportInterface
 {
     /**
-     * @var \tr33m4n\OauthGoogleMail\Model\ValidateSender
+     * @var \tr33m4n\OauthGmail\Model\ValidateSender
      */
     private $validateSender;
 
     /**
-     * @var \tr33m4n\OauthGoogleMail\Model\GetGmailService
+     * @var \tr33m4n\OauthGmail\Model\GetGmailService
      */
     private $getGmailService;
 
@@ -34,8 +34,8 @@ class Transport implements TransportInterface
     /**
      * Transport constructor.
      *
-     * @param \tr33m4n\OauthGoogleMail\Model\ValidateSender  $validateSender
-     * @param \tr33m4n\OauthGoogleMail\Model\GetGmailService $getGmailService
+     * @param \tr33m4n\OauthGmail\Model\ValidateSender  $validateSender
+     * @param \tr33m4n\OauthGmail\Model\GetGmailService $getGmailService
      * @param \Magento\Framework\Mail\MessageInterface       $message
      */
     public function __construct(
