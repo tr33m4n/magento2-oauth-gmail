@@ -59,6 +59,8 @@ class GetGoogleClient
         $client->setAccessType('offline');
         $client->setApprovalPrompt('force');
         $client->addScope(Google_Service_Gmail::GMAIL_COMPOSE);
+        $client->addScope(Google_Service_Gmail::GMAIL_SEND);
+        $client->addScope(Google_Service_Gmail::GMAIL_READONLY);
 
         return $this->configuredClient = $this->configureAccessToken->execute($client);
     }

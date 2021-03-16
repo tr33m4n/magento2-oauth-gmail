@@ -8,6 +8,7 @@ use Magento\Backend\App\Area\FrontNameResolver;
 use Magento\Backend\Model\Auth\Session as AuthSession;
 use Magento\Framework\App\Action\HttpGetActionInterface;
 use Magento\Framework\App\ResponseInterface;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Mail\Template\TransportBuilder;
 use Magento\Store\Model\Store;
 
@@ -72,11 +73,16 @@ class Test extends Action implements HttpGetActionInterface
             ->setTemplateVars([]);
 
         $transport = $this->transportBuilder->getTransport();
-        $transport->sendMessage();
 
-        $this->messageManager->addSuccessMessage(
-            __('Successfully sent a test email to the address associated with this account!')
-        );
+        try {
+            $transport->sendMessage();
+
+            $this->messageManager->addSuccessMessage(
+                __('Successfully sent a test email to the address associated with this account!')
+            );
+        } catch (LocalizedException $exception) {
+            $this->messageManager->addErrorMessage(__('Test email failed to send: %1', $exception->getMessage()));
+        }
 
         return $this->_redirect('adminhtml/system_config/edit', ['section' => 'system']);
     }

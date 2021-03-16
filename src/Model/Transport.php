@@ -51,21 +51,25 @@ class Transport implements TransportInterface
     /**
      * {@inheritdoc}
      *
-     * @throws \Google\Exception
      * @throws \Magento\Framework\Exception\MailException
-     * @throws \tr33m4n\GoogleOauthMail\Exception\SenderVerificationException
      */
     public function sendMessage()
     {
-        /** @var \Magento\Framework\Mail\EmailMessage $message */
-        $message = $this->message;
-        $this->validateSender->execute($message);
+        /** @var \Magento\Framework\Mail\EmailMessage $emailMessage */
+        $emailMessage = $this->getMessage();
 
         try {
-            $googleMessage = new Google_Service_Gmail_Message();
-            $googleMessage->setRaw(strtr(base64_encode($message->toString()), ['+' => '-', '/' => '_']));
+            $this->validateSender->execute($emailMessage);
 
-            $this->getGmailService->execute()->users_messages->send('me', $googleMessage);
+            $googleMessage = new Google_Service_Gmail_Message();
+            // TODO: Elegantly handle message conversion
+            $googleMessage->setRaw(strtr(base64_encode($emailMessage->getRawMessage()), ['+' => '-', '/' => '_']));
+
+            $this->getGmailService->execute()
+                ->users_messages->send(
+                    current($emailMessage->getFrom())->getEmail(),
+                    $googleMessage
+                );
         } catch (Exception $exception) {
             throw new MailException(new Phrase($exception->getMessage()), $exception);
         }
