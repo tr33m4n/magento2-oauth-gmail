@@ -6,7 +6,6 @@ use Magento\Framework\Api\DataObjectHelper;
 use Magento\Framework\Serialize\SerializerInterface;
 use tr33m4n\GoogleOauthMail\Api\Data\TokenInterface;
 use tr33m4n\GoogleOauthMail\Api\Data\TokenInterfaceFactory;
-use tr33m4n\GoogleOauthMail\Exception\AccessTokenException;
 use tr33m4n\GoogleOauthMail\Model\ResourceModel\Token as TokenResource;
 
 /**

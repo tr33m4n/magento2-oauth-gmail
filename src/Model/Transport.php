@@ -4,49 +4,68 @@ namespace tr33m4n\GoogleOauthMail\Model;
 
 use Exception;
 use Google_Service_Gmail_Message;
-use Google_Service_Gmail_SendAs;
 use Magento\Framework\Exception\MailException;
 use Magento\Framework\Mail\MessageInterface;
 use Magento\Framework\Mail\TransportInterface;
 use Magento\Framework\Phrase;
 
+/**
+ * Class Transport
+ *
+ * @package tr33m4n\GoogleOauthMail\Model
+ */
 class Transport implements TransportInterface
 {
+    /**
+     * @var \tr33m4n\GoogleOauthMail\Model\ValidateSender
+     */
+    private $validateSender;
+
+    /**
+     * @var \tr33m4n\GoogleOauthMail\Model\GetGmailService
+     */
     private $getGmailService;
 
+    /**
+     * @var \Magento\Framework\Mail\MessageInterface
+     */
     private $message;
 
+    /**
+     * Transport constructor.
+     *
+     * @param \tr33m4n\GoogleOauthMail\Model\ValidateSender  $validateSender
+     * @param \tr33m4n\GoogleOauthMail\Model\GetGmailService $getGmailService
+     * @param \Magento\Framework\Mail\MessageInterface       $message
+     */
     public function __construct(
+        ValidateSender $validateSender,
         GetGmailService $getGmailService,
         MessageInterface $message
     ) {
+        $this->validateSender = $validateSender;
         $this->getGmailService = $getGmailService;
         $this->message = $message;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
+     *
+     * @throws \Google\Exception
+     * @throws \Magento\Framework\Exception\MailException
+     * @throws \tr33m4n\GoogleOauthMail\Exception\SenderVerificationException
      */
     public function sendMessage()
     {
+        /** @var \Magento\Framework\Mail\EmailMessage $message */
+        $message = $this->message;
+        $this->validateSender->execute($message);
+
         try {
-            $sendAs = new Google_Service_Gmail_SendAs();
-            $sendAs->setSendAsEmail('tr33m4n@googlemail.com');
-            $sendAs->setDisplayName('Testing Daniel');
-            $sendAs->setTreatAsAlias(true);
+            $googleMessage = new Google_Service_Gmail_Message();
+            $googleMessage->setRaw(strtr(base64_encode($message->toString()), ['+' => '-', '/' => '_']));
 
-            $this->getGmailService->execute()->users_settings_sendAs->create(
-                'me',
-                $sendAs
-            );
-
-            $message = new Google_Service_Gmail_Message();
-            $message->setRaw(strtr(base64_encode($this->message->toString()), ['+' => '-', '/' => '_']));
-
-            $this->getGmailService->execute()->users_messages->send(
-                'me',
-                $message
-            );
+            $this->getGmailService->execute()->users_messages->send('me', $googleMessage);
         } catch (Exception $exception) {
             throw new MailException(new Phrase($exception->getMessage()), $exception);
         }

@@ -2,10 +2,8 @@
 
 namespace tr33m4n\GoogleOauthMail\Model;
 
-use Exception;
 use Google\Client;
 use Google_Service_Gmail;
-use Magento\Framework\App\Config\ScopeConfigInterface;
 
 /**
  * Class GetGoogleClient
@@ -15,19 +13,14 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 class GetGoogleClient
 {
     /**
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface
-     */
-    private $scopeConfig;
-
-    /**
      * @var \tr33m4n\GoogleOauthMail\Model\GetAuthConfig
      */
     private $getAuthConfig;
 
     /**
-     * @var \tr33m4n\GoogleOauthMail\Model\GetLatestAccessToken
+     * @var \tr33m4n\GoogleOauthMail\Model\ConfigureAccessToken
      */
-    private $getLatestAccessToken;
+    private $configureAccessToken;
 
     /**
      * @var \Google\Client|null
@@ -37,18 +30,15 @@ class GetGoogleClient
     /**
      * GetGoogleClient constructor.
      *
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface  $scopeConfig
      * @param \tr33m4n\GoogleOauthMail\Model\GetAuthConfig        $getAuthConfig
-     * @param \tr33m4n\GoogleOauthMail\Model\GetLatestAccessToken $getLatestAccessToken
+     * @param \tr33m4n\GoogleOauthMail\Model\ConfigureAccessToken $configureAccessToken
      */
     public function __construct(
-        ScopeConfigInterface $scopeConfig,
         GetAuthConfig $getAuthConfig,
-        GetLatestAccessToken $getLatestAccessToken
+        ConfigureAccessToken $configureAccessToken
     ) {
-        $this->scopeConfig = $scopeConfig;
         $this->getAuthConfig = $getAuthConfig;
-        $this->getLatestAccessToken = $getLatestAccessToken;
+        $this->configureAccessToken = $configureAccessToken;
     }
 
     /**
@@ -70,24 +60,6 @@ class GetGoogleClient
         $client->setApprovalPrompt('force');
         $client->addScope(Google_Service_Gmail::GMAIL_COMPOSE);
 
-        /** @var \tr33m4n\GoogleOauthMail\Model\Token $accessToken */
-        if ($accessToken = $this->getLatestAccessToken->execute()) {
-            $client->setAccessToken($accessToken->getData());
-
-            // TODO: Refactor refresh handling
-            if ($client->isAccessTokenExpired()) {
-                if ($client->getRefreshToken()) {
-                    $credentials = $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
-
-                    if (array_key_exists('error', $credentials)) {
-                        throw new Exception('TODO');
-                    }
-                } else {
-                    throw new Exception('TODO');
-                }
-            }
-        }
-
-        return $this->configuredClient = $client;
+        return $this->configuredClient = $this->configureAccessToken->execute($client);
     }
 }

@@ -6,6 +6,7 @@ use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\App\Action\HttpGetActionInterface;
 use Magento\Framework\App\ResponseInterface;
+use tr33m4n\GoogleOauthMail\Exception\AccessTokenException;
 use tr33m4n\GoogleOauthMail\Model\GetGoogleClient;
 use tr33m4n\GoogleOauthMail\Model\SaveAccessToken;
 
@@ -61,22 +62,21 @@ class Authenticate extends Action implements HttpGetActionInterface
      *
      * @throws \Google\Exception
      * @throws \Magento\Framework\Exception\AlreadyExistsException
-     * @throws \tr33m4n\GoogleOauthMail\Exception\AccessTokenException
      * @return \Magento\Framework\App\ResponseInterface
      */
     public function execute() : ResponseInterface
     {
-        $client = $this->getGoogleClient->execute();
-        $credentials = $client->fetchAccessTokenWithAuthCode($this->getRequest()->getParam('code'));
+        $credentials = $this->getGoogleClient->execute()
+            ->fetchAccessTokenWithAuthCode($this->getRequest()->getParam('code'));
 
-        // TODO: Refactor and handle credential errors properly
-        if (array_key_exists('error', $credentials)) {
-            $this->messageManager->addErrorMessage(__('Something went wrong: %1', json_encode($credentials)));
+        try {
+            $this->saveAccessToken->execute($credentials);
+        } catch (AccessTokenException $exception) {
+            $this->messageManager->addErrorMessage($exception->getMessage());
 
             return $this->_redirect('adminhtml/system_config/edit', ['section' => 'system']);
         }
 
-        $this->saveAccessToken->execute($client->getAccessToken());
         $this->messageManager->addSuccessMessage(__('Successfully authenticated with Google!'));
 
         return $this->_redirect('adminhtml/system_config/edit', ['section' => 'system']);
