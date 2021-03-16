@@ -1,15 +1,15 @@
 <?php
 
-namespace tr33m4n\GoogleOauthMail\Model;
+namespace tr33m4n\OauthGoogleMail\Model;
 
 use Google\Exception;
 use Magento\Framework\Mail\EmailMessage;
-use tr33m4n\GoogleOauthMail\Exception\SenderVerificationException;
+use tr33m4n\OauthGoogleMail\Exception\SenderVerificationException;
 
 /**
  * Class ValidateSender
  *
- * @package tr33m4n\GoogleOauthMail\Model
+ * @package tr33m4n\OauthGoogleMail\Model
  */
 class ValidateSender
 {
@@ -18,14 +18,14 @@ class ValidateSender
     const PENDING_STATUS = 'PENDING';
 
     /**
-     * @var \tr33m4n\GoogleOauthMail\Model\GetGmailService
+     * @var \tr33m4n\OauthGoogleMail\Model\GetGmailService
      */
     private $getGmailService;
 
     /**
      * ValidateSender constructor.
      *
-     * @param \tr33m4n\GoogleOauthMail\Model\GetGmailService $getGmailService
+     * @param \tr33m4n\OauthGoogleMail\Model\GetGmailService $getGmailService
      */
     public function __construct(
         GetGmailService $getGmailService
@@ -37,7 +37,7 @@ class ValidateSender
      * Validate sender credentials with Google
      *
      * @throws \Google\Exception
-     * @throws \tr33m4n\GoogleOauthMail\Exception\SenderVerificationException
+     * @throws \tr33m4n\OauthGoogleMail\Exception\SenderVerificationException
      * @param \Magento\Framework\Mail\EmailMessage $emailMessage
      */
     public function execute(EmailMessage $emailMessage) : void
@@ -53,7 +53,8 @@ class ValidateSender
                         'The email address %1 has not been configured: %2',
                         $address->getEmail(),
                         $exception->getMessage()
-                    )
+                    ),
+                    $exception
                 );
             }
 

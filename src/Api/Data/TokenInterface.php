@@ -1,11 +1,11 @@
 <?php
 
-namespace tr33m4n\GoogleOauthMail\Api\Data;
+namespace tr33m4n\OauthGoogleMail\Api\Data;
 
 /**
  * Interface TokenInterface
  *
- * @package tr33m4n\GoogleOauthMail\Api\Data
+ * @package tr33m4n\OauthGoogleMail\Api\Data
  */
 interface TokenInterface
 {
@@ -32,7 +32,7 @@ interface TokenInterface
      * Set access token
      *
      * @param string $accessToken
-     * @return \tr33m4n\GoogleOauthMail\Api\Data\TokenInterface
+     * @return \tr33m4n\OauthGoogleMail\Api\Data\TokenInterface
      */
     public function setAccessToken(string $accessToken) : TokenInterface;
 
@@ -47,7 +47,7 @@ interface TokenInterface
      * Set refresh token
      *
      * @param string $refreshToken
-     * @return \tr33m4n\GoogleOauthMail\Api\Data\TokenInterface
+     * @return \tr33m4n\OauthGoogleMail\Api\Data\TokenInterface
      */
     public function setRefreshToken(string $refreshToken) : TokenInterface;
 
@@ -62,7 +62,7 @@ interface TokenInterface
      * Set token type
      *
      * @param string $tokenType
-     * @return \tr33m4n\GoogleOauthMail\Api\Data\TokenInterface
+     * @return \tr33m4n\OauthGoogleMail\Api\Data\TokenInterface
      */
     public function setTokenType(string $tokenType) : TokenInterface;
 
@@ -77,7 +77,7 @@ interface TokenInterface
      * Set scope
      *
      * @param string $scope
-     * @return \tr33m4n\GoogleOauthMail\Api\Data\TokenInterface
+     * @return \tr33m4n\OauthGoogleMail\Api\Data\TokenInterface
      */
     public function setScope(string $scope) : TokenInterface;
 
@@ -92,7 +92,7 @@ interface TokenInterface
      * Set expires in
      *
      * @param int $expiresIn
-     * @return \tr33m4n\GoogleOauthMail\Api\Data\TokenInterface
+     * @return \tr33m4n\OauthGoogleMail\Api\Data\TokenInterface
      */
     public function setExpiresIn(int $expiresIn) : TokenInterface;
 
@@ -107,7 +107,7 @@ interface TokenInterface
      * Set created
      *
      * @param int $created
-     * @return \tr33m4n\GoogleOauthMail\Api\Data\TokenInterface
+     * @return \tr33m4n\OauthGoogleMail\Api\Data\TokenInterface
      */
     public function setCreated(int $created) : TokenInterface;
 }

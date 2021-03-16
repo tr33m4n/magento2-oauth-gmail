@@ -3,7 +3,7 @@
         xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
     <router id="admin">
         <route id="oauthgmail" frontName="oauthgmail">
-            <module name="tr33m4n_GoogleOauthMail"/>
+            <module name="tr33m4n_OauthGoogleMail"/>
         </route>
     </router>
 </config>

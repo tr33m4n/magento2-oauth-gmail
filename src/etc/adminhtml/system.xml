@@ -17,10 +17,10 @@
                     <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
                 </field>
                 <field id="authenticate" sortOrder="3" showInDefault="1" showInWebsite="0" showInStore="0">
-                    <frontend_model>tr33m4n\GoogleOauthMail\Block\Adminhtml\System\Config\Authenticate</frontend_model>
+                    <frontend_model>tr33m4n\OauthGoogleMail\Block\Adminhtml\System\Config\Authenticate</frontend_model>
                 </field>
                 <field id="send_test" sortOrder="3" showInDefault="1" showInWebsite="0" showInStore="0">
-                    <frontend_model>tr33m4n\GoogleOauthMail\Block\Adminhtml\System\Config\SendTest</frontend_model>
+                    <frontend_model>tr33m4n\OauthGoogleMail\Block\Adminhtml\System\Config\SendTest</frontend_model>
                 </field>
             </group>
         </section>

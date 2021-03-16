@@ -1,29 +1,29 @@
 <?php
 
-namespace tr33m4n\GoogleOauthMail\Block\Adminhtml\System\Config;
+namespace tr33m4n\OauthGoogleMail\Block\Adminhtml\System\Config;
 
 use InvalidArgumentException;
 use Magento\Backend\Block\Template\Context;
 use Magento\Framework\Data\Form\Element\AbstractElement;
 use Magento\Framework\View\Helper\SecureHtmlRenderer;
-use tr33m4n\GoogleOauthMail\Model\GetGoogleClient;
+use tr33m4n\OauthGoogleMail\Model\GetGoogleClient;
 
 /**
  * Class Authenticate
  *
- * @package tr33m4n\GoogleOauthMail\Block\Adminhtml\System\Config
+ * @package tr33m4n\OauthGoogleMail\Block\Adminhtml\System\Config
  */
 class Authenticate extends AbstractButton
 {
     /**
-     * @var \tr33m4n\GoogleOauthMail\Model\GetGoogleClient
+     * @var \tr33m4n\OauthGoogleMail\Model\GetGoogleClient
      */
     private $getGoogleClient;
 
     /**
      * Authenticate constructor.
      *
-     * @param \tr33m4n\GoogleOauthMail\Model\GetGoogleClient         $getGoogleClient
+     * @param \tr33m4n\OauthGoogleMail\Model\GetGoogleClient         $getGoogleClient
      * @param \Magento\Backend\Block\Template\Context                $context
      * @param array                                                  $data
      * @param \Magento\Framework\View\Helper\SecureHtmlRenderer|null $secureRenderer

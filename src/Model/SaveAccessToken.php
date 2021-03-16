@@ -1,17 +1,17 @@
 <?php
 
-namespace tr33m4n\GoogleOauthMail\Model;
+namespace tr33m4n\OauthGoogleMail\Model;
 
 use Magento\Framework\Api\DataObjectHelper;
 use Magento\Framework\Serialize\SerializerInterface;
-use tr33m4n\GoogleOauthMail\Api\Data\TokenInterface;
-use tr33m4n\GoogleOauthMail\Api\Data\TokenInterfaceFactory;
-use tr33m4n\GoogleOauthMail\Model\ResourceModel\Token as TokenResource;
+use tr33m4n\OauthGoogleMail\Api\Data\TokenInterface;
+use tr33m4n\OauthGoogleMail\Api\Data\TokenInterfaceFactory;
+use tr33m4n\OauthGoogleMail\Model\ResourceModel\Token as TokenResource;
 
 /**
  * Class SaveAccessToken
  *
- * @package tr33m4n\GoogleOauthMail\Model
+ * @package tr33m4n\OauthGoogleMail\Model
  */
 class SaveAccessToken
 {
@@ -26,17 +26,17 @@ class SaveAccessToken
     private $serializer;
 
     /**
-     * @var \tr33m4n\GoogleOauthMail\Model\ValidateAccessToken
+     * @var \tr33m4n\OauthGoogleMail\Model\ValidateAccessToken
      */
     private $validateAccessToken;
 
     /**
-     * @var \tr33m4n\GoogleOauthMail\Api\Data\TokenInterfaceFactory
+     * @var \tr33m4n\OauthGoogleMail\Api\Data\TokenInterfaceFactory
      */
     private $tokenFactory;
 
     /**
-     * @var \tr33m4n\GoogleOauthMail\Model\ResourceModel\Token
+     * @var \tr33m4n\OauthGoogleMail\Model\ResourceModel\Token
      */
     private $tokenResource;
 
@@ -45,9 +45,9 @@ class SaveAccessToken
      *
      * @param \Magento\Framework\Api\DataObjectHelper                 $dataObjectHelper
      * @param \Magento\Framework\Serialize\SerializerInterface        $serializer
-     * @param \tr33m4n\GoogleOauthMail\Model\ValidateAccessToken      $validateAccessToken
-     * @param \tr33m4n\GoogleOauthMail\Api\Data\TokenInterfaceFactory $tokenFactory
-     * @param \tr33m4n\GoogleOauthMail\Model\ResourceModel\Token      $tokenResource
+     * @param \tr33m4n\OauthGoogleMail\Model\ValidateAccessToken      $validateAccessToken
+     * @param \tr33m4n\OauthGoogleMail\Api\Data\TokenInterfaceFactory $tokenFactory
+     * @param \tr33m4n\OauthGoogleMail\Model\ResourceModel\Token      $tokenResource
      */
     public function __construct(
         DataObjectHelper $dataObjectHelper,
@@ -67,14 +67,14 @@ class SaveAccessToken
      * Save access token
      *
      * @throws \Magento\Framework\Exception\AlreadyExistsException
-     * @throws \tr33m4n\GoogleOauthMail\Exception\AccessTokenException
+     * @throws \tr33m4n\OauthGoogleMail\Exception\AccessTokenException
      * @param array $accessToken
      */
     public function execute(array $accessToken) : void
     {
         $this->validateAccessToken->execute($accessToken);
 
-        /** @var \tr33m4n\GoogleOauthMail\Api\Data\TokenInterface $token */
+        /** @var \tr33m4n\OauthGoogleMail\Api\Data\TokenInterface $token */
         $token = $this->tokenFactory->create();
 
         $this->dataObjectHelper->populateWithArray(

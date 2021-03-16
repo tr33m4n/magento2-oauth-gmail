@@ -1,6 +1,6 @@
 <?php
 
-namespace tr33m4n\GoogleOauthMail\Model;
+namespace tr33m4n\OauthGoogleMail\Model;
 
 use Magento\Backend\Model\UrlInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
@@ -8,7 +8,7 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 /**
  * Class GetAuthConfig
  *
- * @package tr33m4n\GoogleOauthMail\Model
+ * @package tr33m4n\OauthGoogleMail\Model
  */
 class GetAuthConfig
 {

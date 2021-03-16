@@ -1,15 +1,15 @@
 <?php
 
-namespace tr33m4n\GoogleOauthMail\Model;
+namespace tr33m4n\OauthGoogleMail\Model;
 
 use Magento\Framework\Serialize\SerializerInterface;
-use tr33m4n\GoogleOauthMail\Api\Data\TokenInterface;
-use tr33m4n\GoogleOauthMail\Exception\AccessTokenException;
+use tr33m4n\OauthGoogleMail\Api\Data\TokenInterface;
+use tr33m4n\OauthGoogleMail\Exception\AccessTokenException;
 
 /**
  * Class ValidateAccessToken
  *
- * @package tr33m4n\GoogleOauthMail\Model
+ * @package tr33m4n\OauthGoogleMail\Model
  */
 class ValidateAccessToken
 {
@@ -43,7 +43,7 @@ class ValidateAccessToken
     /**
      * Validate access token
      *
-     * @throws \tr33m4n\GoogleOauthMail\Exception\AccessTokenException
+     * @throws \tr33m4n\OauthGoogleMail\Exception\AccessTokenException
      * @param array $accessToken
      */
     public function execute(array $accessToken) : void

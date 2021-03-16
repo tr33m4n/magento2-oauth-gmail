@@ -1,32 +1,32 @@
 <?php
 
-namespace tr33m4n\GoogleOauthMail\Model;
+namespace tr33m4n\OauthGoogleMail\Model;
 
 use Google\Client;
-use tr33m4n\GoogleOauthMail\Exception\AccessTokenException;
+use tr33m4n\OauthGoogleMail\Exception\AccessTokenException;
 
 /**
  * Class ConfigureAccessToken
  *
- * @package tr33m4n\GoogleOauthMail\Model
+ * @package tr33m4n\OauthGoogleMail\Model
  */
 class ConfigureAccessToken
 {
     /**
-     * @var \tr33m4n\GoogleOauthMail\Model\SaveAccessToken
+     * @var \tr33m4n\OauthGoogleMail\Model\SaveAccessToken
      */
     private $saveAccessToken;
 
     /**
-     * @var \tr33m4n\GoogleOauthMail\Model\GetLatestAccessToken
+     * @var \tr33m4n\OauthGoogleMail\Model\GetLatestAccessToken
      */
     private $getLatestAccessToken;
 
     /**
      * ConfigureAccessToken constructor.
      *
-     * @param \tr33m4n\GoogleOauthMail\Model\SaveAccessToken      $saveAccessToken
-     * @param \tr33m4n\GoogleOauthMail\Model\GetLatestAccessToken $getLatestAccessToken
+     * @param \tr33m4n\OauthGoogleMail\Model\SaveAccessToken      $saveAccessToken
+     * @param \tr33m4n\OauthGoogleMail\Model\GetLatestAccessToken $getLatestAccessToken
      */
     public function __construct(
         SaveAccessToken $saveAccessToken,
@@ -40,13 +40,13 @@ class ConfigureAccessToken
      * Configure access token
      *
      * @throws \Magento\Framework\Exception\AlreadyExistsException
-     * @throws \tr33m4n\GoogleOauthMail\Exception\AccessTokenException
+     * @throws \tr33m4n\OauthGoogleMail\Exception\AccessTokenException
      * @param \Google\Client $client
      * @return \Google\Client
      */
     public function execute(Client $client) : Client
     {
-        /** @var \tr33m4n\GoogleOauthMail\Model\Token $accessToken */
+        /** @var \tr33m4n\OauthGoogleMail\Model\Token $accessToken */
         $accessToken = $this->getLatestAccessToken->execute();
         if (!$accessToken) {
             return $client;

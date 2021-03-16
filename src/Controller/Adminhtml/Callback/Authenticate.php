@@ -1,26 +1,26 @@
 <?php
 
-namespace tr33m4n\GoogleOauthMail\Controller\Adminhtml\Callback;
+namespace tr33m4n\OauthGoogleMail\Controller\Adminhtml\Callback;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\App\Action\HttpGetActionInterface;
 use Magento\Framework\App\ResponseInterface;
-use tr33m4n\GoogleOauthMail\Exception\AccessTokenException;
-use tr33m4n\GoogleOauthMail\Model\GetGoogleClient;
-use tr33m4n\GoogleOauthMail\Model\SaveAccessToken;
+use tr33m4n\OauthGoogleMail\Exception\AccessTokenException;
+use tr33m4n\OauthGoogleMail\Model\GetGoogleClient;
+use tr33m4n\OauthGoogleMail\Model\SaveAccessToken;
 
 /**
  * Class Authenticate
  *
- * @package tr33m4n\GoogleOauthMail\Controller\Adminhtml\Callback
+ * @package tr33m4n\OauthGoogleMail\Controller\Adminhtml\Callback
  */
 class Authenticate extends Action implements HttpGetActionInterface
 {
     /**
      * @inheritDoc
      */
-    const ADMIN_RESOURCE = 'tr33m4n_GoogleOauthMail::oauth';
+    const ADMIN_RESOURCE = 'tr33m4n_OauthGoogleMail::oauth';
 
     /**
      * @inheritDoc
@@ -30,12 +30,12 @@ class Authenticate extends Action implements HttpGetActionInterface
     ];
 
     /**
-     * @var \tr33m4n\GoogleOauthMail\Model\GetGoogleClient
+     * @var \tr33m4n\OauthGoogleMail\Model\GetGoogleClient
      */
     private $getGoogleClient;
 
     /**
-     * @var \tr33m4n\GoogleOauthMail\Model\SaveAccessToken
+     * @var \tr33m4n\OauthGoogleMail\Model\SaveAccessToken
      */
     private $saveAccessToken;
 
@@ -43,8 +43,8 @@ class Authenticate extends Action implements HttpGetActionInterface
      * Authenticate constructor.
      *
      * @param \Magento\Backend\App\Action\Context            $context
-     * @param \tr33m4n\GoogleOauthMail\Model\GetGoogleClient $getGoogleClient
-     * @param \tr33m4n\GoogleOauthMail\Model\SaveAccessToken $saveAccessToken
+     * @param \tr33m4n\OauthGoogleMail\Model\GetGoogleClient $getGoogleClient
+     * @param \tr33m4n\OauthGoogleMail\Model\SaveAccessToken $saveAccessToken
      */
     public function __construct(
         Context $context,

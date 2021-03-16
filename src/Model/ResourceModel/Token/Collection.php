@@ -1,15 +1,15 @@
 <?php
 
-namespace tr33m4n\GoogleOauthMail\Model\ResourceModel\Token;
+namespace tr33m4n\OauthGoogleMail\Model\ResourceModel\Token;
 
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
-use tr33m4n\GoogleOauthMail\Model\Token;
-use tr33m4n\GoogleOauthMail\Model\ResourceModel\Token as TokenResource;
+use tr33m4n\OauthGoogleMail\Model\Token;
+use tr33m4n\OauthGoogleMail\Model\ResourceModel\Token as TokenResource;
 
 /**
  * Class Collection
  *
- * @package tr33m4n\GoogleOauthMail\Model\ResourceModel\Token
+ * @package tr33m4n\OauthGoogleMail\Model\ResourceModel\Token
  */
 class Collection extends AbstractCollection
 {

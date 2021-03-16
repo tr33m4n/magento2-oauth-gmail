@@ -1,6 +1,6 @@
 <?php
 
-namespace tr33m4n\GoogleOauthMail\Model;
+namespace tr33m4n\OauthGoogleMail\Model;
 
 use Magento\Framework\Data\Collection\AbstractDb;
 use Magento\Framework\Model\AbstractModel;
@@ -8,13 +8,13 @@ use Magento\Framework\Model\Context;
 use Magento\Framework\Model\ResourceModel\AbstractResource;
 use Magento\Framework\Registry;
 use Magento\Framework\Stdlib\DateTime\DateTime;
-use tr33m4n\GoogleOauthMail\Api\Data\TokenInterface;
-use tr33m4n\GoogleOauthMail\Model\ResourceModel\Token as TokenResource;
+use tr33m4n\OauthGoogleMail\Api\Data\TokenInterface;
+use tr33m4n\OauthGoogleMail\Model\ResourceModel\Token as TokenResource;
 
 /**
  * Class Token
  *
- * @package tr33m4n\GoogleOauthMail\Model
+ * @package tr33m4n\OauthGoogleMail\Model
  */
 class Token extends AbstractModel implements TokenInterface
 {

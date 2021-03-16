@@ -1,6 +1,6 @@
 <?php
 
-namespace tr33m4n\GoogleOauthMail\Model;
+namespace tr33m4n\OauthGoogleMail\Model;
 
 use Google\Client;
 use Google_Service_Gmail;
@@ -8,17 +8,17 @@ use Google_Service_Gmail;
 /**
  * Class GetGoogleClient
  *
- * @package tr33m4n\GoogleOauthMail\Model
+ * @package tr33m4n\OauthGoogleMail\Model
  */
 class GetGoogleClient
 {
     /**
-     * @var \tr33m4n\GoogleOauthMail\Model\GetAuthConfig
+     * @var \tr33m4n\OauthGoogleMail\Model\GetAuthConfig
      */
     private $getAuthConfig;
 
     /**
-     * @var \tr33m4n\GoogleOauthMail\Model\ConfigureAccessToken
+     * @var \tr33m4n\OauthGoogleMail\Model\ConfigureAccessToken
      */
     private $configureAccessToken;
 
@@ -30,8 +30,8 @@ class GetGoogleClient
     /**
      * GetGoogleClient constructor.
      *
-     * @param \tr33m4n\GoogleOauthMail\Model\GetAuthConfig        $getAuthConfig
-     * @param \tr33m4n\GoogleOauthMail\Model\ConfigureAccessToken $configureAccessToken
+     * @param \tr33m4n\OauthGoogleMail\Model\GetAuthConfig        $getAuthConfig
+     * @param \tr33m4n\OauthGoogleMail\Model\ConfigureAccessToken $configureAccessToken
      */
     public function __construct(
         GetAuthConfig $getAuthConfig,

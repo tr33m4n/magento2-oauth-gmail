@@ -1,6 +1,6 @@
 <?php
 
-namespace tr33m4n\GoogleOauthMail\Controller\Adminhtml\Email;
+namespace tr33m4n\OauthGoogleMail\Controller\Adminhtml\Email;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
@@ -15,14 +15,14 @@ use Magento\Store\Model\Store;
 /**
  * Class Test
  *
- * @package tr33m4n\GoogleOauthMail\Controller\Adminhtml\Email
+ * @package tr33m4n\OauthGoogleMail\Controller\Adminhtml\Email
  */
 class Test extends Action implements HttpGetActionInterface
 {
     /**
      * @inheritDoc
      */
-    const ADMIN_RESOURCE = 'tr33m4n_GoogleOauthMail::oauth';
+    const ADMIN_RESOURCE = 'tr33m4n_OauthGoogleMail::oauth';
 
     /**
      * @var \Magento\Backend\Model\Auth\Session
