@@ -13,7 +13,7 @@ use tr33m4n\OauthGmail\Model\Client\GetClient;
 class GetGmailService
 {
     /**
-     * @var \tr33m4n\OauthGmail\Model\GetGoogleClient
+     * @var \tr33m4n\OauthGmail\Model\Client\GetClient
      */
     private $getClient;
 
@@ -45,6 +45,6 @@ class GetGmailService
             return $this->gmailService;
         }
 
-        return $this->gmailService = new Google_Service_Gmail($this->getGoogleClient->execute());
+        return $this->gmailService = new Google_Service_Gmail($this->getClient->execute());
     }
 }
