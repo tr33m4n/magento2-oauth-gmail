@@ -1,8 +1,8 @@
 # magento2-oauth-gmail
-A simple way to send mail via Gmail using Oauth
+A simple way to send mail via the Gmail API with Oauth authentication
 
 ## This is alpha software!
-This module allows Magento to send emails through a Gmail account using Oauth credentials, rather than having to create/manage a real email account purely for the website to use Gmail's SMTP.
+This module allows Magento to send emails through the Gmail API using Oauth authentication, instead of SMTP.
 
 ## TODO
 - [ ] Add instructions/wiki for configuring the Oauth application within the Google Developer console

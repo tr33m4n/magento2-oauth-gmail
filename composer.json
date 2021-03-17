@@ -1,7 +1,7 @@
 {
     "name": "tr33m4n/magento2-oauth-gmail",
     "type": "magento2-module",
-    "description": "A simple way to send mail via Gmail using Oauth",
+    "description": "A simple way to send mail via the Gmail API with Oauth authentication",
     "license": "MIT",
     "authors": [
         {
