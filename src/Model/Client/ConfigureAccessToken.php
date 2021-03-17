@@ -1,14 +1,16 @@
 <?php
 
-namespace tr33m4n\OauthGmail\Model;
+namespace tr33m4n\OauthGmail\Model\Client;
 
 use Google\Client;
 use tr33m4n\OauthGmail\Exception\AccessTokenException;
+use tr33m4n\OauthGmail\Model\GetAccessToken;
+use tr33m4n\OauthGmail\Model\SaveAccessToken;
 
 /**
  * Class ConfigureAccessToken
  *
- * @package tr33m4n\OauthGmail\Model
+ * @package tr33m4n\OauthGmail\Model\Client
  */
 class ConfigureAccessToken
 {
@@ -18,22 +20,22 @@ class ConfigureAccessToken
     private $saveAccessToken;
 
     /**
-     * @var \tr33m4n\OauthGmail\Model\GetLatestAccessToken
+     * @var \tr33m4n\OauthGmail\Model\GetAccessToken
      */
-    private $getLatestAccessToken;
+    private $getAccessToken;
 
     /**
      * ConfigureAccessToken constructor.
      *
-     * @param \tr33m4n\OauthGmail\Model\SaveAccessToken      $saveAccessToken
-     * @param \tr33m4n\OauthGmail\Model\GetLatestAccessToken $getLatestAccessToken
+     * @param \tr33m4n\OauthGmail\Model\SaveAccessToken $saveAccessToken
+     * @param \tr33m4n\OauthGmail\Model\GetAccessToken  $getAccessToken
      */
     public function __construct(
         SaveAccessToken $saveAccessToken,
-        GetLatestAccessToken $getLatestAccessToken
+        GetAccessToken $getAccessToken
     ) {
         $this->saveAccessToken = $saveAccessToken;
-        $this->getLatestAccessToken = $getLatestAccessToken;
+        $this->getAccessToken = $getAccessToken;
     }
 
     /**
@@ -47,7 +49,7 @@ class ConfigureAccessToken
     public function execute(Client $client) : Client
     {
         /** @var \tr33m4n\OauthGmail\Model\Token $accessToken */
-        $accessToken = $this->getLatestAccessToken->execute();
+        $accessToken = $this->getAccessToken->execute();
         if (!$accessToken) {
             return $client;
         }

@@ -1,16 +1,17 @@
 <?php
 
-namespace tr33m4n\OauthGmail\Model;
+namespace tr33m4n\OauthGmail\Model\Client;
 
+use Google\Client;
 use Magento\Backend\Model\UrlInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 
 /**
- * Class GetAuthConfig
+ * Class ConfigureAuthConfig
  *
- * @package tr33m4n\OauthGmail\Model
+ * @package tr33m4n\OauthGmail\Model\Client
  */
-class GetAuthConfig
+class ConfigureAuthConfig
 {
     private const XML_CONFIG_CLIENT_ID_PATH = 'system/oauth_gmail/client_id';
 
@@ -27,7 +28,7 @@ class GetAuthConfig
     private $url;
 
     /**
-     * GetAuthConfig constructor.
+     * ConfigureAuthConfig constructor.
      *
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      * @param \Magento\Backend\Model\UrlInterface                $url
@@ -41,19 +42,23 @@ class GetAuthConfig
     }
 
     /**
-     * Get auth config
+     * Configure auth config
      *
-     * @return array
+     * @throws \Google\Exception
+     * @param \Google\Client $client
+     * @return \Google\Client
      */
-    public function execute() : array
+    public function execute(Client $client) : Client
     {
-        return [
+        $client->setAuthConfig([
             'client_id' => $this->scopeConfig->getValue(self::XML_CONFIG_CLIENT_ID_PATH),
             'client_secret' => $this->scopeConfig->getValue(self::XML_CONFIG_CLIENT_SECRET_PATH),
             'redirect_uris' => [
                 $this->getRedirectUrl()
             ]
-        ];
+        ]);
+
+        return $client;
     }
 
     /**

@@ -6,11 +6,11 @@ use tr33m4n\OauthGmail\Api\Data\TokenInterface;
 use tr33m4n\OauthGmail\Model\ResourceModel\Token\CollectionFactory;
 
 /**
- * Class GetLatestAccessToken
+ * Class GetAccessToken
  *
  * @package tr33m4n\OauthGmail\Model
  */
-class GetLatestAccessToken
+class GetAccessToken
 {
     /**
      * @var \tr33m4n\OauthGmail\Model\ResourceModel\Token\CollectionFactory
@@ -29,7 +29,7 @@ class GetLatestAccessToken
     }
 
     /**
-     * Get latest access token
+     * Get access token
      *
      * @return \tr33m4n\OauthGmail\Api\Data\TokenInterface|null
      */

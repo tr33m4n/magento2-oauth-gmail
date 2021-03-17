@@ -3,6 +3,7 @@
 namespace tr33m4n\OauthGmail\Model;
 
 use Google_Service_Gmail;
+use tr33m4n\OauthGmail\Model\Client\GetClient;
 
 /**
  * Class GetGmailService
@@ -14,17 +15,22 @@ class GetGmailService
     /**
      * @var \tr33m4n\OauthGmail\Model\GetGoogleClient
      */
-    private $getGoogleClient;
+    private $getClient;
+
+    /**
+     * @var Google_Service_Gmail|null
+     */
+    private $gmailService;
 
     /**
      * GetGmailService constructor.
      *
-     * @param \tr33m4n\OauthGmail\Model\GetGoogleClient $getGoogleClient
+     * @param \tr33m4n\OauthGmail\Model\Client\GetClient $getClient
      */
     public function __construct(
-        GetGoogleClient $getGoogleClient
+        GetClient $getClient
     ) {
-        $this->getGoogleClient = $getGoogleClient;
+        $this->getClient = $getClient;
     }
 
     /**
@@ -35,6 +41,10 @@ class GetGmailService
      */
     public function execute() : Google_Service_Gmail
     {
-        return new Google_Service_Gmail($this->getGoogleClient->execute());
+        if ($this->gmailService) {
+            return $this->gmailService;
+        }
+
+        return $this->gmailService = new Google_Service_Gmail($this->getGoogleClient->execute());
     }
 }
