@@ -6,7 +6,7 @@ use InvalidArgumentException;
 use Magento\Backend\Block\Template\Context;
 use Magento\Framework\Data\Form\Element\AbstractElement;
 use Magento\Framework\View\Helper\SecureHtmlRenderer;
-use tr33m4n\OauthGmail\Model\GetGoogleClient;
+use tr33m4n\OauthGmail\Model\Client\GetClient;
 
 /**
  * Class Authenticate
@@ -16,36 +16,40 @@ use tr33m4n\OauthGmail\Model\GetGoogleClient;
 class Authenticate extends AbstractButton
 {
     /**
-     * @var \tr33m4n\OauthGmail\Model\GetGoogleClient
+     * @var \tr33m4n\OauthGmail\Model\Client\GetClient
      */
-    private $getGoogleClient;
+    private $getClient;
 
     /**
      * Authenticate constructor.
      *
-     * @param \tr33m4n\OauthGmail\Model\GetGoogleClient              $getGoogleClient
+     * @param \tr33m4n\OauthGmail\Model\Client\GetClient             $getClient
      * @param \Magento\Backend\Block\Template\Context                $context
      * @param array                                                  $data
      * @param \Magento\Framework\View\Helper\SecureHtmlRenderer|null $secureRenderer
      */
     public function __construct(
-        GetGoogleClient $getGoogleClient,
+        GetClient $getClient,
         Context $context,
         array $data = [],
         ?SecureHtmlRenderer $secureRenderer = null
     ) {
-        $this->getGoogleClient = $getGoogleClient;
+        $this->getClient = $getClient;
 
         parent::__construct($context, $data, $secureRenderer);
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
+     *
+     * @throws \Google\Exception
+     * @param \Magento\Framework\Data\Form\Element\AbstractElement $element
+     * @return string
      */
     protected function _getElementHtml(AbstractElement $element) : string
     {
         try {
-            $buttonUrl = $this->getGoogleClient->execute()->createAuthUrl();
+            $buttonUrl = $this->getClient->execute()->createAuthUrl();
         } catch (InvalidArgumentException $exception) {
             $buttonUrl = null;
         }

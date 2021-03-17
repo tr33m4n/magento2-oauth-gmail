@@ -7,7 +7,7 @@ use Magento\Backend\App\Action\Context;
 use Magento\Framework\App\Action\HttpGetActionInterface;
 use Magento\Framework\App\ResponseInterface;
 use tr33m4n\OauthGmail\Exception\AccessTokenException;
-use tr33m4n\OauthGmail\Model\GetGoogleClient;
+use tr33m4n\OauthGmail\Model\Client\GetClient;
 use tr33m4n\OauthGmail\Model\SaveAccessToken;
 
 /**
@@ -30,9 +30,9 @@ class Authenticate extends Action implements HttpGetActionInterface
     ];
 
     /**
-     * @var \tr33m4n\OauthGmail\Model\GetGoogleClient
+     * @var \tr33m4n\OauthGmail\Model\Client\GetClient
      */
-    private $getGoogleClient;
+    private $getClient;
 
     /**
      * @var \tr33m4n\OauthGmail\Model\SaveAccessToken
@@ -42,16 +42,16 @@ class Authenticate extends Action implements HttpGetActionInterface
     /**
      * Authenticate constructor.
      *
-     * @param \Magento\Backend\App\Action\Context            $context
-     * @param \tr33m4n\OauthGmail\Model\GetGoogleClient $getGoogleClient
-     * @param \tr33m4n\OauthGmail\Model\SaveAccessToken $saveAccessToken
+     * @param \Magento\Backend\App\Action\Context        $context
+     * @param \tr33m4n\OauthGmail\Model\Client\GetClient $getClient
+     * @param \tr33m4n\OauthGmail\Model\SaveAccessToken  $saveAccessToken
      */
     public function __construct(
         Context $context,
-        GetGoogleClient $getGoogleClient,
+        GetClient $getClient,
         SaveAccessToken $saveAccessToken
     ) {
-        $this->getGoogleClient = $getGoogleClient;
+        $this->getClient = $getClient;
         $this->saveAccessToken = $saveAccessToken;
 
         parent::__construct($context);
@@ -66,7 +66,7 @@ class Authenticate extends Action implements HttpGetActionInterface
      */
     public function execute() : ResponseInterface
     {
-        $credentials = $this->getGoogleClient->execute()
+        $credentials = $this->getClient->execute()
             ->fetchAccessTokenWithAuthCode($this->getRequest()->getParam('code'));
 
         try {
