@@ -2,8 +2,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <section id="system" translate="label" type="text" sortOrder="300" showInDefault="1"
-                 showInWebsite="0" showInStore="0">
+        <section id="system">
             <group id="oauth_gmail" translate="label" type="text" sortOrder="1" showInDefault="1"
                    showInWebsite="0" showInStore="0">
                 <label>Oauth Gmail</label>
