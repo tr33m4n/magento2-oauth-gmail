@@ -64,11 +64,12 @@ class Transport implements TransportInterface
             // TODO: Elegantly handle message conversion
             $googleMessage->setRaw(strtr(base64_encode($emailMessage->getRawMessage()), ['+' => '-', '/' => '_']));
 
-            $this->getGmailService->execute()
-                ->users_messages->send(
-                    current($emailMessage->getFrom())->getEmail(),
-                    $googleMessage
-                );
+            $from = current((array) $emailMessage->getFrom());
+            if (!$from) {
+                throw new MailException(__('From field has not been specified'));
+            }
+
+            $this->getGmailService->execute()->users_messages->send($from->getEmail(), $googleMessage);
         } catch (Exception $exception) {
             throw new MailException(__($exception->getMessage()), $exception);
         }

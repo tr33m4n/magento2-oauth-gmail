@@ -3,7 +3,6 @@
 namespace tr33m4n\OauthGmail\Model;
 
 use Magento\Framework\Api\DataObjectHelper;
-use Magento\Framework\Serialize\SerializerInterface;
 use tr33m4n\OauthGmail\Api\Data\TokenInterface;
 use tr33m4n\OauthGmail\Api\Data\TokenInterfaceFactory;
 use tr33m4n\OauthGmail\Model\ResourceModel\Token as TokenResource;
@@ -19,11 +18,6 @@ class SaveAccessToken
      * @var \Magento\Framework\Api\DataObjectHelper
      */
     private $dataObjectHelper;
-
-    /**
-     * @var \Magento\Framework\Serialize\SerializerInterface
-     */
-    private $serializer;
 
     /**
      * @var \tr33m4n\OauthGmail\Model\ValidateAccessToken
@@ -51,13 +45,11 @@ class SaveAccessToken
      */
     public function __construct(
         DataObjectHelper $dataObjectHelper,
-        SerializerInterface $serializer,
         ValidateAccessToken $validateAccessToken,
         TokenInterfaceFactory $tokenFactory,
         TokenResource $tokenResource
     ) {
         $this->dataObjectHelper = $dataObjectHelper;
-        $this->serializer = $serializer;
         $this->validateAccessToken = $validateAccessToken;
         $this->tokenFactory = $tokenFactory;
         $this->tokenResource = $tokenResource;

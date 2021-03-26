@@ -9,6 +9,9 @@
             "email": "tr33m4n@googlemail.com"
         }
     ],
+    "config": {
+        "sort-packages": true
+    },
     "minimum-stability": "stable",
     "autoload": {
         "files": [
@@ -20,15 +23,29 @@
     },
     "require": {
         "php": "^7.3",
-        "google/apiclient": "^2.9",
-        "magento/framework": "^102||^103"
+        "magento/framework": "^103",
+        "google/apiclient": "^2.9"
     },
     "scripts": {
-        "post-update-cmd": "Google\\Task\\Composer::cleanup"
+        "post-update-cmd": "Google\\Task\\Composer::cleanup",
+        "lint": "vendor/bin/rector process && vendor/bin/php-cs-fixer fix --diff",
+        "test:lint": "vendor/bin/rector process --dry-run && vendor/bin/php-cs-fixer fix --dry-run --diff",
+        "test:types": "vendor/bin/phpstan analyse --no-interaction --no-progress",
+        "test": [
+            "@test:lint",
+            "@test:types"
+        ]
     },
     "extra": {
         "google/apiclient-services": [
             "Gmail"
         ]
+    },
+    "require-dev": {
+        "fooman/phpstan-magento2-magic-methods": "^0.7.1",
+        "friendsofphp/php-cs-fixer": "^2.18",
+        "magento/module-config": "^101.2",
+        "phpstan/phpstan": "^0.12.82",
+        "rector/rector": "^0.10.3"
     }
 }

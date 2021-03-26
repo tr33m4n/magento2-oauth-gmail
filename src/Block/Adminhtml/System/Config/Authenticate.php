@@ -25,7 +25,7 @@ class Authenticate extends AbstractButton
      *
      * @param \tr33m4n\OauthGmail\Model\Client\GetClient             $getClient
      * @param \Magento\Backend\Block\Template\Context                $context
-     * @param array                                                  $data
+     * @param array<mixed, mixed>                                    $data
      * @param \Magento\Framework\View\Helper\SecureHtmlRenderer|null $secureRenderer
      */
     public function __construct(

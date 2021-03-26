@@ -41,7 +41,7 @@ class GetGmailService
      */
     public function execute() : Google_Service_Gmail
     {
-        if ($this->gmailService) {
+        if ($this->gmailService !== null) {
             return $this->gmailService;
         }
 

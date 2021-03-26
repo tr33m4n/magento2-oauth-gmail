@@ -44,7 +44,7 @@ class ValidateAccessToken
      * Validate access token
      *
      * @throws \tr33m4n\OauthGmail\Exception\AccessTokenException
-     * @param array $accessToken
+     * @param array<string, mixed> $accessToken
      */
     public function execute(array $accessToken) : void
     {

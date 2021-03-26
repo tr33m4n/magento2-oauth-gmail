@@ -22,7 +22,7 @@ abstract class AbstractButton extends Field
      */
     public function render(AbstractElement $element) : string
     {
-        $element->unsScope()->unsCanUseWebsiteValue()->unsCanUseDefaultValue();
+        $element->unsetData('scope')->unsetData('can_use_website_value')->unsetData('can_use_default_value');
 
         return parent::render($element);
     }

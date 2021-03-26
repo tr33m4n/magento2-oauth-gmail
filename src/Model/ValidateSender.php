@@ -44,7 +44,7 @@ class ValidateSender
     {
         $gmailService = $this->getGmailService->execute();
 
-        foreach ($emailMessage->getFrom() as $address) {
+        foreach ((array) $emailMessage->getFrom() as $address) {
             try {
                 $result = $gmailService->users_settings_sendAs->get('me', $address->getEmail());
             } catch (Exception $exception) {

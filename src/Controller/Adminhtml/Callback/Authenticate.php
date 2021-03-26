@@ -23,7 +23,9 @@ class Authenticate extends Action implements HttpGetActionInterface
     const ADMIN_RESOURCE = 'tr33m4n_OauthGmail::oauth';
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
+     *
+     * @var string[]
      */
     protected $_publicActions = [
         'authenticate'

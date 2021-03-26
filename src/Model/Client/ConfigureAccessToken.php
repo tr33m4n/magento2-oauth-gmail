@@ -48,9 +48,9 @@ class ConfigureAccessToken
      */
     public function execute(Client $client) : Client
     {
-        /** @var \tr33m4n\OauthGmail\Model\Token $accessToken */
+        /** @var \tr33m4n\OauthGmail\Model\Token|null $accessToken */
         $accessToken = $this->getAccessToken->execute();
-        if (!$accessToken) {
+        if ($accessToken === null) {
             return $client;
         }
 

@@ -66,7 +66,7 @@ class GetClient
      */
     public function execute() : Client
     {
-        if ($this->configuredClient) {
+        if ($this->configuredClient !== null) {
             return $this->configuredClient;
         }
 
