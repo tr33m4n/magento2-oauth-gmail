@@ -2,7 +2,7 @@
 
 namespace tr33m4n\OauthGmail\Block\Adminhtml\System\Config;
 
-use InvalidArgumentException;
+use Exception;
 use Magento\Backend\Block\Template\Context;
 use Magento\Framework\Data\Form\Element\AbstractElement;
 use Magento\Framework\View\Helper\SecureHtmlRenderer;
@@ -21,6 +21,11 @@ class Authenticate extends AbstractButton
     private $getClient;
 
     /**
+     * @var \Magento\Backend\Block\Template\Context
+     */
+    private $context;
+
+    /**
      * Authenticate constructor.
      *
      * @param \tr33m4n\OauthGmail\Model\Client\GetClient             $getClient
@@ -35,6 +40,7 @@ class Authenticate extends AbstractButton
         ?SecureHtmlRenderer $secureRenderer = null
     ) {
         $this->getClient = $getClient;
+        $this->context = $context;
 
         parent::__construct($context, $data, $secureRenderer);
     }
@@ -42,7 +48,6 @@ class Authenticate extends AbstractButton
     /**
      * {@inheritdoc}
      *
-     * @throws \Google\Exception
      * @param \Magento\Framework\Data\Form\Element\AbstractElement $element
      * @return string
      */
@@ -50,7 +55,9 @@ class Authenticate extends AbstractButton
     {
         try {
             $buttonUrl = $this->getClient->execute()->createAuthUrl();
-        } catch (InvalidArgumentException $exception) {
+        } catch (Exception $exception) {
+            $this->context->getLogger()->error($exception);
+
             $buttonUrl = null;
         }
 

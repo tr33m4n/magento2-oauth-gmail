@@ -37,8 +37,7 @@ class SaveAccessToken
     /**
      * SaveAccessToken constructor.
      *
-     * @param \Magento\Framework\Api\DataObjectHelper                 $dataObjectHelper
-     * @param \Magento\Framework\Serialize\SerializerInterface        $serializer
+     * @param \Magento\Framework\Api\DataObjectHelper            $dataObjectHelper
      * @param \tr33m4n\OauthGmail\Model\ValidateAccessToken      $validateAccessToken
      * @param \tr33m4n\OauthGmail\Api\Data\TokenInterfaceFactory $tokenFactory
      * @param \tr33m4n\OauthGmail\Model\ResourceModel\Token      $tokenResource
