@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace tr33m4n\OauthGmail\Model;
 
@@ -6,21 +7,13 @@ use Google\Exception;
 use Magento\Framework\Mail\EmailMessage;
 use tr33m4n\OauthGmail\Exception\SenderVerificationException;
 
-/**
- * Class ValidateSender
- *
- * @package tr33m4n\OauthGmail\Model
- */
 class ValidateSender
 {
     const UNSPECIFIED_STATUS = 'VERIFICATION_STATUS_UNSPECIFIED';
 
     const PENDING_STATUS = 'PENDING';
 
-    /**
-     * @var \tr33m4n\OauthGmail\Model\GetGmailService
-     */
-    private $getGmailService;
+    private GetGmailService $getGmailService;
 
     /**
      * ValidateSender constructor.

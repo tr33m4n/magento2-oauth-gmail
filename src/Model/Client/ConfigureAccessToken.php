@@ -1,41 +1,44 @@
 <?php
+declare(strict_types=1);
 
 namespace tr33m4n\OauthGmail\Model\Client;
 
 use Google\Client;
+use tr33m4n\OauthGmail\Api\Data\TokenInterface;
 use tr33m4n\OauthGmail\Exception\AccessTokenException;
 use tr33m4n\OauthGmail\Model\GetAccessToken;
 use tr33m4n\OauthGmail\Model\SaveAccessToken;
+use tr33m4n\OauthGmail\Model\ValidateAccessToken;
+use Psr\Log\LoggerInterface;
 
-/**
- * Class ConfigureAccessToken
- *
- * @package tr33m4n\OauthGmail\Model\Client
- */
 class ConfigureAccessToken
 {
-    /**
-     * @var \tr33m4n\OauthGmail\Model\SaveAccessToken
-     */
-    private $saveAccessToken;
+    private SaveAccessToken $saveAccessToken;
 
-    /**
-     * @var \tr33m4n\OauthGmail\Model\GetAccessToken
-     */
-    private $getAccessToken;
+    private GetAccessToken $getAccessToken;
+
+    private ValidateAccessToken $validateAccessToken;
+
+    private LoggerInterface $logger;
 
     /**
      * ConfigureAccessToken constructor.
      *
-     * @param \tr33m4n\OauthGmail\Model\SaveAccessToken $saveAccessToken
-     * @param \tr33m4n\OauthGmail\Model\GetAccessToken  $getAccessToken
+     * @param \tr33m4n\OauthGmail\Model\SaveAccessToken     $saveAccessToken
+     * @param \tr33m4n\OauthGmail\Model\GetAccessToken      $getAccessToken
+     * @param \tr33m4n\OauthGmail\Model\ValidateAccessToken $validateAccessToken
+     * @param \Psr\Log\LoggerInterface                      $logger
      */
     public function __construct(
         SaveAccessToken $saveAccessToken,
-        GetAccessToken $getAccessToken
+        GetAccessToken $getAccessToken,
+        ValidateAccessToken $validateAccessToken,
+        LoggerInterface $logger
     ) {
         $this->saveAccessToken = $saveAccessToken;
         $this->getAccessToken = $getAccessToken;
+        $this->validateAccessToken = $validateAccessToken;
+        $this->logger = $logger;
     }
 
     /**
@@ -50,11 +53,11 @@ class ConfigureAccessToken
     {
         /** @var \tr33m4n\OauthGmail\Model\Token|null $accessToken */
         $accessToken = $this->getAccessToken->execute();
-        if ($accessToken === null) {
+        if (!$accessToken instanceof TokenInterface) {
             return $client;
         }
 
-        $client->setAccessToken($accessToken->getData());
+        $client->setAccessToken($accessToken->toArray());
         if (!$client->isAccessTokenExpired()) {
             return $client;
         }
@@ -65,9 +68,17 @@ class ConfigureAccessToken
             );
         }
 
-        $this->saveAccessToken->execute(
-            $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken())
-        );
+        $accessTokenCredentials = $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
+
+        try {
+            $this->validateAccessToken->execute($accessTokenCredentials);
+        } catch (AccessTokenException $accessTokenException) {
+            $this->logger->error($accessTokenException);
+
+            return $client;
+        }
+
+        $this->saveAccessToken->execute($accessTokenCredentials);
 
         return $client;
     }

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace tr33m4n\OauthGmail\Model;
 
@@ -6,11 +7,6 @@ use Magento\Framework\Model\AbstractModel;
 use tr33m4n\OauthGmail\Api\Data\TokenInterface;
 use tr33m4n\OauthGmail\Model\ResourceModel\Token as TokenResource;
 
-/**
- * Class Token
- *
- * @package tr33m4n\OauthGmail\Model
- */
 class Token extends AbstractModel implements TokenInterface
 {
     /**
@@ -112,7 +108,7 @@ class Token extends AbstractModel implements TokenInterface
     /**
      * @inheritDoc
      */
-    protected function _construct()
+    protected function _construct() : void
     {
         $this->_init(TokenResource::class);
     }

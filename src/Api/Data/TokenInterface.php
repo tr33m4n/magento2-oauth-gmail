@@ -1,12 +1,8 @@
 <?php
+declare(strict_types=1);
 
 namespace tr33m4n\OauthGmail\Api\Data;
 
-/**
- * Interface TokenInterface
- *
- * @package tr33m4n\OauthGmail\Api\Data
- */
 interface TokenInterface
 {
     const KEY_ACCESS_TOKEN = 'access_token';

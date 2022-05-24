@@ -1,15 +1,11 @@
 <?php
+declare(strict_types=1);
 
 namespace tr33m4n\OauthGmail\Block\Adminhtml\System\Config;
 
 use Magento\Config\Block\System\Config\Form\Field;
 use Magento\Framework\Data\Form\Element\AbstractElement;
 
-/**
- * Class AbstractButton
- *
- * @package tr33m4n\OauthGmail\Block\Adminhtml\System\Config
- */
 abstract class AbstractButton extends Field
 {
     /**

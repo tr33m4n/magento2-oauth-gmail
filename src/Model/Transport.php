@@ -1,34 +1,21 @@
 <?php
+declare(strict_types=1);
 
 namespace tr33m4n\OauthGmail\Model;
 
 use Exception;
-use Google_Service_Gmail_Message;
+use Google\Service\Gmail\Message;
 use Magento\Framework\Exception\MailException;
 use Magento\Framework\Mail\MessageInterface;
 use Magento\Framework\Mail\TransportInterface;
 
-/**
- * Class Transport
- *
- * @package tr33m4n\OauthGmail\Model
- */
 class Transport implements TransportInterface
 {
-    /**
-     * @var \tr33m4n\OauthGmail\Model\ValidateSender
-     */
-    private $validateSender;
+    private ValidateSender $validateSender;
 
-    /**
-     * @var \tr33m4n\OauthGmail\Model\GetGmailService
-     */
-    private $getGmailService;
+    private GetGmailService $getGmailService;
 
-    /**
-     * @var \Magento\Framework\Mail\MessageInterface
-     */
-    private $message;
+    private MessageInterface $message;
 
     /**
      * Transport constructor.
@@ -52,7 +39,7 @@ class Transport implements TransportInterface
      *
      * @throws \Magento\Framework\Exception\MailException
      */
-    public function sendMessage()
+    public function sendMessage() : void
     {
         /** @var \Magento\Framework\Mail\EmailMessage $emailMessage */
         $emailMessage = $this->getMessage();
@@ -60,7 +47,7 @@ class Transport implements TransportInterface
         try {
             $this->validateSender->execute($emailMessage);
 
-            $googleMessage = new Google_Service_Gmail_Message();
+            $googleMessage = new Message();
             // TODO: Elegantly handle message conversion
             $googleMessage->setRaw(strtr(base64_encode($emailMessage->getRawMessage()), ['+' => '-', '/' => '_']));
 

@@ -1,21 +1,14 @@
 <?php
+declare(strict_types=1);
 
 namespace tr33m4n\OauthGmail\Model;
 
 use tr33m4n\OauthGmail\Api\Data\TokenInterface;
 use tr33m4n\OauthGmail\Model\ResourceModel\Token\CollectionFactory;
 
-/**
- * Class GetAccessToken
- *
- * @package tr33m4n\OauthGmail\Model
- */
 class GetAccessToken
 {
-    /**
-     * @var \tr33m4n\OauthGmail\Model\ResourceModel\Token\CollectionFactory
-     */
-    private $collectionFactory;
+    private CollectionFactory $collectionFactory;
 
     /**
      * GetAccessToken constructor.

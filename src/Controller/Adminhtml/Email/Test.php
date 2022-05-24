@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace tr33m4n\OauthGmail\Controller\Adminhtml\Email;
 
@@ -12,11 +13,6 @@ use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Mail\Template\TransportBuilder;
 use Magento\Store\Model\Store;
 
-/**
- * Class Test
- *
- * @package tr33m4n\OauthGmail\Controller\Adminhtml\Email
- */
 class Test extends Action implements HttpGetActionInterface
 {
     /**
@@ -24,15 +20,9 @@ class Test extends Action implements HttpGetActionInterface
      */
     const ADMIN_RESOURCE = 'tr33m4n_OauthGmail::oauth';
 
-    /**
-     * @var \Magento\Backend\Model\Auth\Session
-     */
-    private $authSession;
+    private AuthSession $authSession;
 
-    /**
-     * @var \Magento\Framework\Mail\Template\TransportBuilder
-     */
-    private $transportBuilder;
+    private TransportBuilder $transportBuilder;
 
     /**
      * Test constructor.

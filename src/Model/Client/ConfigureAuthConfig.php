@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace tr33m4n\OauthGmail\Model\Client;
 
@@ -6,26 +7,15 @@ use Google\Client;
 use Magento\Backend\Model\UrlInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 
-/**
- * Class ConfigureAuthConfig
- *
- * @package tr33m4n\OauthGmail\Model\Client
- */
 class ConfigureAuthConfig
 {
     private const XML_CONFIG_CLIENT_ID_PATH = 'system/oauth_gmail/client_id';
 
     private const XML_CONFIG_CLIENT_SECRET_PATH = 'system/oauth_gmail/client_secret';
 
-    /**
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface
-     */
-    private $scopeConfig;
+    private ScopeConfigInterface $scopeConfig;
 
-    /**
-     * @var \Magento\Backend\Model\UrlInterface
-     */
-    private $url;
+    private UrlInterface $url;
 
     /**
      * ConfigureAuthConfig constructor.

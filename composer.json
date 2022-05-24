@@ -10,7 +10,12 @@
         }
     ],
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "phpstan/extension-installer": true,
+            "rector/rector-installer": true,
+            "magento/composer-dependency-version-audit-plugin": true
+        }
     },
     "minimum-stability": "stable",
     "autoload": {
@@ -22,9 +27,9 @@
         }
     },
     "require": {
-        "php": "^7.3",
-        "magento/framework": "^103",
-        "google/apiclient": "^2.9"
+        "php": "^7.4",
+        "google/apiclient": "^2.12",
+        "magento/framework": "^103"
     },
     "scripts": {
         "post-update-cmd": "Google\\Task\\Composer::cleanup",
@@ -42,10 +47,10 @@
         ]
     },
     "require-dev": {
-        "fooman/phpstan-magento2-magic-methods": "^0.7.1",
+        "fooman/phpstan-magento2-magic-methods": "^0.7.4",
         "friendsofphp/php-cs-fixer": "^2.18",
         "magento/module-config": "^101.2",
-        "phpstan/phpstan": "^0.12.82",
-        "rector/rector": "^0.10.3"
+        "phpstan/phpstan": "^1.7",
+        "rector/rector": "^0.13.0"
     }
 }

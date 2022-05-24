@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace tr33m4n\OauthGmail\Model;
 
@@ -6,11 +7,6 @@ use Magento\Framework\Serialize\SerializerInterface;
 use tr33m4n\OauthGmail\Api\Data\TokenInterface;
 use tr33m4n\OauthGmail\Exception\AccessTokenException;
 
-/**
- * Class ValidateAccessToken
- *
- * @package tr33m4n\OauthGmail\Model
- */
 class ValidateAccessToken
 {
     const REQUIRED_FIELDS = [
@@ -24,10 +20,7 @@ class ValidateAccessToken
 
     const ERROR_KEY = 'error';
 
-    /**
-     * @var \Magento\Framework\Serialize\SerializerInterface
-     */
-    private $serializer;
+    private SerializerInterface $serializer;
 
     /**
      * ValidateCredentials constructor.

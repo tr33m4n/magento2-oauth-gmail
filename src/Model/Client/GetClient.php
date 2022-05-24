@@ -1,41 +1,22 @@
 <?php
+declare(strict_types=1);
 
 namespace tr33m4n\OauthGmail\Model\Client;
 
 use Google\Client;
 use Google\ClientFactory;
 
-/**
- * Class GetClient
- *
- * @package tr33m4n\OauthGmail\Model\Client
- */
 class GetClient
 {
-    /**
-     * @var \Google\ClientFactory
-     */
-    private $clientFactory;
+    private ClientFactory $clientFactory;
 
-    /**
-     * @var \tr33m4n\OauthGmail\Model\Client\ConfigureAuthConfig
-     */
-    private $configureAuthConfig;
+    private ConfigureAuthConfig $configureAuthConfig;
 
-    /**
-     * @var \tr33m4n\OauthGmail\Model\Client\ConfigureScopeConfig
-     */
-    private $configureScopeConfig;
+    private ConfigureScopeConfig $configureScopeConfig;
 
-    /**
-     * @var \tr33m4n\OauthGmail\Model\Client\ConfigureAccessToken
-     */
-    private $configureAccessToken;
+    private ConfigureAccessToken $configureAccessToken;
 
-    /**
-     * @var \Google\Client|null
-     */
-    private $configuredClient;
+    private ?Client $configuredClient = null;
 
     /**
      * GetClient constructor.

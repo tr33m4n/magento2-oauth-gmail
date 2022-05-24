@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace tr33m4n\OauthGmail\Block\Adminhtml\System\Config;
 
@@ -8,29 +9,18 @@ use Magento\Framework\Data\Form\Element\AbstractElement;
 use Magento\Framework\View\Helper\SecureHtmlRenderer;
 use tr33m4n\OauthGmail\Model\Client\GetClient;
 
-/**
- * Class Authenticate
- *
- * @package tr33m4n\OauthGmail\Block\Adminhtml\System\Config
- */
 class Authenticate extends AbstractButton
 {
-    /**
-     * @var \tr33m4n\OauthGmail\Model\Client\GetClient
-     */
-    private $getClient;
+    private GetClient $getClient;
 
-    /**
-     * @var \Magento\Backend\Block\Template\Context
-     */
-    private $context;
+    private Context $context;
 
     /**
      * Authenticate constructor.
      *
      * @param \tr33m4n\OauthGmail\Model\Client\GetClient             $getClient
      * @param \Magento\Backend\Block\Template\Context                $context
-     * @param array<mixed, mixed>                                    $data
+     * @param array<int|string, mixed>                               $data
      * @param \Magento\Framework\View\Helper\SecureHtmlRenderer|null $secureRenderer
      */
     public function __construct(

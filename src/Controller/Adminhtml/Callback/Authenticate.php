@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace tr33m4n\OauthGmail\Controller\Adminhtml\Callback;
 
@@ -10,11 +11,6 @@ use tr33m4n\OauthGmail\Exception\AccessTokenException;
 use tr33m4n\OauthGmail\Model\Client\GetClient;
 use tr33m4n\OauthGmail\Model\SaveAccessToken;
 
-/**
- * Class Authenticate
- *
- * @package tr33m4n\OauthGmail\Controller\Adminhtml\Callback
- */
 class Authenticate extends Action implements HttpGetActionInterface
 {
     /**
@@ -31,15 +27,9 @@ class Authenticate extends Action implements HttpGetActionInterface
         'authenticate'
     ];
 
-    /**
-     * @var \tr33m4n\OauthGmail\Model\Client\GetClient
-     */
-    private $getClient;
+    private GetClient $getClient;
 
-    /**
-     * @var \tr33m4n\OauthGmail\Model\SaveAccessToken
-     */
-    private $saveAccessToken;
+    private SaveAccessToken $saveAccessToken;
 
     /**
      * Authenticate constructor.
@@ -79,7 +69,7 @@ class Authenticate extends Action implements HttpGetActionInterface
             return $this->_redirect('adminhtml/system_config/edit', ['section' => 'system']);
         }
 
-        $this->messageManager->addSuccessMessage(__('Successfully authenticated with Google!'));
+        $this->messageManager->addSuccessMessage((string) __('Successfully authenticated with Google!'));
 
         return $this->_redirect('adminhtml/system_config/edit', ['section' => 'system']);
     }

@@ -1,9 +1,9 @@
 parameters:
     paths:
         - %currentWorkingDirectory%/src
-    excludes_analyse:
+    excludePaths:
         - *Test*
         - *tests*
         - %currentWorkingDirectory%/src/Model/GetAccessToken.php
         - %currentWorkingDirectory%/src/Model/SaveAccessToken.php
-    level: 8
+    level: max

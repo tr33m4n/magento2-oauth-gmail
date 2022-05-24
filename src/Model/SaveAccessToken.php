@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace tr33m4n\OauthGmail\Model;
 
@@ -7,32 +8,15 @@ use tr33m4n\OauthGmail\Api\Data\TokenInterface;
 use tr33m4n\OauthGmail\Api\Data\TokenInterfaceFactory;
 use tr33m4n\OauthGmail\Model\ResourceModel\Token as TokenResource;
 
-/**
- * Class SaveAccessToken
- *
- * @package tr33m4n\OauthGmail\Model
- */
 class SaveAccessToken
 {
-    /**
-     * @var \Magento\Framework\Api\DataObjectHelper
-     */
-    private $dataObjectHelper;
+    private DataObjectHelper $dataObjectHelper;
 
-    /**
-     * @var \tr33m4n\OauthGmail\Model\ValidateAccessToken
-     */
-    private $validateAccessToken;
+    private ValidateAccessToken $validateAccessToken;
 
-    /**
-     * @var \tr33m4n\OauthGmail\Api\Data\TokenInterfaceFactory
-     */
-    private $tokenFactory;
+    private TokenInterfaceFactory $tokenFactory;
 
-    /**
-     * @var \tr33m4n\OauthGmail\Model\ResourceModel\Token
-     */
-    private $tokenResource;
+    private TokenResource $tokenResource;
 
     /**
      * SaveAccessToken constructor.

@@ -1,26 +1,16 @@
 <?php
+declare(strict_types=1);
 
 namespace tr33m4n\OauthGmail\Model;
 
-use Google_Service_Gmail;
+use Google\Service\Gmail;
 use tr33m4n\OauthGmail\Model\Client\GetClient;
 
-/**
- * Class GetGmailService
- *
- * @package tr33m4n\OauthGmail\Model
- */
 class GetGmailService
 {
-    /**
-     * @var \tr33m4n\OauthGmail\Model\Client\GetClient
-     */
-    private $getClient;
+    private GetClient $getClient;
 
-    /**
-     * @var Google_Service_Gmail|null
-     */
-    private $gmailService;
+    private ?Gmail $gmailService = null;
 
     /**
      * GetGmailService constructor.
@@ -37,14 +27,14 @@ class GetGmailService
      * Get Gmail service
      *
      * @throws \Google\Exception
-     * @return \Google_Service_Gmail
+     * @return \Google\Service\Gmail
      */
-    public function execute() : Google_Service_Gmail
+    public function execute() : Gmail
     {
         if ($this->gmailService !== null) {
             return $this->gmailService;
         }
 
-        return $this->gmailService = new Google_Service_Gmail($this->getClient->execute());
+        return $this->gmailService = new Gmail($this->getClient->execute());
     }
 }
