@@ -4,11 +4,14 @@ declare(strict_types=1);
 namespace tr33m4n\OauthGmail\Model;
 
 use Google\Service\Gmail;
+use Google\Service\GmailFactory;
 use tr33m4n\OauthGmail\Model\Client\GetClient;
 
 class GetGmailService
 {
     private GetClient $getClient;
+
+    private GmailFactory $gmailFactory;
 
     private ?Gmail $gmailService = null;
 
@@ -16,11 +19,14 @@ class GetGmailService
      * GetGmailService constructor.
      *
      * @param \tr33m4n\OauthGmail\Model\Client\GetClient $getClient
+     * @param \Google\Service\GmailFactory               $gmailFactory
      */
     public function __construct(
-        GetClient $getClient
+        GetClient $getClient,
+        GmailFactory $gmailFactory
     ) {
         $this->getClient = $getClient;
+        $this->gmailFactory = $gmailFactory;
     }
 
     /**
@@ -35,6 +41,8 @@ class GetGmailService
             return $this->gmailService;
         }
 
-        return $this->gmailService = new Gmail($this->getClient->execute());
+        return $this->gmailService = $this->gmailFactory->create([
+            'clientOrConfig' => $this->getClient->execute()
+        ]);
     }
 }
