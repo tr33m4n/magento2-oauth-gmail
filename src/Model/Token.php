@@ -14,6 +14,7 @@ class Token extends AbstractModel implements TokenInterface
      */
     public function getAccessToken() : ?string
     {
+        // @phpstan-ignore-next-line
         return $this->getData(self::KEY_ACCESS_TOKEN);
     }
 
@@ -30,6 +31,7 @@ class Token extends AbstractModel implements TokenInterface
      */
     public function getRefreshToken() : ?string
     {
+        // @phpstan-ignore-next-line
         return $this->getData(self::KEY_REFRESH_TOKEN);
     }
 
@@ -46,6 +48,7 @@ class Token extends AbstractModel implements TokenInterface
      */
     public function getTokenType() : ?string
     {
+        // @phpstan-ignore-next-line
         return $this->getData(self::KEY_TOKEN_TYPE);
     }
 
@@ -62,6 +65,7 @@ class Token extends AbstractModel implements TokenInterface
      */
     public function getScope() : ?string
     {
+        // @phpstan-ignore-next-line
         return $this->getData(self::KEY_SCOPE);
     }
 
@@ -78,6 +82,7 @@ class Token extends AbstractModel implements TokenInterface
      */
     public function getExpiresIn() : ?int
     {
+        // @phpstan-ignore-next-line
         return $this->getData(self::KEY_EXPIRES_IN);
     }
 
@@ -94,6 +99,7 @@ class Token extends AbstractModel implements TokenInterface
      */
     public function getCreated() : ?int
     {
+        // @phpstan-ignore-next-line
         return $this->getData(self::KEY_CREATED);
     }
 

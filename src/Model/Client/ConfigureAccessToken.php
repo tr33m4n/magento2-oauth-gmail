@@ -4,12 +4,12 @@ declare(strict_types=1);
 namespace tr33m4n\OauthGmail\Model\Client;
 
 use Google\Client;
+use Psr\Log\LoggerInterface;
 use tr33m4n\OauthGmail\Api\Data\TokenInterface;
 use tr33m4n\OauthGmail\Exception\AccessTokenException;
 use tr33m4n\OauthGmail\Model\GetAccessToken;
 use tr33m4n\OauthGmail\Model\SaveAccessToken;
 use tr33m4n\OauthGmail\Model\ValidateAccessToken;
-use Psr\Log\LoggerInterface;
 
 class ConfigureAccessToken
 {
