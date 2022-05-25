@@ -7,6 +7,7 @@ use Exception;
 use Google\Service\Gmail\Message;
 use Google\Service\Gmail\MessageFactory;
 use Magento\Framework\Exception\MailException;
+use Magento\Framework\Mail\MailMessageInterface;
 use Magento\Framework\Mail\MessageInterface;
 use Magento\Framework\Mail\TransportInterface;
 
@@ -72,14 +73,14 @@ class Transport implements TransportInterface
     /**
      * As Gmail message
      *
-     * @param \Magento\Framework\Mail\MessageInterface $message
+     * @param \Magento\Framework\Mail\MailMessageInterface $message
      * @return \Google\Service\Gmail\Message
      */
-    private function asGmailMessage(MessageInterface $message) : Message
+    private function asGmailMessage(MailMessageInterface $message) : Message
     {
         /** @var \Google\Service\Gmail\Message $googleMessage */
         $googleMessage = $this->googleMessageFactory->create();
-        $googleMessage->setRaw(strtr(base64_encode($emailMessage->getRawMessage()), ['+' => '-', '/' => '_']));
+        $googleMessage->setRaw(strtr(base64_encode($message->getRawMessage()), ['+' => '-', '/' => '_']));
 
         return $googleMessage;
     }
