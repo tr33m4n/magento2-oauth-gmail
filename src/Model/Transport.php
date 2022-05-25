@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace tr33m4n\OauthGmail\Model;
 
 use Exception;
+use Google\Service\Gmail\Message;
 use Google\Service\Gmail\MessageFactory;
 use Magento\Framework\Exception\MailException;
 use Magento\Framework\Mail\MessageInterface;
@@ -40,6 +41,14 @@ class Transport implements TransportInterface
     }
 
     /**
+     * @inheritDoc
+     */
+    public function getMessage() : MessageInterface
+    {
+        return $this->message;
+    }
+
+    /**
      * {@inheritdoc}
      *
      * @throws \Magento\Framework\Exception\MailException
@@ -52,27 +61,26 @@ class Transport implements TransportInterface
         try {
             $this->validateSender->execute($emailMessage);
 
-            /** @var \Google\Service\Gmail\Message $googleMessage */
-            $googleMessage = $this->googleMessageFactory->create();
-            // TODO: Elegantly handle message conversion
-            $googleMessage->setRaw(strtr(base64_encode($emailMessage->getRawMessage()), ['+' => '-', '/' => '_']));
-
-            $from = current((array) $emailMessage->getFrom());
-            if (!$from) {
-                throw new MailException(__('From field has not been specified'));
-            }
-
-            $this->getGmailService->execute()->users_messages->send($from->getEmail(), $googleMessage);
+            $this->getGmailService->execute()
+                ->users_messages
+                ->send('me', $this->asGmailMessage($emailMessage));
         } catch (Exception $exception) {
             throw new MailException(__($exception->getMessage()), $exception);
         }
     }
 
     /**
-     * @inheritDoc
+     * As Gmail message
+     *
+     * @param \Magento\Framework\Mail\MessageInterface $message
+     * @return \Google\Service\Gmail\Message
      */
-    public function getMessage() : MessageInterface
+    private function asGmailMessage(MessageInterface $message) : Message
     {
-        return $this->message;
+        /** @var \Google\Service\Gmail\Message $googleMessage */
+        $googleMessage = $this->googleMessageFactory->create();
+        $googleMessage->setRaw(strtr(base64_encode($emailMessage->getRawMessage()), ['+' => '-', '/' => '_']));
+
+        return $googleMessage;
     }
 }

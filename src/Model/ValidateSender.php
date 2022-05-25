@@ -35,11 +35,11 @@ class ValidateSender
      */
     public function execute(EmailMessage $emailMessage) : void
     {
-        $gmailService = $this->getGmailService->execute();
-
         foreach ((array) $emailMessage->getFrom() as $address) {
             try {
-                $result = $gmailService->users_settings_sendAs->get('me', $address->getEmail());
+                $result = $this->getGmailService->execute()
+                    ->users_settings_sendAs
+                    ->get('me', $address->getEmail());
             } catch (Exception $exception) {
                 throw new SenderVerificationException(
                     __(
