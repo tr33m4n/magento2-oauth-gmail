@@ -5,6 +5,8 @@ A simple way to send mail via the Gmail API with Oauth authentication
 This module allows Magento to send emails through the Gmail API using Oauth authentication, instead of SMTP.
 
 ## TODO
+- [ ] Allow configuring different test email addresses
+- [ ] Better handling of refresh token errors
 - [ ] Add instructions/wiki for configuring the Oauth application within the Google Developer console
 - [ ] Add unit/integration tests
 - [ ] Add CI
