@@ -18,6 +18,7 @@ class ConfigureScopeConfig
     {
         $client->setAccessType('offline');
         $client->setApprovalPrompt('force');
+        $client->setPrompt('select_account');
         $client->addScope(Gmail::GMAIL_COMPOSE);
         $client->addScope(Gmail::GMAIL_SEND);
         $client->addScope(Gmail::GMAIL_READONLY);
