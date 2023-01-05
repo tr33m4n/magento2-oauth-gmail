@@ -43,9 +43,6 @@ class AuthFile extends File
         AbstractDb $resourceCollection = null,
         array $data = []
     ) {
-        // Ensure we do not save the auth JSON file in a public location
-        $this->_mediaDirectory = $filesystem->getDirectoryWrite(DirectoryList::VAR_DIR);
-
         parent::__construct(
             $context,
             $registry,
@@ -58,6 +55,9 @@ class AuthFile extends File
             $resourceCollection,
             $data
         );
+
+        // Ensure we do not save the auth JSON file in a public location
+        $this->_mediaDirectory = $filesystem->getDirectoryWrite(DirectoryList::VAR_DIR);
     }
 
     /**
