@@ -37,6 +37,9 @@
                 </field>
                 <field id="authenticate" sortOrder="5" showInDefault="1" showInWebsite="0" showInStore="0">
                     <frontend_model>tr33m4n\OauthGmail\Block\Adminhtml\System\Config\Authenticate</frontend_model>
+                    <depends>
+                        <field id="system/oauth_gmail/auth_type">client_id_secret</field>
+                    </depends>
                 </field>
                 <field id="send_test" sortOrder="6" showInDefault="1" showInWebsite="0" showInStore="0">
                     <frontend_model>tr33m4n\OauthGmail\Block\Adminhtml\System\Config\SendTest</frontend_model>
