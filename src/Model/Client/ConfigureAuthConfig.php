@@ -11,6 +11,7 @@ use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\Filesystem;
 use Magento\Framework\Filesystem\Directory\ReadInterface;
 use tr33m4n\OauthGmail\Exception\AuthConfigException;
+use tr33m4n\OauthGmail\Model\Config\Backend\AuthFile;
 use tr33m4n\OauthGmail\Model\Config\Source\AuthType;
 
 class ConfigureAuthConfig
@@ -59,7 +60,12 @@ class ConfigureAuthConfig
         switch ($this->scopeConfig->getValue(self::XML_CONFIG_AUTH_TYPE)) {
             case AuthType::AUTH_TYPE_FILE:
                 $authFile = $this->varDirectory->getAbsolutePath(
-                    $this->scopeConfig->getValue(self::XML_CONFIG_AUTH_FILE)
+                    sprintf(
+                        '%s%s%s',
+                        AuthFile::ROOT_PATH,
+                        DIRECTORY_SEPARATOR,
+                        $this->scopeConfig->getValue(self::XML_CONFIG_AUTH_FILE)
+                    )
                 );
 
                 if (!$this->varDirectory->isExist($authFile)) {
