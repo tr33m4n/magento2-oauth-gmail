@@ -17,8 +17,6 @@ use Magento\MediaStorage\Model\File\UploaderFactory;
 
 class AuthFile extends File
 {
-    public const ROOT_PATH = 'oauth_gmail';
-
     /**
      * AuthFile constructor.
      *

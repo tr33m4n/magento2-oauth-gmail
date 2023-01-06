@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace tr33m4n\OauthGmail\Controller\Adminhtml\Email;
@@ -12,6 +13,7 @@ use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Mail\Template\TransportBuilder;
 use Magento\Store\Model\Store;
+use tr33m4n\OauthGmail\Model\Config\Provider;
 
 class Test extends Action implements HttpGetActionInterface
 {
@@ -20,22 +22,22 @@ class Test extends Action implements HttpGetActionInterface
      */
     const ADMIN_RESOURCE = 'tr33m4n_OauthGmail::oauth';
 
+    private Provider $configProvider;
+
     private AuthSession $authSession;
 
     private TransportBuilder $transportBuilder;
 
     /**
      * Test constructor.
-     *
-     * @param \Magento\Backend\App\Action\Context               $context
-     * @param \Magento\Backend\Model\Auth\Session               $authSession
-     * @param \Magento\Framework\Mail\Template\TransportBuilder $transportBuilder
      */
     public function __construct(
         Context $context,
+        Provider $configProvider,
         AuthSession $authSession,
         TransportBuilder $transportBuilder
     ) {
+        $this->configProvider = $configProvider;
         $this->authSession = $authSession;
         $this->transportBuilder = $transportBuilder;
 
@@ -49,8 +51,14 @@ class Test extends Action implements HttpGetActionInterface
      * @throws \Magento\Framework\Exception\LocalizedException
      * @return \Magento\Framework\App\ResponseInterface
      */
-    public function execute() : ResponseInterface
+    public function execute(): ResponseInterface
     {
+        if (!$this->configProvider->hasAuthCredentials()) {
+            $this->messageManager->addErrorMessage(__('Auth credentials have not been configured'));
+
+            return $this->_redirect('adminhtml/system_config/edit', ['section' => 'system']);
+        }
+
         $adminUser = $this->authSession->getUser();
 
         $this->transportBuilder->setTemplateIdentifier('google_oauth_mail_test')

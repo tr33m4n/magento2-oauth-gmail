@@ -1,23 +1,51 @@
 <?php
+
 declare(strict_types=1);
 
 namespace tr33m4n\OauthGmail\Block\Adminhtml\System\Config;
 
+use Magento\Backend\Block\Template\Context;
 use Magento\Framework\Data\Form\Element\AbstractElement;
+use Magento\Framework\View\Helper\SecureHtmlRenderer;
+use tr33m4n\OauthGmail\Model\Config\Provider;
 
 class SendTest extends AbstractButton
 {
+    private Provider $configProvider;
+
+    /**
+     * SendTest constructor.
+     *
+     * @param array<string, mixed> $data
+     */
+    public function __construct(
+        Provider $configProvider,
+        Context $context,
+        array $data = [],
+        ?SecureHtmlRenderer $secureRenderer = null
+    ) {
+        $this->configProvider = $configProvider;
+
+        parent::__construct(
+            $context,
+            $data,
+            $secureRenderer
+        );
+    }
+
     /**
      * @inheritDoc
      */
-    protected function _getElementHtml(AbstractElement $element) : string
+    protected function _getElementHtml(AbstractElement $element): string
     {
         $this->addData(
             [
                 'button_label' => __('Send Test'),
                 'class_suffix' => 'send-test',
                 'html_id' => $element->getHtmlId(),
-                'button_url' => $this->getUrl('oauthgmail/email/test')
+                'button_url' => $this->configProvider->hasAuthCredentials()
+                    ? $this->getUrl('oauthgmail/email/test')
+                    : null
             ]
         );
 
