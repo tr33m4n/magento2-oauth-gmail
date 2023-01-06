@@ -8,7 +8,6 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\Filesystem;
 use Magento\Framework\Filesystem\Directory\ReadInterface;
-use Magento\Tests\NamingConvention\true\string;
 use tr33m4n\OauthGmail\Exception\ConfigException;
 
 class Provider
