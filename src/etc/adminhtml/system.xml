@@ -20,14 +20,31 @@
                         <field id="system/oauth_gmail/auth_type">file</field>
                     </depends>
                 </field>
-                <field id="client_id" translate="label" type="text" sortOrder="3" showInDefault="1"
+                <field id="use_impersonated" translate="label,comment" type="select" sortOrder="3" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Use Impersonated Email</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>If you have delegated domain-wide access to a service account and you want to impersonate a user account</comment>
+                    <depends>
+                        <field id="system/oauth_gmail/auth_type">file</field>
+                    </depends>
+                </field>
+                <field id="impersonated_email" translate="label" type="text" sortOrder="4" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Impersonated Email</label>
+                    <validate>validate-email</validate>
+                    <depends>
+                        <field id="system/oauth_gmail/use_impersonated">1</field>
+                    </depends>
+                </field>
+                <field id="client_id" translate="label" type="text" sortOrder="5" showInDefault="1"
                        showInWebsite="0" showInStore="0">
                     <label>Client ID</label>
                     <depends>
                         <field id="system/oauth_gmail/auth_type">client_id_secret</field>
                     </depends>
                 </field>
-                <field id="client_secret" translate="label" type="obscure" sortOrder="4" showInDefault="1"
+                <field id="client_secret" translate="label" type="obscure" sortOrder="6" showInDefault="1"
                        showInWebsite="0" showInStore="0">
                     <label>Client Secret</label>
                     <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
@@ -35,13 +52,13 @@
                         <field id="system/oauth_gmail/auth_type">client_id_secret</field>
                     </depends>
                 </field>
-                <field id="authenticate" sortOrder="5" showInDefault="1" showInWebsite="0" showInStore="0">
+                <field id="authenticate" sortOrder="7" showInDefault="1" showInWebsite="0" showInStore="0">
                     <frontend_model>tr33m4n\OauthGmail\Block\Adminhtml\System\Config\Authenticate</frontend_model>
                     <depends>
                         <field id="system/oauth_gmail/auth_type">client_id_secret</field>
                     </depends>
                 </field>
-                <field id="send_test" sortOrder="6" showInDefault="1" showInWebsite="0" showInStore="0">
+                <field id="send_test" sortOrder="8" showInDefault="1" showInWebsite="0" showInStore="0">
                     <frontend_model>tr33m4n\OauthGmail\Block\Adminhtml\System\Config\SendTest</frontend_model>
                 </field>
             </group>

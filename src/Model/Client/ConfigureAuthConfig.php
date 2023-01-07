@@ -55,6 +55,10 @@ class ConfigureAuthConfig
                 throw new AuthConfigException(__('Invalid auth type'));
         }
 
+        if ($this->configProvider->shouldUseImpersonated()) {
+            $client->setSubject($this->configProvider->getImpersonatedEmail());
+        }
+
         return $client;
     }
 
