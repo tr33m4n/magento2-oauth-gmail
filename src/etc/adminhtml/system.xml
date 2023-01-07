@@ -34,6 +34,7 @@
                     <label>Impersonated Email</label>
                     <validate>validate-email</validate>
                     <depends>
+                        <field id="system/oauth_gmail/auth_type">file</field>
                         <field id="system/oauth_gmail/use_impersonated">1</field>
                     </depends>
                 </field>
