@@ -8,6 +8,8 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\Filesystem;
 use Magento\Framework\Filesystem\Directory\ReadInterface;
+use Magento\Framework\Mail\Template\SenderResolverInterface;
+use Magento\Framework\Serialize\SerializerInterface;
 use tr33m4n\OauthGmail\Exception\ConfigException;
 
 class Provider
@@ -26,19 +28,36 @@ class Provider
 
     private const AUTH_PATH_TEMPLATE = 'oauth_gmail' . DIRECTORY_SEPARATOR . '%s';
 
+    public const EMAIL_KEY = 'email';
+
+    public const SCOPES_KEY = 'scopes';
+
+    private SerializerInterface $serializer;
+
     private ScopeConfigInterface $scopeConfig;
 
     private ReadInterface $varDirectory;
+
+    private SenderResolverInterface $senderResolver;
+
+    /**
+     * @var array<string, string>
+     */
+    private ?array $impersonatedEmails = null;
 
     /**
      * Provider constructor.
      */
     public function __construct(
+        SerializerInterface $serializer,
         ScopeConfigInterface $scopeConfig,
-        Filesystem $filesystem
+        Filesystem $filesystem,
+        SenderResolverInterface $senderResolver
     ) {
+        $this->serializer = $serializer;
         $this->scopeConfig = $scopeConfig;
         $this->varDirectory = $filesystem->getDirectoryRead(DirectoryList::VAR_DIR);
+        $this->senderResolver = $senderResolver;
     }
 
     /**
@@ -118,16 +137,42 @@ class Provider
      * Get impersonated emails
      *
      * @throws \tr33m4n\OauthGmail\Exception\ConfigException
+     * @throws \Magento\Framework\Exception\MailException
      * @return array<string, string>
      */
     public function getImpersonatedEmails(): array
     {
-        $impersonatedEmail = $this->scopeConfig->getValue(self::XML_CONFIG_IMPERSONATED_EMAILS);
-        if (!filter_var($impersonatedEmail, FILTER_VALIDATE_EMAIL)) {
-            throw new ConfigException(__('Impersonated email is not a valid email'));
+        if (null !== $this->impersonatedEmails) {
+            return $this->impersonatedEmails;
         }
 
-        return $impersonatedEmail;
+        $impersonatedEmails = $this->scopeConfig->getValue(self::XML_CONFIG_IMPERSONATED_EMAILS);
+        if (is_string($impersonatedEmails)) {
+            $impersonatedEmails = $this->serializer->unserialize($impersonatedEmails);
+        }
+
+        if (empty($impersonatedEmails)) {
+            throw new ConfigException(__('No impersonated emails have been set'));
+        }
+
+        $indexedEmails = [];
+        foreach ($impersonatedEmails as $impersonatedEmail) {
+            $scopes = $impersonatedEmail[self::SCOPES_KEY] ?? [];
+            if (empty($scopes)) {
+                continue;
+            }
+
+            foreach ($scopes as $scope) {
+                $resolvedEmail = $this->senderResolver->resolve($scope)[self::EMAIL_KEY] ?? null;
+                if (!$resolvedEmail) {
+                    continue;
+                }
+
+                $indexedEmails[$resolvedEmail] = $impersonatedEmails[self::EMAIL_KEY];
+            }
+        }
+
+        return $this->impersonatedEmails = $indexedEmails;
     }
 
     /**

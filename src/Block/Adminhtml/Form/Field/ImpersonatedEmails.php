@@ -7,6 +7,7 @@ namespace tr33m4n\OauthGmail\Block\Adminhtml\Form\Field;
 use Magento\Config\Block\System\Config\Form\Field\FieldArray\AbstractFieldArray;
 use Magento\Framework\DataObject;
 use Magento\Framework\View\Element\BlockInterface;
+use tr33m4n\OauthGmail\Model\Config\Provider;
 
 class ImpersonatedEmails extends AbstractFieldArray
 {
@@ -20,7 +21,7 @@ class ImpersonatedEmails extends AbstractFieldArray
     protected function _prepareToRender()
     {
         $this->addColumn(
-            'email',
+            Provider::EMAIL_KEY,
             [
                 'label' => __('Email'),
                 'class' => 'required-entry validate-email'
@@ -28,7 +29,7 @@ class ImpersonatedEmails extends AbstractFieldArray
         );
 
         $this->addColumn(
-            'scopes',
+            Provider::SCOPES_KEY,
             [
                 'label' => __('Scopes'),
                 'renderer' => $this->getScopesRenderer()
