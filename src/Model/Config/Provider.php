@@ -18,7 +18,7 @@ class Provider
 
     private const XML_CONFIG_USE_IMPERSONATED = 'system/oauth_gmail/use_impersonated';
 
-    private const XML_CONFIG_IMPERSONATED_EMAIL = 'system/oauth_gmail/impersonated_email';
+    private const XML_CONFIG_IMPERSONATED_EMAILS = 'system/oauth_gmail/impersonated_emails';
 
     private const XML_CONFIG_CLIENT_ID_PATH = 'system/oauth_gmail/client_id';
 
@@ -115,13 +115,14 @@ class Provider
     }
 
     /**
-     * Get impersonated email
+     * Get impersonated emails
      *
      * @throws \tr33m4n\OauthGmail\Exception\ConfigException
+     * @return array<string, string>
      */
-    public function getImpersonatedEmail(): string
+    public function getImpersonatedEmails(): array
     {
-        $impersonatedEmail = $this->scopeConfig->getValue(self::XML_CONFIG_IMPERSONATED_EMAIL);
+        $impersonatedEmail = $this->scopeConfig->getValue(self::XML_CONFIG_IMPERSONATED_EMAILS);
         if (!filter_var($impersonatedEmail, FILTER_VALIDATE_EMAIL)) {
             throw new ConfigException(__('Impersonated email is not a valid email'));
         }

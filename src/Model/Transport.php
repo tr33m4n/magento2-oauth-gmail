@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace tr33m4n\OauthGmail\Model;
@@ -15,6 +16,8 @@ class Transport implements TransportInterface
 {
     private ValidateSender $validateSender;
 
+    private ApplyImpersonatedEmails $applyImpersonatedEmails;
+
     private GetGmailService $getGmailService;
 
     private MessageInterface $message;
@@ -23,19 +26,16 @@ class Transport implements TransportInterface
 
     /**
      * Transport constructor.
-     *
-     * @param \tr33m4n\OauthGmail\Model\ValidateSender  $validateSender
-     * @param \tr33m4n\OauthGmail\Model\GetGmailService $getGmailService
-     * @param \Magento\Framework\Mail\MessageInterface  $message
-     * @param \Google\Service\Gmail\MessageFactory      $googleMessageFactory
      */
     public function __construct(
         ValidateSender $validateSender,
+        ApplyImpersonatedEmails $applyImpersonatedEmails,
         GetGmailService $getGmailService,
         MessageInterface $message,
         MessageFactory $googleMessageFactory
     ) {
         $this->validateSender = $validateSender;
+        $this->applyImpersonatedEmails = $applyImpersonatedEmails;
         $this->getGmailService = $getGmailService;
         $this->message = $message;
         $this->googleMessageFactory = $googleMessageFactory;
@@ -44,7 +44,7 @@ class Transport implements TransportInterface
     /**
      * @inheritDoc
      */
-    public function getMessage() : MessageInterface
+    public function getMessage(): MessageInterface
     {
         return $this->message;
     }
@@ -54,12 +54,13 @@ class Transport implements TransportInterface
      *
      * @throws \Magento\Framework\Exception\MailException
      */
-    public function sendMessage() : void
+    public function sendMessage(): void
     {
         /** @var \Magento\Framework\Mail\EmailMessage $emailMessage */
         $emailMessage = $this->getMessage();
 
         try {
+            $this->applyImpersonatedEmails->execute($emailMessage, $this->getGmailService->execute()->getClient());
             $this->validateSender->execute($emailMessage);
 
             $this->getGmailService->execute()
@@ -76,7 +77,7 @@ class Transport implements TransportInterface
      * @param \Magento\Framework\Mail\MailMessageInterface $message
      * @return \Google\Service\Gmail\Message
      */
-    private function asGmailMessage(MailMessageInterface $message) : Message
+    private function asGmailMessage(MailMessageInterface $message): Message
     {
         /** @var \Google\Service\Gmail\Message $googleMessage */
         $googleMessage = $this->googleMessageFactory->create();
