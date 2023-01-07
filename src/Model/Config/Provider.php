@@ -168,7 +168,7 @@ class Provider
                     continue;
                 }
 
-                $indexedEmails[$resolvedEmail] = $impersonatedEmails[self::EMAIL_KEY];
+                $indexedEmails[$resolvedEmail] = $impersonatedEmail[self::EMAIL_KEY];
             }
         }
 
