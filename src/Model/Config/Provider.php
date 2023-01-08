@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace tr33m4n\OauthGmail\Model\Config;
 
+use InvalidArgumentException;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\Filesystem;
@@ -14,8 +15,6 @@ use tr33m4n\OauthGmail\Exception\ConfigException;
 
 class Provider
 {
-    public const XML_CONFIG_IS_SERVICE_ACCOUNT = 'system/oauth_gmail/is_service_account';
-
     private const XML_CONFIG_AUTH_TYPE = 'system/oauth_gmail/auth_type';
 
     private const XML_CONFIG_AUTH_FILE = 'system/oauth_gmail/auth_file';
@@ -29,6 +28,8 @@ class Provider
     private const XML_CONFIG_CLIENT_SECRET_PATH = 'system/oauth_gmail/client_secret';
 
     private const AUTH_PATH_TEMPLATE = 'oauth_gmail' . DIRECTORY_SEPARATOR . '%s';
+
+    private const SERVICE_ACCOUNT_VALUE = 'service_account';
 
     public const EMAIL_KEY = 'email';
 
@@ -46,6 +47,8 @@ class Provider
      * @var array<string, string>
      */
     private ?array $impersonatedEmails = null;
+
+    private ?bool $isServiceAccount = null;
 
     /**
      * Provider constructor.
@@ -99,10 +102,23 @@ class Provider
 
     /**
      * Check if service account
+     *
+     * @throws \Magento\Framework\Exception\FileSystemException
+     * @throws \tr33m4n\OauthGmail\Exception\ConfigException
      */
     public function isServiceAccount(): bool
     {
-        return $this->scopeConfig->isSetFlag(self::XML_CONFIG_IS_SERVICE_ACCOUNT);
+        if (null !== $this->isServiceAccount) {
+            return $this->isServiceAccount;
+        }
+
+        try {
+            $authFileData = $this->serializer->unserialize($this->varDirectory->readFile($this->getAuthFilePath()));
+        } catch (InvalidArgumentException $invalidArgumentException) {
+            return false;
+        }
+
+        return $this->isServiceAccount = ($authFileData['type'] ?? null) === self::SERVICE_ACCOUNT_VALUE;
     }
 
     /**
@@ -137,6 +153,9 @@ class Provider
 
     /**
      * Whether to use an impersonated account
+     *
+     * @throws \Magento\Framework\Exception\FileSystemException
+     * @throws \tr33m4n\OauthGmail\Exception\ConfigException
      */
     public function shouldUseImpersonated(): bool
     {
