@@ -11,4 +11,9 @@
             </argument>
         </arguments>
     </type>
+
+    <type name="Magento\Config\Model\Config\Structure\Element\Field">
+        <plugin name="determine_dependency_if_service_account"
+                type="\tr33m4n\OauthGmail\Plugin\Model\Config\Structure\Element\FieldPlugin"/>
+    </type>
 </config>
