@@ -81,18 +81,28 @@ class Provider
     }
 
     /**
-     * Get auth file path
+     * Get auth file
      *
      * @throws \tr33m4n\OauthGmail\Exception\ConfigException
      */
-    public function getAuthFilePath(): string
+    public function getAuthFile(): string
     {
         $authFilePath = $this->scopeConfig->getValue(self::XML_CONFIG_AUTH_FILE);
         if (!is_string($authFilePath)) {
             throw new ConfigException(__('Invalid auth file'));
         }
 
-        $authFilePath = $this->varDirectory->getAbsolutePath(sprintf(self::AUTH_PATH_TEMPLATE, $authFilePath));
+        return $authFilePath;
+    }
+
+    /**
+     * Get auth file path
+     *
+     * @throws \tr33m4n\OauthGmail\Exception\ConfigException
+     */
+    public function getAuthFilePath(): string
+    {
+        $authFilePath = $this->varDirectory->getAbsolutePath(sprintf(self::AUTH_PATH_TEMPLATE, $this->getAuthFile()));
         if (!$this->varDirectory->isExist($authFilePath)) {
             throw new ConfigException(__('Auth file "%1" does not exist', $authFilePath));
         }
