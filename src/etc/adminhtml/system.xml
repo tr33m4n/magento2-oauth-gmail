@@ -20,11 +20,10 @@
                         <field id="system/oauth_gmail/auth_type">file</field>
                     </depends>
                 </field>
-                <field id="is_service_account" translate="label,comment" type="select" sortOrder="2" showInDefault="0"
+                <field id="is_service_account" translate="label,comment"
+                       type="tr33m4n\OauthGmail\Block\Adminhtml\Form\Field\TrulyHidden" sortOrder="2" showInDefault="1"
                        showInWebsite="0" showInStore="0">
-                    <label>Is Service Account?</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment>Hidden field to aid showing/hiding service account related fields</comment>
                 </field>
                 <field id="use_impersonated" translate="label,comment" type="select" sortOrder="3" showInDefault="1"
                        showInWebsite="0" showInStore="0">
