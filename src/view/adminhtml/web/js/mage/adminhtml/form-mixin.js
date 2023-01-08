@@ -4,10 +4,9 @@ define([
     'use strict';
 
     return function (DefaultForm) {
-        var originalDependenceControllerTrackChange = FormElementDependenceController.prototype.trackChange,
-            ELEMENT_ID = 'system_oauth_gmail_auth_file';
-
         /**
+         * If input is file type, ensure the `defaultValue` is fallen back to if `value` is empty
+         *
          * @override
          * @param {Object} e - event
          * @param {String} idTo - id of target element
@@ -15,36 +14,48 @@ define([
          * @return
          */
         FormElementDependenceController.prototype.trackChange = function (e, idTo, valuesFrom) {
-            originalDependenceControllerTrackChange.call(this, e, idTo, valuesFrom);
+            // define whether the target should show up
+            var shouldShowUp = true,
+                idFrom, from, values, isInArray, isNegative, headElement, isInheritCheckboxChecked, target, inputs,
+                isAnInputOrSelect, currentConfig, rowElement, fromId, radioFrom, targetArray, isChooser;
 
-            if (!valuesFrom.hasOwnProperty(ELEMENT_ID)) {
-                return;
-            }
+            for (idFrom in valuesFrom) { //eslint-disable-line guard-for-in
+                from = $(idFrom);
 
-            var element = $(ELEMENT_ID);
-            if (!element || element.type !== 'file') {
-                return;
-            }
+                if (from) {
+                    values = valuesFrom[idFrom].values;
+                    isInArray = values.indexOf(from.value || from.defaultValue) !== -1; //eslint-disable-line
+                    isNegative = valuesFrom[idFrom].negative;
 
-            var values = valuesFrom[ELEMENT_ID].values,
-                fromValue = element.value || element.defaultValue,
-                isInArray = values.indexOf(fromValue) !== -1,
-                isNegative = valuesFrom[ELEMENT_ID].negative,
-                shouldShowUp = true;
+                    if (!from || isInArray && isNegative || !isInArray && !isNegative) {
+                        shouldShowUp = false;
+                    }
+                    // Check if radio button
+                } else {
+                    values = valuesFrom[idFrom].values;
+                    fromId = $(idFrom + values[0]);
 
-            if (isInArray && isNegative || !isInArray && !isNegative) {
-                shouldShowUp = false;
+                    if (fromId) {
+                        radioFrom = $$('[name="' + fromId.name + '"]:checked');
+                        isInArray = radioFrom.length > 0 && values.indexOf(radioFrom[0].value) !== -1;
+                        isNegative = valuesFrom[idFrom].negative;
+
+                        if (!radioFrom || isInArray && isNegative || !isInArray && !isNegative) {
+                            shouldShowUp = false;
+                        }
+                    }
+                }
             }
 
             // toggle target row
-            var headElement = jQuery('#' + idTo + '-head'),
-                isInheritCheckboxChecked = $(idTo + '_inherit') && $(idTo + '_inherit').checked,
-                target = $(idTo);
+            headElement = jQuery('#' + idTo + '-head');
+            isInheritCheckboxChecked = $(idTo + '_inherit') && $(idTo + '_inherit').checked;
+            target = $(idTo);
 
             // Account for the chooser style parameters.
             if (target === null && headElement.length === 0 && idTo.substring(0, 16) === 'options_fieldset') {
-                var targetArray = $$('input[id*="' + idTo + '"]');
-                var isChooser = true;
+                targetArray = $$('input[id*="' + idTo + '"]');
+                isChooser = true;
 
                 if (targetArray !== null && targetArray.length > 0) {
                     target = targetArray[0];
@@ -54,19 +65,19 @@ define([
 
             // Target won't always exist (for example, if field type is "label")
             if (target) {
-                var inputs = target.up(this._config['levels_up']).select('input', 'select', 'td');
-                var isAnInputOrSelect = ['input', 'select'].indexOf(target.tagName.toLowerCase()) != -1; //eslint-disable-line
+                inputs = target.up(this._config['levels_up']).select('input', 'select', 'td');
+                isAnInputOrSelect = ['input', 'select'].indexOf(target.tagName.toLowerCase()) != -1; //eslint-disable-line
 
                 if (target.type === 'fieldset') {
                     inputs = target.select('input', 'select', 'td');
                 }
             } else {
-                var inputs = false;
-                var isAnInputOrSelect = false;
+                inputs = false;
+                isAnInputOrSelect = false;
             }
 
             if (shouldShowUp) {
-                var currentConfig = this._config;
+                currentConfig = this._config;
 
                 if (inputs) {
                     inputs.each(function (item) {
@@ -140,7 +151,7 @@ define([
                 }
 
             }
-            var rowElement = $('row_' + idTo);
+            rowElement = $('row_' + idTo);
 
             if (rowElement == undefined && target) { //eslint-disable-line eqeqeq
                 rowElement = target.up(this._config['levels_up']);
