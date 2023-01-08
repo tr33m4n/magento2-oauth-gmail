@@ -114,7 +114,6 @@ class Provider
      * Check if service account
      *
      * @throws \Magento\Framework\Exception\FileSystemException
-     * @throws \tr33m4n\OauthGmail\Exception\ConfigException
      */
     public function isServiceAccount(): bool
     {
@@ -124,7 +123,7 @@ class Provider
 
         try {
             $authFileData = $this->serializer->unserialize($this->varDirectory->readFile($this->getAuthFilePath()));
-        } catch (InvalidArgumentException $invalidArgumentException) {
+        } catch (InvalidArgumentException | ConfigException $exception) {
             return false;
         }
 
