@@ -17,14 +17,20 @@ define([
             // define whether the target should show up
             var shouldShowUp = true,
                 idFrom, from, values, isInArray, isNegative, headElement, isInheritCheckboxChecked, target, inputs,
-                isAnInputOrSelect, currentConfig, rowElement, fromId, radioFrom, targetArray, isChooser;
+                isAnInputOrSelect, currentConfig, rowElement, fromId, radioFrom, targetArray, isChooser, fromValue;
 
             for (idFrom in valuesFrom) { //eslint-disable-line guard-for-in
                 from = $(idFrom);
 
                 if (from) {
                     values = valuesFrom[idFrom].values;
-                    isInArray = values.indexOf(from.value || from.defaultValue) !== -1; //eslint-disable-line
+
+                    fromValue = from.value;
+                    if (from.type === 'file') {
+                        fromValue = from.defaultValue;
+                    }
+
+                    isInArray = values.indexOf(fromValue) !== -1; //eslint-disable-line
                     isNegative = valuesFrom[idFrom].negative;
 
                     if (!from || isInArray && isNegative || !isInArray && !isNegative) {
