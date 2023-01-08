@@ -20,6 +20,12 @@
                         <field id="system/oauth_gmail/auth_type">file</field>
                     </depends>
                 </field>
+                <field id="is_service_account" translate="label,comment" type="select" sortOrder="2" showInDefault="0"
+                       showInWebsite="0" showInStore="0">
+                    <label>Is Service Account?</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Hidden field to aid showing/hiding service account related fields</comment>
+                </field>
                 <field id="use_impersonated" translate="label,comment" type="select" sortOrder="3" showInDefault="1"
                        showInWebsite="0" showInStore="0">
                     <label>Use Impersonated Emails</label>
@@ -27,6 +33,7 @@
                     <comment>If you have delegated domain-wide access to a service account, and you want to impersonate a user account when sending for a particular email scope</comment>
                     <depends>
                         <field id="system/oauth_gmail/auth_type">file</field>
+                        <field id="system/oauth_gmail/is_service_account">1</field>
                     </depends>
                 </field>
                 <field id="impersonated_emails" translate="label" type="select" sortOrder="4" showInDefault="1"
@@ -37,6 +44,7 @@
                     <depends>
                         <field id="system/oauth_gmail/auth_type">file</field>
                         <field id="system/oauth_gmail/use_impersonated">1</field>
+                        <field id="system/oauth_gmail/is_service_account">1</field>
                     </depends>
                 </field>
                 <field id="client_id" translate="label" type="text" sortOrder="5" showInDefault="1"
@@ -58,6 +66,8 @@
                     <frontend_model>tr33m4n\OauthGmail\Block\Adminhtml\System\Config\Authenticate</frontend_model>
                     <depends>
                         <field id="system/oauth_gmail/auth_type">client_id_secret</field>
+                        <field id="system/oauth_gmail/auth_type">file</field>
+                        <field id="system/oauth_gmail/is_service_account">0</field>
                     </depends>
                 </field>
                 <field id="send_test" sortOrder="8" showInDefault="1" showInWebsite="0" showInStore="0">

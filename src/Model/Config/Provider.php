@@ -14,6 +14,8 @@ use tr33m4n\OauthGmail\Exception\ConfigException;
 
 class Provider
 {
+    public const XML_CONFIG_IS_SERVICE_ACCOUNT = 'system/oauth_gmail/is_service_account';
+
     private const XML_CONFIG_AUTH_TYPE = 'system/oauth_gmail/auth_type';
 
     private const XML_CONFIG_AUTH_FILE = 'system/oauth_gmail/auth_file';
@@ -96,6 +98,14 @@ class Provider
     }
 
     /**
+     * Check if service account
+     */
+    public function isServiceAccount(): bool
+    {
+        return $this->scopeConfig->isSetFlag(self::XML_CONFIG_IS_SERVICE_ACCOUNT);
+    }
+
+    /**
      * Get client ID
      *
      * @throws \tr33m4n\OauthGmail\Exception\ConfigException
@@ -130,7 +140,7 @@ class Provider
      */
     public function shouldUseImpersonated(): bool
     {
-        return $this->scopeConfig->isSetFlag(self::XML_CONFIG_USE_IMPERSONATED);
+        return $this->isServiceAccount() && $this->scopeConfig->isSetFlag(self::XML_CONFIG_USE_IMPERSONATED);
     }
 
     /**
@@ -158,9 +168,6 @@ class Provider
         $indexedEmails = [];
         foreach ($impersonatedEmails as $impersonatedEmail) {
             $scopes = $impersonatedEmail[self::SCOPES_KEY] ?? [];
-            if (empty($scopes)) {
-                continue;
-            }
 
             foreach ($scopes as $scope) {
                 $resolvedEmail = $this->senderResolver->resolve($scope)[self::EMAIL_KEY] ?? null;
