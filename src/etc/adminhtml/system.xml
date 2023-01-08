@@ -65,8 +65,6 @@
                 <field id="authenticate" sortOrder="7" showInDefault="1" showInWebsite="0" showInStore="0">
                     <frontend_model>tr33m4n\OauthGmail\Block\Adminhtml\System\Config\Authenticate</frontend_model>
                     <depends>
-                        <field id="system/oauth_gmail/auth_type">client_id_secret</field>
-                        <field id="system/oauth_gmail/auth_type">file</field>
                         <field id="system/oauth_gmail/is_service_account">0</field>
                     </depends>
                 </field>
