@@ -21,7 +21,7 @@ define([
                 return;
             }
 
-            var element = $(valuesFrom[ELEMENT_ID]);
+            var element = $(ELEMENT_ID);
             if (!element || element.type !== 'file') {
                 return;
             }
