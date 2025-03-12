@@ -161,10 +161,22 @@ class Provider
     }
 
     /**
+     * Get test scope
+     */
+    public function getTestScope(): ?string
+    {
+        $testScope = $this->scopeConfig->getValue('system/oauth_gmail/test_scope');
+        if (!is_string($testScope)) {
+            return null;
+        }
+
+        return $testScope;
+    }
+
+    /**
      * Whether to use an impersonated account
      *
      * @throws \Magento\Framework\Exception\FileSystemException
-     * @throws \tr33m4n\OauthGmail\Exception\ConfigException
      */
     public function shouldUseImpersonated(): bool
     {

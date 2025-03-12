@@ -6,6 +6,7 @@
             <oauth_gmail>
                 <client_secret backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
                 <auth_type>client_id_secret</auth_type>
+                <test_scope>general</test_scope>
             </oauth_gmail>
         </system>
     </default>

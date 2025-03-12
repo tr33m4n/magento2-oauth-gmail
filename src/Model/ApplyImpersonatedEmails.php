@@ -26,6 +26,7 @@ class ApplyImpersonatedEmails
      *
      * @throws \tr33m4n\OauthGmail\Exception\ConfigException
      * @throws \Magento\Framework\Exception\MailException
+     * @throws \Magento\Framework\Exception\FileSystemException
      */
     public function execute(EmailMessage $emailMessage, Client $client): EmailMessage
     {

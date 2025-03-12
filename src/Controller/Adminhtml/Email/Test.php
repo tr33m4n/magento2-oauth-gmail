@@ -62,7 +62,7 @@ class Test extends Action implements HttpGetActionInterface
         $adminUser = $this->authSession->getUser();
 
         $this->transportBuilder->setTemplateIdentifier('google_oauth_mail_test')
-            ->setFromByScope('general')
+            ->setFromByScope($this->configProvider->getTestScope() ?? 'general')
             ->addTo($adminUser->getEmail(), $adminUser->getName())
             ->setTemplateOptions([
                 'area' => FrontNameResolver::AREA_CODE,

@@ -8,7 +8,7 @@ This module allows Magento to send emails through the Gmail API using Oauth auth
 - [ ] Allow send failure to fallback to default
 - [ ] Allow configuring different test email addresses
 - [ ] Better handling of refresh token errors
-- [ ] Add instructions/wiki for configuring the Oauth application within the Google Developer console
+- [ ] Add instructions/wiki for configuring the Oauth application within the Google Developer console https://developers.google.com/workspace/guides/create-credentials
 - [ ] Add unit/integration tests
 - [ ] Add CI
 
