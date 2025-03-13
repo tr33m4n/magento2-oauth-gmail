@@ -36,8 +36,8 @@ class ApplyImpersonatedEmails
             return $emailMessage;
         }
 
-        foreach ($emailMessage->getFrom() as $address) {
-            $addressEmail = $address->getEmail();
+        foreach (($emailMessage->getFrom() ?? []) as $address) {
+            $addressEmail = $address->getEmail() ?? '';
             if (!array_key_exists($addressEmail, $impersonatedEmailConfig)) {
                 continue;
             }

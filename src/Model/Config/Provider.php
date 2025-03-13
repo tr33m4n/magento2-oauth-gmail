@@ -192,15 +192,20 @@ class Provider
             $impersonatedEmails = $this->serializer->unserialize($impersonatedEmails);
         }
 
-        if (empty($impersonatedEmails)) {
+        if (!is_array($impersonatedEmails) || [] === $impersonatedEmails) {
             throw new ConfigException(__('No impersonated emails have been set'));
         }
 
         $indexedEmails = [];
+        /** @var array{scopes?: array<string, mixed>, email: string} $impersonatedEmail */
         foreach ($impersonatedEmails as $impersonatedEmail) {
             $scopes = $impersonatedEmail[self::SCOPES_KEY] ?? [];
 
             foreach ($scopes as $scope) {
+                if (!is_array($scope) && !is_string($scope)) {
+                    continue;
+                }
+
                 $resolvedEmail = $this->senderResolver->resolve($scope)[self::EMAIL_KEY] ?? null;
                 if (!$resolvedEmail) {
                     continue;
@@ -210,6 +215,7 @@ class Provider
             }
         }
 
+        /** @var array<string, string> $indexedEmails */
         return $this->impersonatedEmails = $indexedEmails;
     }
 

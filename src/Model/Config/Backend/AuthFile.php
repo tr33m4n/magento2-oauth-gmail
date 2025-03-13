@@ -53,7 +53,9 @@ class AuthFile extends File
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
+     *
+     * @return string[]
      */
     protected function _getAllowedExtensions(): array
     {

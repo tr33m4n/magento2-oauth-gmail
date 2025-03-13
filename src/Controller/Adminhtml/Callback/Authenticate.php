@@ -47,10 +47,16 @@ class Authenticate extends Action implements HttpGetActionInterface
      */
     public function execute(): ResponseInterface
     {
-        $credentials = $this->getClient->execute()
-            ->fetchAccessTokenWithAuthCode($this->getRequest()->getParam('code'));
-
         try {
+            $code = $this->getRequest()->getParam('code');
+            if (!is_scalar($code)) {
+                $code = '';
+            }
+
+            /** @var array<string, mixed> $credentials */
+            $credentials = $this->getClient->execute()
+                ->fetchAccessTokenWithAuthCode((string) $code);
+
             $this->saveAccessToken->execute($credentials);
         } catch (AccessTokenException $exception) {
             $this->messageManager->addErrorMessage($exception->getMessage());

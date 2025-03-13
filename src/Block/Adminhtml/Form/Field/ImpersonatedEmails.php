@@ -6,12 +6,11 @@ namespace tr33m4n\OauthGmail\Block\Adminhtml\Form\Field;
 
 use Magento\Config\Block\System\Config\Form\Field\FieldArray\AbstractFieldArray;
 use Magento\Framework\DataObject;
-use Magento\Framework\View\Element\BlockInterface;
 use tr33m4n\OauthGmail\Model\Config\Provider;
 
 class ImpersonatedEmails extends AbstractFieldArray
 {
-    private ?BlockInterface $scopesRenderer = null;
+    private ?ScopesColumn $scopesRenderer = null;
 
     /**
      * {@inheritdoc}
@@ -37,7 +36,7 @@ class ImpersonatedEmails extends AbstractFieldArray
         );
 
         $this->_addAfter = false;
-        $this->_addButtonLabel = __('Add Email');
+        $this->_addButtonLabel = (string) __('Add Email');
     }
 
     /**
@@ -52,7 +51,12 @@ class ImpersonatedEmails extends AbstractFieldArray
         $scopes = $row->getData('scopes');
         if (is_array($scopes)) {
             foreach ($scopes as $scope) {
-                $options['option_' . $this->getScopesRenderer()->calcOptionHash($scope)] = 'selected="selected"';
+                if (!is_scalar($scope)) {
+                    continue;
+                }
+
+                $options['option_' . $this->getScopesRenderer()->calcOptionHash((string) $scope)] =
+                    'selected="selected"';
             }
         }
 
@@ -64,14 +68,17 @@ class ImpersonatedEmails extends AbstractFieldArray
      *
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    private function getScopesRenderer(): BlockInterface
+    private function getScopesRenderer(): ScopesColumn
     {
-        if (!$this->scopesRenderer instanceof BlockInterface) {
-            $this->scopesRenderer = $this->getLayout()->createBlock(
+        if (!$this->scopesRenderer instanceof ScopesColumn) {
+            /** @var \tr33m4n\OauthGmail\Block\Adminhtml\Form\Field\ScopesColumn $scopesColumns */
+            $scopesColumns = $this->getLayout()->createBlock(
                 ScopesColumn::class,
                 '',
                 ['data' => ['is_render_to_js_template' => true]]
             );
+
+            $this->scopesRenderer = $scopesColumns;
         }
 
         return $this->scopesRenderer;

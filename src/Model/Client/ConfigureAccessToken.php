@@ -50,6 +50,7 @@ class ConfigureAccessToken
             );
         }
 
+        /** @var array<string, mixed> $accessTokenCredentials */
         $accessTokenCredentials = $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
 
         try {

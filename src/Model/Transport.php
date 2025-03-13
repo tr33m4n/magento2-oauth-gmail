@@ -48,6 +48,7 @@ class Transport implements TransportInterface
             $this->applyImpersonatedEmails->execute($emailMessage, $this->getGmailService->execute()->getClient());
             $this->validateSender->execute($emailMessage);
 
+            // @phpstan-ignore-next-line
             $this->getGmailService->execute()
                 ->users_messages
                 ->send('me', $this->asGmailMessage($emailMessage));

@@ -37,6 +37,7 @@ class ValidateSender
     {
         foreach ((array) $emailMessage->getFrom() as $address) {
             try {
+                // @phpstan-ignore-next-line
                 $result = $this->getGmailService->execute()
                     ->users_settings_sendAs
                     ->get('me', $address->getEmail());
@@ -44,6 +45,7 @@ class ValidateSender
                 $sendAsMessage = null;
 
                 if ($this->configProvider->isServiceAccount() && $this->configProvider->shouldUseImpersonated()) {
+                    // @phpstan-ignore-next-line
                     $sendAsList = $this->getGmailService->execute()
                         ->users_settings_sendAs
                         ->listUsersSettingsSendAs('me')
