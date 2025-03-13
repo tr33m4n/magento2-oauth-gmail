@@ -20,7 +20,8 @@
         "allow-plugins": {
             "phpstan/extension-installer": true,
             "rector/rector-installer": true,
-            "magento/composer-dependency-version-audit-plugin": true
+            "magento/composer-dependency-version-audit-plugin": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     },
     "minimum-stability": "stable",
@@ -68,7 +69,9 @@
     },
     "require-dev": {
         "adamwojs/php-cs-fixer-phpdoc-force-fqcn": "^2.0",
+        "ampersand/magento-docker-test-instance": "^0.1.21",
         "bitexpert/phpstan-magento": "^0.41.0",
+        "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
         "friendsofphp/php-cs-fixer": "^3.72",
         "magento/module-config": "^101.2",
         "phpstan/extension-installer": "^1.4",
