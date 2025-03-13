@@ -10,28 +10,21 @@ use Magento\Framework\View\Element\Html\Select;
 
 class ScopesColumn extends Select
 {
-    private Identity $identitySource;
-
     /**
      * ScopesColumn constructor.
      *
      * @param array<string, mixed> $data
      */
     public function __construct(
-        Identity $identitySource,
+        private readonly Identity $identitySource,
         Context $context,
         array $data = []
     ) {
-        $this->identitySource = $identitySource;
-
         parent::__construct($context, $data);
     }
 
     /**
      * Set "name" for <select> element
-     *
-     * @param string $value
-     * @return $this
      */
     public function setInputName(string $value): ScopesColumn
     {
@@ -40,9 +33,6 @@ class ScopesColumn extends Select
 
     /**
      * Set "id" for <select> element
-     *
-     * @param string $value
-     * @return $this
      */
     public function setInputId(string $value): ScopesColumn
     {

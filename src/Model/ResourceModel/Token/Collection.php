@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace tr33m4n\OauthGmail\Model\ResourceModel\Token;
@@ -12,7 +13,7 @@ class Collection extends AbstractCollection
     /**
      * @inheritDoc
      */
-    protected function _construct() : void
+    protected function _construct(): void
     {
         $this->_init(Token::class, TokenResource::class);
     }

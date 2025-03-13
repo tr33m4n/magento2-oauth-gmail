@@ -20,27 +20,17 @@ class Test extends Action implements HttpGetActionInterface
     /**
      * @inheritDoc
      */
-    const ADMIN_RESOURCE = 'tr33m4n_OauthGmail::oauth';
-
-    private Provider $configProvider;
-
-    private AuthSession $authSession;
-
-    private TransportBuilder $transportBuilder;
+    public const ADMIN_RESOURCE = 'tr33m4n_OauthGmail::oauth';
 
     /**
      * Test constructor.
      */
     public function __construct(
-        Context $context,
-        Provider $configProvider,
-        AuthSession $authSession,
-        TransportBuilder $transportBuilder
+        private readonly Provider $configProvider,
+        private readonly AuthSession $authSession,
+        private readonly TransportBuilder $transportBuilder,
+        Context $context
     ) {
-        $this->configProvider = $configProvider;
-        $this->authSession = $authSession;
-        $this->transportBuilder = $transportBuilder;
-
         parent::__construct($context);
     }
 
@@ -49,7 +39,6 @@ class Test extends Action implements HttpGetActionInterface
      *
      * @throws \Magento\Framework\Exception\MailException
      * @throws \Magento\Framework\Exception\LocalizedException
-     * @return \Magento\Framework\App\ResponseInterface
      */
     public function execute(): ResponseInterface
     {

@@ -10,15 +10,12 @@ use tr33m4n\OauthGmail\Model\Config\Provider;
 
 class ApplyImpersonatedEmails
 {
-    private Provider $configProvider;
-
     /**
      * ApplyImpersonatedEmails constructor.
      */
     public function __construct(
-        Provider $configProvider
+        private readonly Provider $configProvider
     ) {
-        $this->configProvider = $configProvider;
     }
 
     /**

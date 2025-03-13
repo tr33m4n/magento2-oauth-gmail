@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace tr33m4n\OauthGmail\Model;
@@ -10,32 +11,15 @@ use tr33m4n\OauthGmail\Model\ResourceModel\Token as TokenResource;
 
 class SaveAccessToken
 {
-    private DataObjectHelper $dataObjectHelper;
-
-    private ValidateAccessToken $validateAccessToken;
-
-    private TokenInterfaceFactory $tokenFactory;
-
-    private TokenResource $tokenResource;
-
     /**
      * SaveAccessToken constructor.
-     *
-     * @param \Magento\Framework\Api\DataObjectHelper            $dataObjectHelper
-     * @param \tr33m4n\OauthGmail\Model\ValidateAccessToken      $validateAccessToken
-     * @param \tr33m4n\OauthGmail\Api\Data\TokenInterfaceFactory $tokenFactory
-     * @param \tr33m4n\OauthGmail\Model\ResourceModel\Token      $tokenResource
      */
     public function __construct(
-        DataObjectHelper $dataObjectHelper,
-        ValidateAccessToken $validateAccessToken,
-        TokenInterfaceFactory $tokenFactory,
-        TokenResource $tokenResource
+        private readonly DataObjectHelper $dataObjectHelper,
+        private readonly ValidateAccessToken $validateAccessToken,
+        private readonly TokenInterfaceFactory $tokenFactory,
+        private readonly TokenResource $tokenResource
     ) {
-        $this->dataObjectHelper = $dataObjectHelper;
-        $this->validateAccessToken = $validateAccessToken;
-        $this->tokenFactory = $tokenFactory;
-        $this->tokenResource = $tokenResource;
     }
 
     /**
@@ -43,9 +27,9 @@ class SaveAccessToken
      *
      * @throws \Magento\Framework\Exception\AlreadyExistsException
      * @throws \tr33m4n\OauthGmail\Exception\AccessTokenException
-     * @param array $accessToken
+     * @param array<string, mixed> $accessToken
      */
-    public function execute(array $accessToken) : void
+    public function execute(array $accessToken): void
     {
         $this->validateAccessToken->execute($accessToken);
 

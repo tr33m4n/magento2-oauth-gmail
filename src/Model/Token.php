@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace tr33m4n\OauthGmail\Model;
@@ -12,7 +13,7 @@ class Token extends AbstractModel implements TokenInterface
     /**
      * @inheritDoc
      */
-    public function getAccessToken() : ?string
+    public function getAccessToken(): ?string
     {
         // @phpstan-ignore-next-line
         return $this->getData(self::KEY_ACCESS_TOKEN);
@@ -21,7 +22,7 @@ class Token extends AbstractModel implements TokenInterface
     /**
      * @inheritDoc
      */
-    public function setAccessToken(string $accessToken) : TokenInterface
+    public function setAccessToken(string $accessToken): TokenInterface
     {
         return $this->setData(self::KEY_ACCESS_TOKEN, $accessToken);
     }
@@ -29,7 +30,7 @@ class Token extends AbstractModel implements TokenInterface
     /**
      * @inheritDoc
      */
-    public function getRefreshToken() : ?string
+    public function getRefreshToken(): ?string
     {
         // @phpstan-ignore-next-line
         return $this->getData(self::KEY_REFRESH_TOKEN);
@@ -38,7 +39,7 @@ class Token extends AbstractModel implements TokenInterface
     /**
      * @inheritDoc
      */
-    public function setRefreshToken(string $refreshToken) : TokenInterface
+    public function setRefreshToken(string $refreshToken): TokenInterface
     {
         return $this->setData(self::KEY_REFRESH_TOKEN, $refreshToken);
     }
@@ -46,7 +47,7 @@ class Token extends AbstractModel implements TokenInterface
     /**
      * @inheritDoc
      */
-    public function getTokenType() : ?string
+    public function getTokenType(): ?string
     {
         // @phpstan-ignore-next-line
         return $this->getData(self::KEY_TOKEN_TYPE);
@@ -55,7 +56,7 @@ class Token extends AbstractModel implements TokenInterface
     /**
      * @inheritDoc
      */
-    public function setTokenType(string $tokenType) : TokenInterface
+    public function setTokenType(string $tokenType): TokenInterface
     {
         return $this->setData(self::KEY_TOKEN_TYPE, $tokenType);
     }
@@ -63,7 +64,7 @@ class Token extends AbstractModel implements TokenInterface
     /**
      * @inheritDoc
      */
-    public function getScope() : ?string
+    public function getScope(): ?string
     {
         // @phpstan-ignore-next-line
         return $this->getData(self::KEY_SCOPE);
@@ -72,7 +73,7 @@ class Token extends AbstractModel implements TokenInterface
     /**
      * @inheritDoc
      */
-    public function setScope(string $scope) : TokenInterface
+    public function setScope(string $scope): TokenInterface
     {
         return $this->setData(self::KEY_SCOPE, $scope);
     }
@@ -80,7 +81,7 @@ class Token extends AbstractModel implements TokenInterface
     /**
      * @inheritDoc
      */
-    public function getExpiresIn() : ?int
+    public function getExpiresIn(): ?int
     {
         // @phpstan-ignore-next-line
         return $this->getData(self::KEY_EXPIRES_IN);
@@ -89,7 +90,7 @@ class Token extends AbstractModel implements TokenInterface
     /**
      * @inheritDoc
      */
-    public function setExpiresIn(int $expiresIn) : TokenInterface
+    public function setExpiresIn(int $expiresIn): TokenInterface
     {
         return $this->setData(self::KEY_EXPIRES_IN, $expiresIn);
     }
@@ -97,7 +98,7 @@ class Token extends AbstractModel implements TokenInterface
     /**
      * @inheritDoc
      */
-    public function getCreated() : ?int
+    public function getCreated(): ?int
     {
         // @phpstan-ignore-next-line
         return $this->getData(self::KEY_CREATED);
@@ -106,7 +107,7 @@ class Token extends AbstractModel implements TokenInterface
     /**
      * @inheritDoc
      */
-    public function setCreated(int $created) : TokenInterface
+    public function setCreated(int $created): TokenInterface
     {
         return $this->setData(self::KEY_CREATED, $created);
     }
@@ -114,7 +115,7 @@ class Token extends AbstractModel implements TokenInterface
     /**
      * @inheritDoc
      */
-    protected function _construct() : void
+    protected function _construct(): void
     {
         $this->_init(TokenResource::class);
     }

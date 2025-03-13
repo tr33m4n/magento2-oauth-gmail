@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace tr33m4n\OauthGmail\Block\Adminhtml\System\Config;
@@ -16,7 +17,7 @@ abstract class AbstractButton extends Field
     /**
      * @inheritDoc
      */
-    public function render(AbstractElement $element) : string
+    public function render(AbstractElement $element): string
     {
         $element->unsetData('scope')->unsetData('can_use_website_value')->unsetData('can_use_default_value');
 

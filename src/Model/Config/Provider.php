@@ -35,13 +35,7 @@ class Provider
 
     public const SCOPES_KEY = 'scopes';
 
-    private SerializerInterface $serializer;
-
-    private ScopeConfigInterface $scopeConfig;
-
     private ReadInterface $varDirectory;
-
-    private SenderResolverInterface $senderResolver;
 
     /**
      * @var array<string, string>
@@ -54,15 +48,12 @@ class Provider
      * Provider constructor.
      */
     public function __construct(
-        SerializerInterface $serializer,
-        ScopeConfigInterface $scopeConfig,
-        Filesystem $filesystem,
-        SenderResolverInterface $senderResolver
+        private readonly SerializerInterface $serializer,
+        private readonly ScopeConfigInterface $scopeConfig,
+        private readonly SenderResolverInterface $senderResolver,
+        Filesystem $filesystem
     ) {
-        $this->serializer = $serializer;
-        $this->scopeConfig = $scopeConfig;
         $this->varDirectory = $filesystem->getDirectoryRead(DirectoryList::VAR_DIR);
-        $this->senderResolver = $senderResolver;
     }
 
     /**
@@ -229,13 +220,13 @@ class Provider
     {
         try {
             return (bool) $this->getAuthFilePath();
-        } catch (ConfigException $configException) {
+        } catch (ConfigException) {
             // Do nothing
         }
 
         try {
             return $this->getClientId() && $this->getClientSecret();
-        } catch (ConfigException $configException) {
+        } catch (ConfigException) {
             // Do nothing
         }
 

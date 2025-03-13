@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace tr33m4n\OauthGmail\Model\Client;
@@ -13,32 +14,15 @@ use tr33m4n\OauthGmail\Model\ValidateAccessToken;
 
 class ConfigureAccessToken
 {
-    private SaveAccessToken $saveAccessToken;
-
-    private GetAccessToken $getAccessToken;
-
-    private ValidateAccessToken $validateAccessToken;
-
-    private LoggerInterface $logger;
-
     /**
      * ConfigureAccessToken constructor.
-     *
-     * @param \tr33m4n\OauthGmail\Model\SaveAccessToken     $saveAccessToken
-     * @param \tr33m4n\OauthGmail\Model\GetAccessToken      $getAccessToken
-     * @param \tr33m4n\OauthGmail\Model\ValidateAccessToken $validateAccessToken
-     * @param \Psr\Log\LoggerInterface                      $logger
      */
     public function __construct(
-        SaveAccessToken $saveAccessToken,
-        GetAccessToken $getAccessToken,
-        ValidateAccessToken $validateAccessToken,
-        LoggerInterface $logger
+        private readonly SaveAccessToken $saveAccessToken,
+        private readonly GetAccessToken $getAccessToken,
+        private readonly ValidateAccessToken $validateAccessToken,
+        private readonly LoggerInterface $logger
     ) {
-        $this->saveAccessToken = $saveAccessToken;
-        $this->getAccessToken = $getAccessToken;
-        $this->validateAccessToken = $validateAccessToken;
-        $this->logger = $logger;
     }
 
     /**
@@ -46,10 +30,8 @@ class ConfigureAccessToken
      *
      * @throws \Magento\Framework\Exception\AlreadyExistsException
      * @throws \tr33m4n\OauthGmail\Exception\AccessTokenException
-     * @param \Google\Client $client
-     * @return \Google\Client
      */
-    public function execute(Client $client) : Client
+    public function execute(Client $client): Client
     {
         /** @var \tr33m4n\OauthGmail\Model\Token|null $accessToken */
         $accessToken = $this->getAccessToken->execute();

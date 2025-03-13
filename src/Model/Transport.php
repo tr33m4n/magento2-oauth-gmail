@@ -14,31 +14,16 @@ use Magento\Framework\Mail\TransportInterface;
 
 class Transport implements TransportInterface
 {
-    private ValidateSender $validateSender;
-
-    private ApplyImpersonatedEmails $applyImpersonatedEmails;
-
-    private GetGmailService $getGmailService;
-
-    private MessageInterface $message;
-
-    private MessageFactory $googleMessageFactory;
-
     /**
      * Transport constructor.
      */
     public function __construct(
-        ValidateSender $validateSender,
-        ApplyImpersonatedEmails $applyImpersonatedEmails,
-        GetGmailService $getGmailService,
-        MessageInterface $message,
-        MessageFactory $googleMessageFactory
+        private readonly ValidateSender $validateSender,
+        private readonly ApplyImpersonatedEmails $applyImpersonatedEmails,
+        private readonly GetGmailService $getGmailService,
+        private readonly MessageInterface $message,
+        private readonly MessageFactory $googleMessageFactory
     ) {
-        $this->validateSender = $validateSender;
-        $this->applyImpersonatedEmails = $applyImpersonatedEmails;
-        $this->getGmailService = $getGmailService;
-        $this->message = $message;
-        $this->googleMessageFactory = $googleMessageFactory;
     }
 
     /**
@@ -73,9 +58,6 @@ class Transport implements TransportInterface
 
     /**
      * As Gmail message
-     *
-     * @param \Magento\Framework\Mail\MailMessageInterface $message
-     * @return \Google\Service\Gmail\Message
      */
     private function asGmailMessage(MailMessageInterface $message): Message
     {

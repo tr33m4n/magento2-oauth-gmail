@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace tr33m4n\OauthGmail\Model;
@@ -9,7 +10,7 @@ use tr33m4n\OauthGmail\Exception\AccessTokenException;
 
 class ValidateAccessToken
 {
-    const REQUIRED_FIELDS = [
+    private const REQUIRED_FIELDS = [
         TokenInterface::KEY_ACCESS_TOKEN,
         TokenInterface::KEY_EXPIRES_IN,
         TokenInterface::KEY_SCOPE,
@@ -18,19 +19,14 @@ class ValidateAccessToken
         TokenInterface::KEY_TOKEN_TYPE
     ];
 
-    const ERROR_KEY = 'error';
-
-    private SerializerInterface $serializer;
+    private const ERROR_KEY = 'error';
 
     /**
      * ValidateCredentials constructor.
-     *
-     * @param \Magento\Framework\Serialize\SerializerInterface $serializer
      */
     public function __construct(
-        SerializerInterface $serializer
+        private readonly SerializerInterface $serializer
     ) {
-        $this->serializer = $serializer;
     }
 
     /**
@@ -39,7 +35,7 @@ class ValidateAccessToken
      * @throws \tr33m4n\OauthGmail\Exception\AccessTokenException
      * @param array<string, mixed> $accessToken
      */
-    public function execute(array $accessToken) : void
+    public function execute(array $accessToken): void
     {
         if (array_key_exists(self::ERROR_KEY, $accessToken)) {
             throw new AccessTokenException(

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace tr33m4n\OauthGmail\Plugin\Model\Config\Structure\Element;
 
 use Magento\Config\Model\Config\Structure\Element\Dependency\Field as DependencyField;
+use Magento\Config\Model\Config\Structure\Element\Dependency\FieldFactory;
 use Magento\Config\Model\Config\Structure\Element\Field;
-use ReflectionProperty;
 use tr33m4n\OauthGmail\Model\Config\Provider;
 
 class FieldPlugin
@@ -15,15 +15,13 @@ class FieldPlugin
 
     private const INVALID_VALUE = '__INVALID__';
 
-    private Provider $configProvider;
-
     /**
      * FieldPlugin constructor.
      */
     public function __construct(
-        Provider $configProvider
+        private readonly Provider $configProvider,
+        private readonly FieldFactory $fieldFactory
     ) {
-        $this->configProvider = $configProvider;
     }
 
     /**

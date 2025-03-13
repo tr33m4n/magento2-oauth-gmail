@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace tr33m4n\OauthGmail\Block\Adminhtml\System\Config;
@@ -11,42 +12,29 @@ use tr33m4n\OauthGmail\Model\Client\GetClient;
 
 class Authenticate extends AbstractButton
 {
-    private GetClient $getClient;
-
-    private Context $context;
-
     /**
      * Authenticate constructor.
      *
-     * @param \tr33m4n\OauthGmail\Model\Client\GetClient             $getClient
-     * @param \Magento\Backend\Block\Template\Context                $context
-     * @param array<int|string, mixed>                               $data
-     * @param \Magento\Framework\View\Helper\SecureHtmlRenderer|null $secureRenderer
+     * @param array<int|string, mixed> $data
      */
     public function __construct(
-        GetClient $getClient,
+        private readonly GetClient $getClient,
         Context $context,
         array $data = [],
         ?SecureHtmlRenderer $secureRenderer = null
     ) {
-        $this->getClient = $getClient;
-        $this->context = $context;
-
         parent::__construct($context, $data, $secureRenderer);
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @param \Magento\Framework\Data\Form\Element\AbstractElement $element
-     * @return string
+     * @inheritDoc
      */
-    protected function _getElementHtml(AbstractElement $element) : string
+    protected function _getElementHtml(AbstractElement $element): string
     {
         try {
             $buttonUrl = $this->getClient->execute()->createAuthUrl();
         } catch (Exception $exception) {
-            $this->context->getLogger()->error($exception);
+            $this->_logger->error($exception);
 
             $buttonUrl = null;
         }

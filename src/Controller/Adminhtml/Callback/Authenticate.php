@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace tr33m4n\OauthGmail\Controller\Adminhtml\Callback;
@@ -16,7 +17,7 @@ class Authenticate extends Action implements HttpGetActionInterface
     /**
      * @inheritDoc
      */
-    const ADMIN_RESOURCE = 'tr33m4n_OauthGmail::oauth';
+    public const ADMIN_RESOURCE = 'tr33m4n_OauthGmail::oauth';
 
     /**
      * {@inheritdoc}
@@ -27,25 +28,14 @@ class Authenticate extends Action implements HttpGetActionInterface
         'authenticate'
     ];
 
-    private GetClient $getClient;
-
-    private SaveAccessToken $saveAccessToken;
-
     /**
      * Authenticate constructor.
-     *
-     * @param \Magento\Backend\App\Action\Context        $context
-     * @param \tr33m4n\OauthGmail\Model\Client\GetClient $getClient
-     * @param \tr33m4n\OauthGmail\Model\SaveAccessToken  $saveAccessToken
      */
     public function __construct(
-        Context $context,
-        GetClient $getClient,
-        SaveAccessToken $saveAccessToken
+        private readonly GetClient $getClient,
+        private readonly SaveAccessToken $saveAccessToken,
+        Context $context
     ) {
-        $this->getClient = $getClient;
-        $this->saveAccessToken = $saveAccessToken;
-
         parent::__construct($context);
     }
 
@@ -54,9 +44,8 @@ class Authenticate extends Action implements HttpGetActionInterface
      *
      * @throws \Google\Exception
      * @throws \Magento\Framework\Exception\AlreadyExistsException
-     * @return \Magento\Framework\App\ResponseInterface
      */
-    public function execute() : ResponseInterface
+    public function execute(): ResponseInterface
     {
         $credentials = $this->getClient->execute()
             ->fetchAccessTokenWithAuthCode($this->getRequest()->getParam('code'));

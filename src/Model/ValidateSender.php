@@ -12,26 +12,17 @@ use tr33m4n\OauthGmail\Model\Config\Provider;
 
 class ValidateSender
 {
-    const UNSPECIFIED_STATUS = 'VERIFICATION_STATUS_UNSPECIFIED';
+    private const UNSPECIFIED_STATUS = 'VERIFICATION_STATUS_UNSPECIFIED';
 
-    const PENDING_STATUS = 'PENDING';
-
-    private GetGmailService $getGmailService;
-
-    private Provider $configProvider;
+    private const PENDING_STATUS = 'PENDING';
 
     /**
      * ValidateSender constructor.
-     *
-     * @param \tr33m4n\OauthGmail\Model\GetGmailService $getGmailService
-     * @param \tr33m4n\OauthGmail\Model\Config\Provider $configProvider
      */
     public function __construct(
-        GetGmailService $getGmailService,
-        Provider $configProvider
+        private readonly GetGmailService $getGmailService,
+        private readonly Provider $configProvider
     ) {
-        $this->getGmailService = $getGmailService;
-        $this->configProvider = $configProvider;
     }
 
     /**
@@ -41,9 +32,8 @@ class ValidateSender
      * @throws \tr33m4n\OauthGmail\Exception\SenderVerificationException
      * @throws \Magento\Framework\Exception\FileSystemException
      * @throws \tr33m4n\OauthGmail\Exception\ConfigException
-     * @param \Magento\Framework\Mail\EmailMessage $emailMessage
      */
-    public function execute(EmailMessage $emailMessage) : void
+    public function execute(EmailMessage $emailMessage): void
     {
         foreach ((array) $emailMessage->getFrom() as $address) {
             try {

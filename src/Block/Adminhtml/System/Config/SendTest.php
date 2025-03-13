@@ -11,21 +11,17 @@ use tr33m4n\OauthGmail\Model\Config\Provider;
 
 class SendTest extends AbstractButton
 {
-    private Provider $configProvider;
-
     /**
      * SendTest constructor.
      *
      * @param array<string, mixed> $data
      */
     public function __construct(
-        Provider $configProvider,
+        private readonly Provider $configProvider,
         Context $context,
         array $data = [],
         ?SecureHtmlRenderer $secureRenderer = null
     ) {
-        $this->configProvider = $configProvider;
-
         parent::__construct(
             $context,
             $data,

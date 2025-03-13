@@ -12,19 +12,13 @@ use tr33m4n\OauthGmail\Model\Config\Source\AuthType;
 
 class ConfigureAuthConfig
 {
-    private Provider $configProvider;
-
-    private UrlInterface $url;
-
     /**
      * ConfigureAuthConfig constructor.
      */
     public function __construct(
-        Provider $configProvider,
-        UrlInterface $url
+        private readonly Provider $configProvider,
+        private readonly UrlInterface $url
     ) {
-        $this->configProvider = $configProvider;
-        $this->url = $url;
     }
 
     /**
@@ -33,8 +27,6 @@ class ConfigureAuthConfig
      * @throws \Google\Exception
      * @throws \tr33m4n\OauthGmail\Exception\AuthConfigException
      * @throws \tr33m4n\OauthGmail\Exception\ConfigException
-     * @param \Google\Client $client
-     * @return \Google\Client
      */
     public function execute(Client $client): Client
     {
@@ -60,8 +52,6 @@ class ConfigureAuthConfig
 
     /**
      * Get redirect URL
-     *
-     * @return string
      */
     private function getRedirectUrl(): string
     {

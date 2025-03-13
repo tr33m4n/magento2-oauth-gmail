@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace tr33m4n\OauthGmail\Model\Config\Source;
 
 use Magento\Framework\Data\OptionSourceInterface;
+use Magento\Framework\Phrase;
 
 class AuthType implements OptionSourceInterface
 {
@@ -15,7 +16,7 @@ class AuthType implements OptionSourceInterface
     /**
      * {@inheritdoc}
      *
-     * @return array[]
+     * @return array<int, array{label: Phrase, value: string}>
      */
     public function toOptionArray(): array
     {

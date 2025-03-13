@@ -18,7 +18,7 @@ class ImpersonatedEmails extends AbstractFieldArray
      *
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    protected function _prepareToRender()
+    protected function _prepareToRender(): void
     {
         $this->addColumn(
             Provider::EMAIL_KEY,
