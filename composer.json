@@ -39,12 +39,26 @@
     },
     "scripts": {
         "post-update-cmd": "Google\\Task\\Composer::cleanup",
-        "lint": "vendor/bin/rector process && vendor/bin/php-cs-fixer fix --diff",
+        "fix": "vendor/bin/rector process && vendor/bin/php-cs-fixer fix --diff",
+        "test:static": "vendor/bin/phpstan analyse --no-interaction --no-progress && vendor/bin/phpcs src -s",
         "test:lint": "vendor/bin/rector process --dry-run && vendor/bin/php-cs-fixer fix --dry-run --diff",
-        "test:types": "vendor/bin/phpstan analyse --no-interaction --no-progress",
+        "test:unit": "vendor/bin/phpunit",
+        "test:integration:install": [
+            "COMPOSER_AUTH_JSON_LOCATION=$COMPOSER_AUTH_JSON_LOCATION COMPOSER_REPOSITORY='https://repo.magento.com/' CURRENT_EXTENSION=\".\" vendor/bin/mtest-make $TEST_GROUP"
+        ],
+        "test:integration": [
+            "vendor/bin/mtest 'vendor/bin/phpunit -c /var/www/html/dev/tests/integration/phpunit.xml.dist --testsuite Integration --debug'"
+        ],
+        "test-static-analysis": [
+            "@test:static",
+            "@test:lint"
+        ],
+        "test-functional": [
+            "@test:unit"
+        ],
         "test": [
-            "@test:lint",
-            "@test:types"
+            "@test-static-analysis",
+            "@test-functional"
         ]
     },
     "extra": {

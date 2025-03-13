@@ -1,0 +1,53 @@
+name: Test
+
+on:
+    push:
+        branches: [ main ]
+    pull_request:
+        branches: [ main ]
+    schedule:
+        - cron: 0 3 * * 1,3,5
+    workflow_dispatch:
+
+env:
+    TEST_GROUP: 2-latest
+    COMPOSER_MEMORY_LIMIT: -1
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                php: [ 8.1, 8.2, 8.3 ]
+            fail-fast: false
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v2
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php }}
+                    tools: composer:v2
+            -   name: Install dependencies
+                run: |
+                    composer config --global --auth http-basic.repo.magento.com ${{ secrets.MAGENTO_REPO_USERNAME }} ${{ secrets.MAGENTO_REPO_PASSWORD }}
+                    sudo chmod 644 ~/.composer/auth.json
+                    composer update
+            -   name: Run static analysis test suite
+                run: composer run test-static-analysis
+            -   name: Run unit test suite
+                run: composer run test:unit
+            -   name: Run integration test suite
+                id: testIntegration
+                run: |
+                    COMPOSER_AUTH_JSON_LOCATION=~/.composer/auth.json composer run test:integration:install
+                    composer run test:integration
+            -   name: Report on failure
+                if: failure() && steps.testIntegration.outcome == 'failure'
+                run: |
+                    vendor/bin/mtest 'cat /var/www/html/var/log/*.log'
+                    vendor/bin/mtest 'for r in ./var/report/*; do cat $r; done'
+                    vendor/bin/mtest 'ls -l ./dev/tests/integration/tmp/sandbox*/var'
+                    vendor/bin/mtest 'for r in ./dev/tests/integration/tmp/sandbox*/var/report/*; do cat $r; done'
+                    vendor/bin/mtest 'for l in ./dev/tests/integration/tmp/sandbox*/var/log/*; do cat $l; done'
+                    sleep 10;
