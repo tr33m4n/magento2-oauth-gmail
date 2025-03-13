@@ -35,7 +35,7 @@ class Provider
 
     public const SCOPES_KEY = 'scopes';
 
-    private ReadInterface $varDirectory;
+    private readonly ReadInterface $varDirectory;
 
     /**
      * @var array<string, string>
@@ -114,7 +114,7 @@ class Provider
 
         try {
             $authFileData = $this->serializer->unserialize($this->varDirectory->readFile($this->getAuthFilePath()));
-        } catch (InvalidArgumentException | ConfigException $exception) {
+        } catch (InvalidArgumentException | ConfigException) {
             return false;
         }
 

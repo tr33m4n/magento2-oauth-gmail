@@ -30,7 +30,8 @@ class AuthFile extends File
         TypeListInterface $cacheTypeList,
         UploaderFactory $uploaderFactory,
         File\RequestData\RequestDataInterface $requestData,
-        Filesystem $filesystem, AbstractResource $resource = null,
+        Filesystem $filesystem,
+        AbstractResource $resource = null,
         AbstractDb $resourceCollection = null,
         array $data = []
     ) {

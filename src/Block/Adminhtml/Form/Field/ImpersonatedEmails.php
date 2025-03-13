@@ -66,7 +66,7 @@ class ImpersonatedEmails extends AbstractFieldArray
      */
     private function getScopesRenderer(): BlockInterface
     {
-        if (null === $this->scopesRenderer) {
+        if (!$this->scopesRenderer instanceof BlockInterface) {
             $this->scopesRenderer = $this->getLayout()->createBlock(
                 ScopesColumn::class,
                 '',

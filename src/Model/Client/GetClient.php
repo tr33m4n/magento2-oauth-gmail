@@ -30,7 +30,7 @@ class GetClient
      */
     public function execute(): Client
     {
-        if ($this->configuredClient !== null) {
+        if ($this->configuredClient instanceof Client) {
             return $this->configuredClient;
         }
 

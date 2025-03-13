@@ -30,22 +30,17 @@ class ConfigureAuthConfig
      */
     public function execute(Client $client): Client
     {
-        switch ($this->configProvider->getAuthType()) {
-            case AuthType::AUTH_TYPE_FILE:
-                $client->setAuthConfig($this->configProvider->getAuthFilePath());
-                break;
-            case AuthType::AUTH_TYPE_CLIENT_ID_SECRET:
-                $client->setAuthConfig([
-                    'client_id' => $this->configProvider->getClientId(),
-                    'client_secret' => $this->configProvider->getClientSecret(),
-                    'redirect_uris' => [
-                        $this->getRedirectUrl()
-                    ]
-                ]);
-                break;
-            default:
-                throw new AuthConfigException(__('Invalid auth type'));
-        }
+        match ($this->configProvider->getAuthType()) {
+            AuthType::AUTH_TYPE_FILE => $client->setAuthConfig($this->configProvider->getAuthFilePath()),
+            AuthType::AUTH_TYPE_CLIENT_ID_SECRET => $client->setAuthConfig([
+                'client_id' => $this->configProvider->getClientId(),
+                'client_secret' => $this->configProvider->getClientSecret(),
+                'redirect_uris' => [
+                    $this->getRedirectUrl()
+                ]
+            ]),
+            default => throw new AuthConfigException(__('Invalid auth type')),
+        };
 
         return $client;
     }

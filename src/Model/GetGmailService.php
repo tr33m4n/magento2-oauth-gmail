@@ -28,7 +28,7 @@ class GetGmailService
      */
     public function execute(): Gmail
     {
-        if ($this->gmailService !== null) {
+        if ($this->gmailService instanceof Gmail) {
             return $this->gmailService;
         }
 

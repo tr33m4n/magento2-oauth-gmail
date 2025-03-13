@@ -32,7 +32,7 @@ class ApplyImpersonatedEmails
         }
 
         $impersonatedEmailConfig = $this->configProvider->getImpersonatedEmails();
-        if (empty($impersonatedEmailConfig)) {
+        if ([] === $impersonatedEmailConfig) {
             return $emailMessage;
         }
 
