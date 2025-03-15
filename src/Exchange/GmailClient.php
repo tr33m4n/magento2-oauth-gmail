@@ -76,7 +76,10 @@ class GmailClient implements GmailClientInterface
      */
     public function getAccessTokenWithAuthCode(string $code): array
     {
-        return $this->getGmailClient()->getClient()->fetchAccessTokenWithAuthCode($code);
+        $accessToken = $this->getGmailClient()->getClient()->fetchAccessTokenWithAuthCode($code);
+
+        /** @var array<string, mixed> $accessToken */
+        return $accessToken;
     }
 
     /**

@@ -39,6 +39,7 @@ class AccessToken implements ClientMiddlewareInterface
             return $client;
         }
 
+        /** @var \tr33m4n\OauthGmail\Model\Token $accessToken */
         $client->setAccessToken($accessToken->toArray());
         if (!$client->isAccessTokenExpired()) {
             return $client;

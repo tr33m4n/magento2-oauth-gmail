@@ -25,12 +25,14 @@ define([
                 if (from) {
                     values = valuesFrom[idFrom].values;
 
+                    // BEGIN `tr33m4n_OauthGmail` modifications
                     fromValue = from.value;
                     if (from.type === 'file') {
                         fromValue = from.defaultValue;
                     }
 
                     isInArray = values.indexOf(fromValue) !== -1; //eslint-disable-line
+                    // END `tr33m4n_OauthGmail` modifications
                     isNegative = valuesFrom[idFrom].negative;
 
                     if (!from || isInArray && isNegative || !isInArray && !isNegative) {
