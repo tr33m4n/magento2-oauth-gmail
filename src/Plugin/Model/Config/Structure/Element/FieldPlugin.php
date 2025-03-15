@@ -63,8 +63,7 @@ class FieldPlugin
                     ? $this->configProvider->getAuthFile()
                     : self::INVALID_VALUE,
                 '_elementType' => 'field',
-                'dependPath' => explode('/', self::FILE_FIELD_PATH),
-                'negative' => $dependencyFieldValue === self::NOT_SERVICE_ACCOUNT_FLAG
+                'dependPath' => explode('/', self::FILE_FIELD_PATH)
             ]
         ]);
 
