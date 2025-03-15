@@ -17,6 +17,8 @@ class FieldPlugin
 
     private const NOT_SERVICE_ACCOUNT_FLAG = 'not_service_account';
 
+    private const INVALID_VALUE = '__INVALID__';
+
     /**
      * FieldPlugin constructor.
      */
@@ -57,11 +59,12 @@ class FieldPlugin
         $result[$snakeCasedPath] = $this->fieldFactory->create([
             'fieldData' => [
                 'id' => self::FILE_FIELD_PATH,
-                'value' => $this->configProvider->getAuthFile(),
+                'value' => $this->configProvider->isServiceAccount()
+                    ? $this->configProvider->getAuthFile()
+                    : self::INVALID_VALUE,
                 '_elementType' => 'field',
                 'dependPath' => explode('/', self::FILE_FIELD_PATH),
-                'negative' => !$this->configProvider->isServiceAccount()
-                    && $dependencyFieldValue === self::NOT_SERVICE_ACCOUNT_FLAG
+                'negative' => $dependencyFieldValue === self::NOT_SERVICE_ACCOUNT_FLAG
             ]
         ]);
 
