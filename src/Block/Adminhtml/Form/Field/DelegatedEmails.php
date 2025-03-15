@@ -8,7 +8,7 @@ use Magento\Config\Block\System\Config\Form\Field\FieldArray\AbstractFieldArray;
 use Magento\Framework\DataObject;
 use tr33m4n\OauthGmail\Model\Config\Provider;
 
-class ImpersonatedEmails extends AbstractFieldArray
+class DelegatedEmails extends AbstractFieldArray
 {
     private ?ScopesColumn $scopesRenderer = null;
 

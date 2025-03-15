@@ -13,10 +13,22 @@ class Token extends AbstractModel implements TokenInterface
     /**
      * @inheritDoc
      */
+    protected function _construct(): void
+    {
+        $this->_init(TokenResource::class);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getAccessToken(): ?string
     {
-        // @phpstan-ignore-next-line
-        return $this->getData(self::KEY_ACCESS_TOKEN);
+        $accessToken = $this->getData(self::KEY_ACCESS_TOKEN);
+        if (!is_string($accessToken)) {
+            return null;
+        }
+
+        return $accessToken;
     }
 
     /**
@@ -32,8 +44,12 @@ class Token extends AbstractModel implements TokenInterface
      */
     public function getRefreshToken(): ?string
     {
-        // @phpstan-ignore-next-line
-        return $this->getData(self::KEY_REFRESH_TOKEN);
+        $refreshToken = $this->getData(self::KEY_REFRESH_TOKEN);
+        if (!is_string($refreshToken)) {
+            return null;
+        }
+
+        return $refreshToken;
     }
 
     /**
@@ -49,8 +65,12 @@ class Token extends AbstractModel implements TokenInterface
      */
     public function getTokenType(): ?string
     {
-        // @phpstan-ignore-next-line
-        return $this->getData(self::KEY_TOKEN_TYPE);
+        $tokenType = $this->getData(self::KEY_TOKEN_TYPE);
+        if (!is_string($tokenType)) {
+            return null;
+        }
+
+        return $tokenType;
     }
 
     /**
@@ -66,8 +86,12 @@ class Token extends AbstractModel implements TokenInterface
      */
     public function getScope(): ?string
     {
-        // @phpstan-ignore-next-line
-        return $this->getData(self::KEY_SCOPE);
+        $scope = $this->getData(self::KEY_SCOPE);
+        if (!is_string($scope)) {
+            return null;
+        }
+
+        return $scope;
     }
 
     /**
@@ -83,8 +107,12 @@ class Token extends AbstractModel implements TokenInterface
      */
     public function getExpiresIn(): ?int
     {
-        // @phpstan-ignore-next-line
-        return $this->getData(self::KEY_EXPIRES_IN);
+        $expiresIn = $this->getData(self::KEY_EXPIRES_IN);
+        if (!is_int($expiresIn)) {
+            return null;
+        }
+
+        return $expiresIn;
     }
 
     /**
@@ -100,8 +128,12 @@ class Token extends AbstractModel implements TokenInterface
      */
     public function getCreated(): ?int
     {
-        // @phpstan-ignore-next-line
-        return $this->getData(self::KEY_CREATED);
+        $created = $this->getData(self::KEY_CREATED);
+        if (!is_int($created)) {
+            return null;
+        }
+
+        return $created;
     }
 
     /**
@@ -110,13 +142,5 @@ class Token extends AbstractModel implements TokenInterface
     public function setCreated(int $created): TokenInterface
     {
         return $this->setData(self::KEY_CREATED, $created);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    protected function _construct(): void
-    {
-        $this->_init(TokenResource::class);
     }
 }

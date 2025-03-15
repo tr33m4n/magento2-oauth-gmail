@@ -8,9 +8,10 @@ use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\App\Action\HttpGetActionInterface;
 use Magento\Framework\App\ResponseInterface;
+use tr33m4n\OauthGmail\Api\GmailClientInterface;
+use tr33m4n\OauthGmail\Api\TokenRepositoryInterface;
 use tr33m4n\OauthGmail\Exception\AccessTokenException;
-use tr33m4n\OauthGmail\Model\Client\GetClient;
-use tr33m4n\OauthGmail\Model\SaveAccessToken;
+use tr33m4n\OauthGmail\Model\TokenFactory;
 
 class Authenticate extends Action implements HttpGetActionInterface
 {
@@ -32,8 +33,9 @@ class Authenticate extends Action implements HttpGetActionInterface
      * Authenticate constructor.
      */
     public function __construct(
-        private readonly GetClient $getClient,
-        private readonly SaveAccessToken $saveAccessToken,
+        private readonly GmailClientInterface $gmailClient,
+        private readonly TokenRepositoryInterface $tokenRepository,
+        private readonly TokenFactory $tokenFactory,
         Context $context
     ) {
         parent::__construct($context);
@@ -42,8 +44,8 @@ class Authenticate extends Action implements HttpGetActionInterface
     /**
      * {@inheritdoc}
      *
-     * @throws \Google\Exception
-     * @throws \Magento\Framework\Exception\AlreadyExistsException
+     * @return \Magento\Framework\App\ResponseInterface
+     * @throws \Magento\Framework\Exception\CouldNotSaveException
      */
     public function execute(): ResponseInterface
     {
@@ -53,11 +55,11 @@ class Authenticate extends Action implements HttpGetActionInterface
                 $code = '';
             }
 
-            /** @var array<string, mixed> $credentials */
-            $credentials = $this->getClient->execute()
-                ->fetchAccessTokenWithAuthCode((string) $code);
-
-            $this->saveAccessToken->execute($credentials);
+            $this->tokenRepository->save(
+                $this->tokenFactory->create(
+                    $this->gmailClient->getAccessTokenWithAuthCode((string) $code)
+                )
+            );
         } catch (AccessTokenException $exception) {
             $this->messageManager->addErrorMessage($exception->getMessage());
 

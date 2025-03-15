@@ -2,18 +2,19 @@
 
 declare(strict_types=1);
 
-namespace tr33m4n\OauthGmail\Model\Client;
+namespace tr33m4n\OauthGmail\Exchange\ClientMiddleware;
 
 use Google\Client;
 use Magento\Backend\Model\UrlInterface;
 use tr33m4n\OauthGmail\Exception\AuthConfigException;
+use tr33m4n\OauthGmail\Exchange\ClientMiddlewareInterface;
 use tr33m4n\OauthGmail\Model\Config\Provider;
 use tr33m4n\OauthGmail\Model\Config\Source\AuthType;
 
-class ConfigureAuthConfig
+class AuthConfig implements ClientMiddlewareInterface
 {
     /**
-     * ConfigureAuthConfig constructor.
+     * AuthConfig constructor.
      */
     public function __construct(
         private readonly Provider $configProvider,
@@ -22,13 +23,15 @@ class ConfigureAuthConfig
     }
 
     /**
+     * {@inheritdoc}
+     *
      * Configure auth config
      *
      * @throws \Google\Exception
      * @throws \tr33m4n\OauthGmail\Exception\AuthConfigException
      * @throws \tr33m4n\OauthGmail\Exception\ConfigException
      */
-    public function execute(Client $client): Client
+    public function apply(Client $client): Client
     {
         match ($this->configProvider->getAuthType()) {
             AuthType::AUTH_TYPE_FILE => $client->setAuthConfig($this->configProvider->getAuthFilePath()),

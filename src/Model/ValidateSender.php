@@ -9,6 +9,7 @@ use Google\Service\Gmail\SendAs;
 use Magento\Framework\Mail\EmailMessage;
 use tr33m4n\OauthGmail\Exception\SenderVerificationException;
 use tr33m4n\OauthGmail\Model\Config\Provider;
+use tr33m4n\OauthGmail\Api\GmailClientInterface;
 
 class ValidateSender
 {
@@ -20,7 +21,7 @@ class ValidateSender
      * ValidateSender constructor.
      */
     public function __construct(
-        private readonly GetGmailService $getGmailService,
+        private readonly GmailClientInterface $gmailClient,
         private readonly Provider $configProvider
     ) {
     }
@@ -31,33 +32,26 @@ class ValidateSender
      * @throws \Google\Exception
      * @throws \tr33m4n\OauthGmail\Exception\SenderVerificationException
      * @throws \Magento\Framework\Exception\FileSystemException
-     * @throws \tr33m4n\OauthGmail\Exception\ConfigException
+     * @throws \tr33m4n\OauthGmail\Exception\ClientException
      */
     public function execute(EmailMessage $emailMessage): void
     {
+        /** @var \Laminas\Mail\Address\AddressInterface $address */
         foreach ((array) $emailMessage->getFrom() as $address) {
             try {
-                // @phpstan-ignore-next-line
-                $result = $this->getGmailService->execute()
-                    ->users_settings_sendAs
+                $result = $this->gmailClient->getUsersSettingsSendAs()
                     ->get('me', $address->getEmail());
             } catch (Exception $exception) {
                 $sendAsMessage = null;
 
-                if ($this->configProvider->isServiceAccount() && $this->configProvider->shouldUseImpersonated()) {
-                    // @phpstan-ignore-next-line
-                    $sendAsList = $this->getGmailService->execute()
-                        ->users_settings_sendAs
+                if ($this->configProvider->isServiceAccount() && $this->configProvider->shouldUseDelegated()) {
+                    $sendAsList = $this->gmailClient->getUsersSettingsSendAs()
                         ->listUsersSettingsSendAs('me')
                         ->getSendAs();
 
-                    $subject = $this->getGmailService->execute()
-                        ->getClient()
-                        ->getConfig('subject');
-
                     $sendAsMessage = __(
                         '. Account %1 can only send as %2',
-                        $subject,
+                        $this->gmailClient->getDelegatedAccount(),
                         implode(
                             ', ',
                             array_map(

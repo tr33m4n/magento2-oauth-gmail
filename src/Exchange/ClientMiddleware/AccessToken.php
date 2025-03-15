@@ -2,39 +2,39 @@
 
 declare(strict_types=1);
 
-namespace tr33m4n\OauthGmail\Model\Client;
+namespace tr33m4n\OauthGmail\Exchange\ClientMiddleware;
 
 use Google\Client;
+use Magento\Framework\Exception\LocalizedException;
 use Psr\Log\LoggerInterface;
 use tr33m4n\OauthGmail\Api\Data\TokenInterface;
+use tr33m4n\OauthGmail\Api\TokenRepositoryInterface;
 use tr33m4n\OauthGmail\Exception\AccessTokenException;
-use tr33m4n\OauthGmail\Model\GetAccessToken;
-use tr33m4n\OauthGmail\Model\SaveAccessToken;
-use tr33m4n\OauthGmail\Model\ValidateAccessToken;
+use tr33m4n\OauthGmail\Exchange\ClientMiddlewareInterface;
+use tr33m4n\OauthGmail\Model\TokenFactory;
 
-class ConfigureAccessToken
+class AccessToken implements ClientMiddlewareInterface
 {
     /**
-     * ConfigureAccessToken constructor.
+     * AccessToken constructor.
      */
     public function __construct(
-        private readonly SaveAccessToken $saveAccessToken,
-        private readonly GetAccessToken $getAccessToken,
-        private readonly ValidateAccessToken $validateAccessToken,
+        private readonly TokenRepositoryInterface $tokenRepository,
+        private readonly TokenFactory $tokenFactory,
         private readonly LoggerInterface $logger
     ) {
     }
 
     /**
+     * {@inheritdoc}
+     *
      * Configure access token
      *
-     * @throws \Magento\Framework\Exception\AlreadyExistsException
      * @throws \tr33m4n\OauthGmail\Exception\AccessTokenException
      */
-    public function execute(Client $client): Client
+    public function apply(Client $client): Client
     {
-        /** @var \tr33m4n\OauthGmail\Model\Token|null $accessToken */
-        $accessToken = $this->getAccessToken->execute();
+        $accessToken = $this->tokenRepository->getLatest();
         if (!$accessToken instanceof TokenInterface) {
             return $client;
         }
@@ -54,14 +54,10 @@ class ConfigureAccessToken
         $accessTokenCredentials = $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
 
         try {
-            $this->validateAccessToken->execute($accessTokenCredentials);
-        } catch (AccessTokenException $accessTokenException) {
-            $this->logger->error($accessTokenException);
-
-            return $client;
+            $this->tokenRepository->save($this->tokenFactory->create($accessTokenCredentials));
+        } catch (LocalizedException $localizedException) {
+            $this->logger->error($localizedException);
         }
-
-        $this->saveAccessToken->execute($accessTokenCredentials);
 
         return $client;
     }

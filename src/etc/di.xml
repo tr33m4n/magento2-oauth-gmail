@@ -2,7 +2,21 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <preference for="tr33m4n\OauthGmail\Api\Data\TokenInterface" type="tr33m4n\OauthGmail\Model\Token"/>
+    <preference for="tr33m4n\OauthGmail\Exchange\ClientMiddlewareInterface"
+                type="tr33m4n\OauthGmail\Exchange\ClientMiddlewareComposite" />
+    <preference for="tr33m4n\OauthGmail\Api\GmailClientInterface" type="tr33m4n\OauthGmail\Exchange\GmailClient"/>
+    <preference for="tr33m4n\OauthGmail\Api\TokenRepositoryInterface" type="tr33m4n\OauthGmail\Model\TokenRepository"/>
     <preference for="Magento\Framework\Mail\TransportInterface" type="tr33m4n\OauthGmail\Model\Transport"/>
+
+    <type name="tr33m4n\OauthGmail\Exchange\ClientMiddlewareComposite">
+        <arguments>
+            <argument name="middlewares" xsi:type="array">
+                <item name="auth" xsi:type="object">tr33m4n\OauthGmail\Exchange\ClientMiddleware\AuthConfig</item>
+                <item name="scope" xsi:type="object">tr33m4n\OauthGmail\Exchange\ClientMiddleware\ScopeConfig</item>
+                <item name="token" xsi:type="object">tr33m4n\OauthGmail\Exchange\ClientMiddleware\AccessToken</item>
+            </argument>
+        </arguments>
+    </type>
 
     <type name="Magento\Config\Model\Config\TypePool">
         <arguments>

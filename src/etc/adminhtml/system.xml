@@ -20,23 +20,23 @@
                         <field id="system/oauth_gmail/auth_type">file</field>
                     </depends>
                 </field>
-                <field id="use_impersonated" translate="label,comment" type="select" sortOrder="3" showInDefault="1"
+                <field id="use_delegated" translate="label,comment" type="select" sortOrder="3" showInDefault="1"
                        showInWebsite="0" showInStore="0">
-                    <label>Use Impersonated Emails</label>
+                    <label>Use Delegated Emails</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment>If you have delegated domain-wide access to a service account, and you want to impersonate a user account when sending for a particular email scope</comment>
+                    <comment>If you have delegated domain-wide access to a service account, and you want to delegate a user account when sending for a particular email scope</comment>
                     <depends>
                         <field id="system/oauth_gmail/auth_type">file</field>
                     </depends>
                 </field>
-                <field id="impersonated_emails" translate="label" type="select" sortOrder="4" showInDefault="1"
+                <field id="delegated_emails" translate="label" type="select" sortOrder="4" showInDefault="1"
                        showInWebsite="0" showInStore="0">
-                    <label>Impersonated Emails</label>
-                    <frontend_model>tr33m4n\OauthGmail\Block\Adminhtml\Form\Field\ImpersonatedEmails</frontend_model>
+                    <label>Delegated Emails</label>
+                    <frontend_model>tr33m4n\OauthGmail\Block\Adminhtml\Form\Field\DelegatedEmails</frontend_model>
                     <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
                     <depends>
                         <field id="system/oauth_gmail/auth_type">file</field>
-                        <field id="system/oauth_gmail/use_impersonated">1</field>
+                        <field id="system/oauth_gmail/use_delegated">1</field>
                     </depends>
                 </field>
                 <field id="client_id" translate="label" type="text" sortOrder="5" showInDefault="1"

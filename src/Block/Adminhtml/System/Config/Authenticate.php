@@ -8,7 +8,7 @@ use Exception;
 use Magento\Backend\Block\Template\Context;
 use Magento\Framework\Data\Form\Element\AbstractElement;
 use Magento\Framework\View\Helper\SecureHtmlRenderer;
-use tr33m4n\OauthGmail\Model\Client\GetClient;
+use tr33m4n\OauthGmail\Api\GmailClientInterface;
 
 class Authenticate extends AbstractButton
 {
@@ -18,7 +18,7 @@ class Authenticate extends AbstractButton
      * @param array<int|string, mixed> $data
      */
     public function __construct(
-        private readonly GetClient $getClient,
+        private readonly GmailClientInterface $gmailClient,
         Context $context,
         array $data = [],
         ?SecureHtmlRenderer $secureRenderer = null
@@ -32,7 +32,7 @@ class Authenticate extends AbstractButton
     protected function _getElementHtml(AbstractElement $element): string
     {
         try {
-            $buttonUrl = $this->getClient->execute()->createAuthUrl();
+            $buttonUrl = $this->gmailClient->getAuthUrl();
         } catch (Exception $exception) {
             $this->_logger->error($exception);
 

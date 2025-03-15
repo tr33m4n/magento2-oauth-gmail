@@ -19,9 +19,9 @@ class Provider
 
     private const XML_CONFIG_AUTH_FILE = 'system/oauth_gmail/auth_file';
 
-    private const XML_CONFIG_USE_IMPERSONATED = 'system/oauth_gmail/use_impersonated';
+    private const XML_CONFIG_USE_DELEGATED = 'system/oauth_gmail/use_delegated';
 
-    private const XML_CONFIG_IMPERSONATED_EMAILS = 'system/oauth_gmail/impersonated_emails';
+    private const XML_CONFIG_DELEGATED_EMAILS = 'system/oauth_gmail/delegated_emails';
 
     private const XML_CONFIG_CLIENT_ID_PATH = 'system/oauth_gmail/client_id';
 
@@ -40,7 +40,7 @@ class Provider
     /**
      * @var array<string, string>
      */
-    private ?array $impersonatedEmails = null;
+    private ?array $delegatedEmails = null;
 
     private ?bool $isServiceAccount = null;
 
@@ -165,41 +165,41 @@ class Provider
     }
 
     /**
-     * Whether to use an impersonated account
+     * Whether to use delegated accounts
      *
      * @throws \Magento\Framework\Exception\FileSystemException
      */
-    public function shouldUseImpersonated(): bool
+    public function shouldUseDelegated(): bool
     {
-        return $this->isServiceAccount() && $this->scopeConfig->isSetFlag(self::XML_CONFIG_USE_IMPERSONATED);
+        return $this->isServiceAccount() && $this->scopeConfig->isSetFlag(self::XML_CONFIG_USE_DELEGATED);
     }
 
     /**
-     * Get impersonated emails
+     * Get delegated emails
      *
      * @throws \tr33m4n\OauthGmail\Exception\ConfigException
      * @throws \Magento\Framework\Exception\MailException
      * @return array<string, string>
      */
-    public function getImpersonatedEmails(): array
+    public function getDelegatedEmails(): array
     {
-        if (null !== $this->impersonatedEmails) {
-            return $this->impersonatedEmails;
+        if (null !== $this->delegatedEmails) {
+            return $this->delegatedEmails;
         }
 
-        $impersonatedEmails = $this->scopeConfig->getValue(self::XML_CONFIG_IMPERSONATED_EMAILS);
-        if (is_string($impersonatedEmails)) {
-            $impersonatedEmails = $this->serializer->unserialize($impersonatedEmails);
+        $delegatedEmails = $this->scopeConfig->getValue(self::XML_CONFIG_DELEGATED_EMAILS);
+        if (is_string($delegatedEmails)) {
+            $delegatedEmails = $this->serializer->unserialize($delegatedEmails);
         }
 
-        if (!is_array($impersonatedEmails) || [] === $impersonatedEmails) {
-            throw new ConfigException(__('No impersonated emails have been set'));
+        if (!is_array($delegatedEmails) || [] === $delegatedEmails) {
+            throw new ConfigException(__('No delegated emails have been set'));
         }
 
         $indexedEmails = [];
-        /** @var array{scopes?: array<string, mixed>, email: string} $impersonatedEmail */
-        foreach ($impersonatedEmails as $impersonatedEmail) {
-            $scopes = $impersonatedEmail[self::SCOPES_KEY] ?? [];
+        /** @var array{scopes?: array<string, mixed>, email: string} $delegatedEmail */
+        foreach ($delegatedEmails as $delegatedEmail) {
+            $scopes = $delegatedEmail[self::SCOPES_KEY] ?? [];
 
             foreach ($scopes as $scope) {
                 if (!is_array($scope) && !is_string($scope)) {
@@ -211,12 +211,12 @@ class Provider
                     continue;
                 }
 
-                $indexedEmails[$resolvedEmail] = $impersonatedEmail[self::EMAIL_KEY];
+                $indexedEmails[$resolvedEmail] = $delegatedEmail[self::EMAIL_KEY];
             }
         }
 
         /** @var array<string, string> $indexedEmails */
-        return $this->impersonatedEmails = $indexedEmails;
+        return $this->delegatedEmails = $indexedEmails;
     }
 
     /**
