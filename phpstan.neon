@@ -4,8 +4,4 @@ parameters:
     excludePaths:
         - *Test*
         - *tests*
-        - %currentWorkingDirectory%/src/Model/GetAccessToken.php
-        - %currentWorkingDirectory%/src/Model/SaveAccessToken.php
     level: max
-    ignoreErrors:
-        - '#Parameter \#1 \$message of method Psr\\Log\\LoggerInterface::(.*) expects string, (.*)Exception given.#'

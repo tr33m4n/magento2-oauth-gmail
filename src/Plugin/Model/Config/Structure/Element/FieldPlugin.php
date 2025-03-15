@@ -31,20 +31,16 @@ class FieldPlugin
     /**
      * Ensure that we only show fields if the auth file is a service account
      *
-     * @param \Magento\Config\Model\Config\Structure\Element\Field $subject
-     * @param \Magento\Config\Model\Config\Structure\Element\Dependency\Field[] $result
-     * @return \Magento\Config\Model\Config\Structure\Element\Dependency\Field[]
+     * @param array<string, \Magento\Config\Model\Config\Structure\Element\Dependency\Field> $result
+     * @return array<string, \Magento\Config\Model\Config\Structure\Element\Dependency\Field>
      * @throws \Magento\Framework\Exception\FileSystemException
      * @throws \tr33m4n\OauthGmail\Exception\ConfigException
      */
     public function afterGetDependencies(Field $subject, array $result): array
     {
         $snakeCasedPath = str_replace('/', '_', self::FILE_FIELD_PATH);
-        if (!array_key_exists($snakeCasedPath, $result)) {
-            return $result;
-        }
 
-        $dependencyFieldObject = $result[$snakeCasedPath];
+        $dependencyFieldObject = $result[$snakeCasedPath] ?? null;
         if (!$dependencyFieldObject instanceof DependencyField) {
             return $result;
         }

@@ -17,9 +17,6 @@ use tr33m4n\OauthGmail\Model\Config\Provider;
 
 class Test extends Action implements HttpGetActionInterface
 {
-    /**
-     * @inheritDoc
-     */
     public const ADMIN_RESOURCE = 'tr33m4n_OauthGmail::oauth';
 
     /**

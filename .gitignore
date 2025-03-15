@@ -3,5 +3,6 @@
 /.idea
 /composer.lock
 /.php_cs.cache
+/.phpunit.cache
 /Brewfile
 /auth.json

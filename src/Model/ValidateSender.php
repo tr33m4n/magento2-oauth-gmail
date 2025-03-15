@@ -7,9 +7,9 @@ namespace tr33m4n\OauthGmail\Model;
 use Google\Exception;
 use Google\Service\Gmail\SendAs;
 use Magento\Framework\Mail\EmailMessage;
+use tr33m4n\OauthGmail\Api\GmailClientInterface;
 use tr33m4n\OauthGmail\Exception\SenderVerificationException;
 use tr33m4n\OauthGmail\Model\Config\Provider;
-use tr33m4n\OauthGmail\Api\GmailClientInterface;
 
 class ValidateSender
 {

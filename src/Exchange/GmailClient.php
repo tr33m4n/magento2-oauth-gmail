@@ -95,8 +95,8 @@ class GmailClient implements GmailClientInterface
      */
     private function getGmailClient(): Gmail
     {
-        return !$this->gmailClient instanceof Gmail
-            ? $this->gmailClient = $this->gmailClientFactory->create()
-            : $this->gmailClient;
+        return $this->gmailClient instanceof Gmail
+            ? $this->gmailClient
+            : $this->gmailClient = $this->gmailClientFactory->create();
     }
 }

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<ruleset name="tr33m4nOauthGmail">
+    <description>tr33m4n Oauth Gmail configuration</description>
+    <rule ref="Magento2">
+        <exclude name="Magento2.CodeAnalysis.EmptyBlock.DetectedFunction"/>
+        <exclude name="Magento2.CodeAnalysis.EmptyBlock.DetectedCatch"/>
+    </rule>
+</ruleset>

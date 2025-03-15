@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
+use AdamWojs\PhpCsFixerPhpdocForceFQCN\Fixer\Phpdoc\ForceFQCNFixer;
+
 $finder = PhpCsFixer\Finder::create()->in(__DIR__ . '/src');
 
 $config = new PhpCsFixer\Config();
 $config->setUsingCache(false);
-$config->registerCustomFixers([
-    new \AdamWojs\PhpCsFixerPhpdocForceFQCN\Fixer\Phpdoc\ForceFQCNFixer()
-]);
+$config->registerCustomFixers([new ForceFQCNFixer()]);
 
 return $config->setRules([
     '@PSR2' => true,
