@@ -27,6 +27,7 @@
                     <comment>If you have delegated domain-wide access to a service account, and you want to delegate a user account when sending for a particular email scope</comment>
                     <depends>
                         <field id="system/oauth_gmail/auth_type">file</field>
+                        <field id="system/oauth_gmail/auth_file">service_account</field>
                     </depends>
                 </field>
                 <field id="delegated_emails" translate="label" type="select" sortOrder="4" showInDefault="1"
@@ -37,6 +38,7 @@
                     <depends>
                         <field id="system/oauth_gmail/auth_type">file</field>
                         <field id="system/oauth_gmail/use_delegated">1</field>
+                        <field id="system/oauth_gmail/auth_file">service_account</field>
                     </depends>
                 </field>
                 <field id="client_id" translate="label" type="text" sortOrder="5" showInDefault="1"
@@ -56,6 +58,9 @@
                 </field>
                 <field id="authenticate" sortOrder="7" showInDefault="1" showInWebsite="0" showInStore="0">
                     <frontend_model>tr33m4n\OauthGmail\Block\Adminhtml\System\Config\Authenticate</frontend_model>
+                    <depends>
+                        <field id="system/oauth_gmail/auth_file">not_service_account</field>
+                    </depends>
                 </field>
                 <field id="test_scope" translate="label" type="select" sortOrder="8" showInDefault="1"
                        showInWebsite="0" showInStore="0">

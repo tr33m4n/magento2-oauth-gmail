@@ -11,9 +11,11 @@ use tr33m4n\OauthGmail\Model\Config\Provider;
 
 class FieldPlugin
 {
-    private const FILE_FIELD_PATH = 'system_oauth_gmail_auth_file';
+    private const FILE_FIELD_PATH = 'system/oauth_gmail/auth_file';
 
-    private const INVALID_VALUE = '__INVALID__';
+    private const SERVICE_ACCOUNT_FLAG = 'service_account';
+
+    private const NOT_SERVICE_ACCOUNT_FLAG = 'not_service_account';
 
     /**
      * FieldPlugin constructor.
@@ -27,41 +29,41 @@ class FieldPlugin
     /**
      * Ensure that we only show fields if the auth file is a service account
      *
-     * @throws \tr33m4n\OauthGmail\Exception\ConfigException
-     * @throws \ReflectionException
-     * @throws \Magento\Framework\Exception\FileSystemException
+     * @param \Magento\Config\Model\Config\Structure\Element\Field $subject
      * @param \Magento\Config\Model\Config\Structure\Element\Dependency\Field[] $result
      * @return \Magento\Config\Model\Config\Structure\Element\Dependency\Field[]
+     * @throws \Magento\Framework\Exception\FileSystemException
+     * @throws \tr33m4n\OauthGmail\Exception\ConfigException
      */
     public function afterGetDependencies(Field $subject, array $result): array
     {
-        if (!array_key_exists(self::FILE_FIELD_PATH, $result)) {
+        $snakeCasedPath = str_replace('/', '_', self::FILE_FIELD_PATH);
+        if (!array_key_exists($snakeCasedPath, $result)) {
             return $result;
         }
 
-        $dependencyFieldObject = $result[self::FILE_FIELD_PATH];
+        $dependencyFieldObject = $result[$snakeCasedPath];
         if (!$dependencyFieldObject instanceof DependencyField) {
             return $result;
         }
 
-        $negate = !filter_var($dependencyFieldObject->getValues()[0] ?? null, FILTER_VALIDATE_BOOLEAN);
-
-        /**
-         * The simplest solution is to change the objects property with reflection, rather than recreate the params that
-         * originally created the immutable class
-         */
-        $refProperty = new ReflectionProperty(get_class($result[self::FILE_FIELD_PATH]), '_values');
-        $refProperty->setAccessible(true);
-        $refProperty->setValue(
-            $result[self::FILE_FIELD_PATH],
-            [$this->configProvider->isServiceAccount() ? $this->configProvider->getAuthFile() : self::INVALID_VALUE]
-        );
-
-        if ($negate) {
-            $refProperty = new ReflectionProperty(get_class($result[self::FILE_FIELD_PATH]), '_isNegative');
-            $refProperty->setAccessible(true);
-            $refProperty->setValue($result[self::FILE_FIELD_PATH], true);
+        $dependencyFieldValue = $dependencyFieldObject->getValues()[0] ?? null;
+        if ($dependencyFieldValue !== self::SERVICE_ACCOUNT_FLAG
+            && $dependencyFieldValue !== self::NOT_SERVICE_ACCOUNT_FLAG
+        ) {
+            return $result;
         }
+
+        $result[$snakeCasedPath] = $this->fieldFactory->create([
+            'fieldData' => [
+                'id' => self::FILE_FIELD_PATH,
+                'value' => $this->configProvider->getAuthFile(),
+                '_elementType' => 'field',
+                'dependPath' => explode('/', self::FILE_FIELD_PATH),
+                'negative' => !$this->configProvider->isServiceAccount()
+                    && $dependencyFieldValue === self::NOT_SERVICE_ACCOUNT_FLAG
+            ]
+        ]);
 
         return $result;
     }
