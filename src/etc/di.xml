@@ -15,6 +15,7 @@
     <type name="tr33m4n\OauthGmail\Exchange\ClientMiddlewareComposite">
         <arguments>
             <argument name="middlewares" xsi:type="array">
+                <item name="logging" xsi:type="object">tr33m4n\OauthGmail\Exchange\ClientMiddleware\Logging</item>
                 <item name="auth" xsi:type="object">tr33m4n\OauthGmail\Exchange\ClientMiddleware\AuthConfig</item>
                 <item name="scope" xsi:type="object">tr33m4n\OauthGmail\Exchange\ClientMiddleware\ScopeConfig</item>
                 <item name="token" xsi:type="object">tr33m4n\OauthGmail\Exchange\ClientMiddleware\AccessToken</item>
