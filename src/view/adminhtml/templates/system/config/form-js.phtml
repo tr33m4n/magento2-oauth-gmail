@@ -1,14 +1,13 @@
 <?php
 /**
- * Render additional system edit form JS. Unfortunately due to how system config JS is rendered, this would not work
- * as expected as a mixin
+ * Render additional system edit form JS
  *
  * @var \Magento\Backend\Block\Template $block
  * @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
  */
 
 $scriptString = <<<script
-define([
+require([
     'jquery',
     'mage/adminhtml/form',
     'domReady!'

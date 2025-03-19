@@ -8,6 +8,10 @@
     <preference for="tr33m4n\OauthGmail\Api\TokenRepositoryInterface" type="tr33m4n\OauthGmail\Model\TokenRepository"/>
     <preference for="Magento\Framework\Mail\TransportInterface" type="tr33m4n\OauthGmail\Model\Transport"/>
 
+    <!-- Extend dependency block to inject our class extension logic before the `new` keyword -->
+    <preference for="Magento\Backend\Block\Widget\Form\Element\Dependence"
+                type="tr33m4n\OauthGmail\Block\Adminhtml\Widget\Form\Element\Dependence"/>
+
     <type name="tr33m4n\OauthGmail\Exchange\ClientMiddlewareComposite">
         <arguments>
             <argument name="middlewares" xsi:type="array">
