@@ -62,7 +62,10 @@ class Test extends Action implements HttpGetActionInterface
             $transport->sendMessage();
 
             $this->messageManager->addSuccessMessage(
-                __('Successfully sent a test email to the address associated with this account!')
+                __(
+                    'Successfully sent a test email to the address "%1" associated with this account',
+                    $adminUser->getEmail()
+                )
             );
         } catch (LocalizedException $exception) {
             $this->messageManager->addErrorMessage(__('Test email failed to send: %1', $exception->getMessage()));
