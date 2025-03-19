@@ -10,8 +10,10 @@ use Magento\Backend\App\Area\FrontNameResolver;
 use Magento\Backend\Model\Auth\Session as AuthSession;
 use Magento\Framework\App\Action\HttpGetActionInterface;
 use Magento\Framework\App\ResponseInterface;
+use Magento\Framework\DB\Adapter\Pdo\Mysql;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Mail\Template\TransportBuilder;
+use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
 use Magento\Store\Model\Store;
 use tr33m4n\OauthGmail\Model\Config\Provider;
 
@@ -26,6 +28,7 @@ class Test extends Action implements HttpGetActionInterface
         private readonly Provider $configProvider,
         private readonly AuthSession $authSession,
         private readonly TransportBuilder $transportBuilder,
+        private readonly TimezoneInterface $timezone,
         Context $context
     ) {
         parent::__construct($context);
@@ -54,7 +57,9 @@ class Test extends Action implements HttpGetActionInterface
                 'area' => FrontNameResolver::AREA_CODE,
                 'store' => Store::DEFAULT_STORE_ID
             ])
-            ->setTemplateVars([]);
+            ->setTemplateVars([
+                'date' => $this->timezone->date()->format(Mysql::TIMESTAMP_FORMAT)
+            ]);
 
         $transport = $this->transportBuilder->getTransport();
 
