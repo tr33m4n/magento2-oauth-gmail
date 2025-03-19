@@ -12,6 +12,47 @@
     <preference for="Magento\Backend\Block\Widget\Form\Element\Dependence"
                 type="tr33m4n\OauthGmail\Block\Adminhtml\Widget\Form\Element\Dependence"/>
 
+    <virtualType name="tr33m4n\OauthGmail\Log\Handler\Exception" type="Magento\Framework\Logger\Handler\Exception">
+        <arguments>
+            <argument name="fileName" xsi:type="string">/var/log/oauth_gmail_exception.log</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="tr33m4n\OauthGmail\Log\Handler\System" type="Magento\Framework\Logger\Handler\System">
+        <arguments>
+            <argument name="fileName" xsi:type="string">/var/log/oauth_gmail.log</argument>
+            <argument name="exceptionHandler" xsi:type="object">tr33m4n\OauthGmail\Log\Handler\Exception</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="tr33m4n\OauthGmail\Log\Handler\Debug" type="Magento\Framework\Logger\Handler\Debug">
+        <arguments>
+            <argument name="fileName" xsi:type="string">/var/log/oauth_gmail_debug.log</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="tr33m4n\OauthGmail\Log\Logger" type="Magento\Framework\Logger\Monolog">
+        <arguments>
+            <argument name="name" xsi:type="string">ampersand_message_queue</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="system" xsi:type="object">tr33m4n\OauthGmail\Log\Handler\System</item>
+                <item name="debug" xsi:type="object">tr33m4n\OauthGmail\Log\Handler\Debug</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="tr33m4n\OauthGmail\Exchange\ClientMiddleware\Logging">
+        <arguments>
+            <argument name="logger" xsi:type="object">tr33m4n\OauthGmail\Log\Logger</argument>
+        </arguments>
+    </type>
+
+    <type name="tr33m4n\OauthGmail\Exchange\ClientMiddleware\AccessToken">
+        <arguments>
+            <argument name="logger" xsi:type="object">tr33m4n\OauthGmail\Log\Logger</argument>
+        </arguments>
+    </type>
+
     <type name="tr33m4n\OauthGmail\Exchange\ClientMiddlewareComposite">
         <arguments>
             <argument name="middlewares" xsi:type="array">
