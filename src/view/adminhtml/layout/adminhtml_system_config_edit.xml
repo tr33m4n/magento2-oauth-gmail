@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="js">
+            <block name="tr33m4n.config.edit.js" template="tr33m4n_OauthGmail::system/config/form-js.phtml"/>
+        </referenceContainer>
+    </body>
+</page>

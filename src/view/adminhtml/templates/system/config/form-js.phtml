@@ -1,9 +1,20 @@
+<?php
+/**
+ * Render additional system edit form JS. Unfortunately due to how system config JS is rendered, this would not work
+ * as expected as a mixin
+ *
+ * @var \Magento\Backend\Block\Template $block
+ * @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
+ */
+
+$scriptString = <<<script
 define([
     'jquery',
-    'mage/adminhtml/form'
+    'mage/adminhtml/form',
+    'domReady!'
 ], function (jQuery) {
     'use strict';
-
+    
     /**
      * If input is file type, ensure the `defaultValue` is fallen back to if `value` is empty
      *
@@ -178,3 +189,6 @@ define([
         }
     };
 });
+script;
+
+echo /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false);
